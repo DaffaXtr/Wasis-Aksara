@@ -1,0 +1,169 @@
+<div id="main-menu-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-all duration-300 select-none">
+  
+  <!-- TOP ROW: Profile & Main Nav -->
+  <div class="flex justify-between items-start w-full">
+    <!-- Player Profile Panel -->
+    <div class="bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl p-3 flex items-center gap-3 w-72 pointer-events-auto shadow-xl">
+      <!-- Avatar Circle -->
+      <div class="w-12 h-12 rounded-full border-2 border-majapahit-gold overflow-hidden bg-stone-light/40 flex items-center justify-center shadow-inner">
+        <img src="/assets/sprites/baskara-idle.webp" class="w-full h-full object-cover object-[30%_15%] scale-150 select-none pointer-events-none" />
+      </div>
+      <!-- Text Details -->
+      <div class="flex-1 flex flex-col justify-center">
+        <div class="flex justify-between items-baseline">
+          <span class="font-cinzel text-majapahit-cream text-[13px] font-bold tracking-wider">BASKARA</span>
+          <span class="font-poppins text-stone-soft text-[9px]">Lvl 1</span>
+        </div>
+        <!-- XP Bar Container -->
+        <div class="flex items-center mt-1">
+          <div class="flex-1 bg-stone-light/30 h-2.5 rounded-full overflow-hidden border border-stone-light/50">
+            <div class="bg-majapahit-gold h-full w-[25%] rounded-full shadow-lg"></div>
+          </div>
+          <span class="text-[9px] text-majapahit-cream/80 ml-2 font-poppins font-semibold">250/1000</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Buttons -->
+    <div class="flex gap-3 pointer-events-auto">
+      <!-- Kamus -->
+      <button id="nav-btn-kamus" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">KAMUS</span>
+      </button>
+      <!-- Achievement -->
+      <button id="nav-btn-achievement" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+          <path d="M4 22h16"></path>
+          <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path>
+          <path d="M12 2a7 7 0 0 0-7 7v4.66a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V9a7 7 0 0 0-7-7z"></path>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">ACHIEVE</span>
+      </button>
+      <!-- Koleksi -->
+      <button id="nav-btn-koleksi" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">KOLEKSI</span>
+      </button>
+      <!-- Pengaturan -->
+      <button id="nav-btn-pengaturan" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">SETTING</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CENTER ROW: Logo & Main Selection -->
+  <div class="flex flex-col items-center justify-center grow py-4">
+    <!-- Game Logo image -->
+    <img src="/assets/images/Logo.webp" class="h-[200px] object-contain mb-4 select-none pointer-events-none drop-shadow-[0_8px_16px_rgba(139,106,43,0.3)]" alt="Wasis Aksara Logo" />
+
+    <!-- Buttons Stack -->
+    <div class="flex flex-col gap-3 pointer-events-auto mt-2">
+      <button id="menu-btn-mulai" class="w-80 h-14 text-stone-dark text-[15px] font-bold tracking-widest font-poppins hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center uppercase hover:text-stone-950 shadow-lg shadow-majapahit-dark-gold/10" style="background-image: url('/assets/images/Button.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Mulai Petualangan
+      </button>
+      <button id="menu-btn-lanjutkan" disabled class="w-80 h-12 text-stone-soft/30 text-[13px] font-semibold tracking-widest font-poppins cursor-not-allowed flex items-center justify-center gap-2 uppercase brightness-[0.7]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Lanjutkan
+        <svg class="w-4 h-4 text-stone-soft/25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </button>
+      <button id="menu-btn-pengaturan" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Pengaturan
+      </button>
+      <button id="menu-btn-kamus" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Kamus Aksara
+      </button>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW: Prolog, Quote, & Quick Info -->
+  <div class="flex justify-between items-end w-full">
+    <!-- Left Panel: Prolog & Version -->
+    <div class="flex flex-col gap-2">
+      <div class="bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl p-4 w-76 pointer-events-auto shadow-xl">
+        <h3 class="font-cinzel text-majapahit-gold text-[12px] font-bold mb-1 tracking-wider uppercase">Prolog</h3>
+        <p class="font-poppins text-stone-soft text-[11px] leading-relaxed">
+          Baskara menemukan sebuah tulisan beraksara Jawa kuno. Rasa penasarannya membawa dia pada sebuah petualangan lintas waktu...
+        </p>
+      </div>
+      <span class="font-poppins text-[10px] text-stone-soft/50 ml-1">v 1.0.0</span>
+    </div>
+
+    <!-- Right Buttons: Tutorial & Info -->
+    <div class="flex gap-3 pointer-events-auto mb-1">
+      <!-- Tutorial -->
+      <button id="quick-btn-tutorial" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+          <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Tutorial</span>
+      </button>
+      <!-- Tentang -->
+      <button id="quick-btn-about" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+        <svg class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Tentang</span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Kamus Aksara Overlay -->
+<div id="kamus-overlay" class="pointer-events-auto hidden w-full max-w-4xl h-[560px] bg-stone-dark border border-stone-light rounded-xl p-6 shadow-2xl transition-all duration-300 transform scale-95 opacity-0">
+  <!-- Header Kamus -->
+  <div class="flex justify-between items-center border-b border-stone-light pb-3">
+    <h2 class="font-cinzel text-2xl text-majapahit-light-gold font-semibold tracking-wider">Kamus Aksara Legena</h2>
+    <button onclick="document.getElementById('kamus-overlay').classList.add('hidden')" class="text-stone-soft hover:text-state-error font-poppins text-sm font-semibold cursor-pointer transition-colors duration-200">
+      ✕ TUTUP
+    </button>
+  </div>
+  
+  <!-- Grid Karakter Aksara -->
+  <div class="grid grid-cols-5 gap-4 mt-6 overflow-y-auto h-[400px] pr-2">
+    <!-- Card 1: ha -->
+    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
+      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦲ</span>
+      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ha</span>
+    </div>
+    <!-- Card 2: na -->
+    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
+      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦤ</span>
+      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">na</span>
+    </div>
+    <!-- Card 3: ca -->
+    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
+      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦕ</span>
+      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ca</span>
+    </div>
+    <!-- Card 4: ra -->
+    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
+      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦪ</span>
+      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ra</span>
+    </div>
+    <!-- Card 5: ka -->
+    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
+      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦦ</span>
+      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ka</span>
+    </div>
+  </div>
+</div>

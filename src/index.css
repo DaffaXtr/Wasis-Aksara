@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme {
+  /* Majapahit Gold Theme */
+  --color-majapahit-gold: #D4A64A;
+  --color-majapahit-dark-gold: #8B6A2B;
+  --color-majapahit-light-gold: #F2D28A;
+  --color-majapahit-cream: #FFF2CC;
+
+  /* Stone/Structural Theme */
+  --color-stone-dark: #3E3228;
+  --color-stone-light: #5A4A3B;
+  --color-stone-soft: #E8E1D4;
+
+  /* Nature Theme */
+  --color-nature-forest: #243A2C;
+  --color-nature-light-forest: #3F5D47;
+
+  /* State Colors */
+  --color-state-success: #6DB56D;
+  --color-state-warning: #D98E32;
+  --color-state-error: #C95B4F;
+  --color-state-blue-info: #4C7C9D;
+
+  /* Fonts */
+  --font-cinzel: "Cinzel", Georgia, serif;
+  --font-marcellus: "Marcellus", "Times New Roman", serif;
+  --font-poppins: "Poppins", Arial, sans-serif;
+  --font-local-javanese: "javanese", "Cinzel", serif;
+}
+
+/* Javanese Local Font definition */
+@font-face {
+  font-family: 'javanese';
+  src: url('/assets/fonts/javanese.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cinzel Local Font definition */
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/assets/fonts/cinzel-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/assets/fonts/cinzel-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/assets/fonts/cinzel-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Cinzel';
+  src: url('/assets/fonts/cinzel-800.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Marcellus Local Font definition */
+@font-face {
+  font-family: 'Marcellus';
+  src: url('/assets/fonts/marcellus-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Poppins Local Font definition */
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-300.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-400.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/assets/fonts/poppins-700.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* Custom Gradients as utility classes */
+@utility bg-gradient-btn {
+  background: linear-gradient(180deg, #F2D28A 0%, #D4A64A 50%, #8B6A2B 100%);
+}
+
+@utility bg-gradient-header {
+  background: linear-gradient(180deg, #FFE7A3 0%, #D4A64A 50%, #7A541A 100%);
+}
+
+@utility bg-gradient-scrim {
+  background: linear-gradient(180deg, rgba(20, 18, 15, 0.2), rgba(20, 18, 15, 0.7));
+}
+
+/* Custom scrollbars and styling elements for a premium historical vibe */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-stone-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-majapahit-dark-gold);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-majapahit-gold);
+}
+
+/* Portrait Orientation Warning Overlay Display Rules */
+@media (orientation: portrait) {
+  #orientation-warning {
+    display: flex !important;
+  }
+}
