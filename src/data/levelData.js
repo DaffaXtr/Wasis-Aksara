@@ -5,11 +5,11 @@ export const levelData = [
   {
     level: 1,
     candiName: 'Candi Tikus',
-    title: 'Aksara Legena (Drag & Drop)',
-    description: 'Petualangan awal Baskara di Candi Tikus untuk mempelajari aksara dasar (Legena) dengan mencocokkan aksara Jawa ke bentuk latinnya.',
+    title: 'Aksara Legena lan Pasangan (Papan Tulis)',
+    description: 'Baskara teka ing Candi Tikus. Temokna jejak aksara, tulis tembung Latin dadi Aksara Jawa, banjur tulis ukara kanggo entuk pusaka Lentera.',
     timeLimit: 60, // Batasan waktu dalam detik
     targetScore: 1000,
-    artifactReward: 'miniatur_wringin_lawang'
+    artifactReward: 'lentera'
   },
   {
     level: 2,

@@ -26,7 +26,7 @@
   --font-cinzel: "Cinzel", Georgia, serif;
   --font-marcellus: "Marcellus", "Times New Roman", serif;
   --font-poppins: "Poppins", Arial, sans-serif;
-  --font-local-javanese: "javanese", "Cinzel", serif;
+  --font-local-javanese: "javanese", "Noto Sans Javanese", "Cinzel", serif;
 }
 
 /* Javanese Local Font definition */
@@ -152,3 +152,35 @@
     display: flex !important;
   }
 }
+
+@keyframes wa-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes wa-pulse-glow { 0%, 100% { box-shadow: 0 0 12px 2px rgba(242,210,138,.55), 0 0 30px 6px rgba(212,166,74,.25); } 50% { box-shadow: 0 0 22px 6px rgba(242,210,138,.95), 0 0 52px 14px rgba(212,166,74,.45); } }
+@keyframes wa-shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+@keyframes wa-pop { 0% { transform: scale(0) rotate(-10deg); opacity: 0; } 70% { transform: scale(1.12) rotate(2deg); opacity: 1; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes wa-gate-glow { 0%, 100% { opacity: .55; } 50% { opacity: .95; } }
+@keyframes wa-pointer { 0%, 100% { transform: translate(-7px, -7px) scale(1); filter: brightness(1); } 50% { transform: translate(3px, 3px) scale(1.08); filter: brightness(1.35); } }
+
+.animate-wa-float { animation: wa-float 2.6s ease-in-out infinite; }
+.animate-wa-pulse-glow { animation: wa-pulse-glow 1.8s ease-in-out infinite; }
+.animate-wa-shake { animation: wa-shake .45s ease; }
+.animate-wa-pop { animation: wa-pop .55s cubic-bezier(.2,.8,.3,1) both; }
+.animate-wa-gate-glow { animation: wa-gate-glow 1.8s ease-in-out infinite; }
+.wa-click-pointer { display: flex; flex-direction: column; align-items: center; justify-content: center; animation: wa-pointer 1.1s ease-in-out infinite; }
+.wa-click-pointer:hover { filter: brightness(1.1); }
+.kenney-click-cursor { width: 52px; height: 52px; object-fit: contain; }
+.kenney-icon-button { background-image: url('/assets/kenney/game-icons/PNG/White/1x/cross.png'); background-position: center; background-repeat: no-repeat; background-size: 20px 20px; }
+.kenney-panel { background-color: rgba(62,50,40,.96); background-image: url('/assets/kenney/ui-rpg-expansion/PNG/panel_brown.png'); background-position: center; background-size: 100% 100%; }
+.l1-board-solid { background: rgba(62,50,40,.98); }
+.kenney-button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: 0; background-color: transparent; background-image: url('/assets/kenney/ui-rpg-expansion/PNG/buttonLong_brown.png'); background-position: center; background-repeat: no-repeat; background-size: 100% 100%; }
+
+.wa-key { display: flex; height: 42px; flex-direction: column; align-items: center; justify-content: center; border: 1px solid rgba(90,74,59,.7); border-radius: 7px; background: rgba(90,74,59,.35); padding: 1px 2px; cursor: pointer; transition: all .15s ease; }
+.wa-key:hover { border-color: var(--color-majapahit-gold); background: rgba(90,74,59,.75); transform: translateY(-1px); }
+.wa-key:active { transform: scale(.94); }
+.wa-glyph { font-family: var(--font-local-javanese); font-size: 18px; line-height: 1; color: var(--color-majapahit-cream); }
+.wa-latin { margin-top: 1px; font-family: var(--font-poppins); font-size: 7px; line-height: 1; color: rgba(232,225,212,.75); }
+.l1-palette-heading { margin-top: 1px; color: rgba(242,210,138,.8); font-family: var(--font-poppins); font-size: 9px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+.wa-util { display: flex; height: 44px; align-items: center; justify-content: center; border: 1px solid rgba(90,74,59,.8); border-radius: 8px; background: rgba(90,74,59,.4); color: var(--color-stone-soft); font-family: var(--font-poppins); font-size: 11px; font-weight: 600; cursor: pointer; transition: all .15s ease; }
+.wa-util:hover { border-color: var(--color-majapahit-gold); }
+.wa-chip { padding: 3px 8px; border: 1px solid rgba(90,74,59,.7); border-radius: 6px; background: rgba(62,50,40,.5); color: rgba(232,225,212,.55); font-family: var(--font-poppins); font-size: 9.5px; font-weight: 600; transition: all .2s ease; }
+.wa-chip-active { border-color: var(--color-majapahit-gold); background: rgba(212,166,74,.18); color: var(--color-majapahit-cream); box-shadow: 0 0 8px rgba(212,166,74,.35); }
+.wa-chip-done { border-color: var(--color-state-success); background: rgba(109,181,109,.15); color: #bfe3bf; }

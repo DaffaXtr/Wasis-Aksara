@@ -45,6 +45,12 @@ class ScoreManager {
     console.log('ScoreManager: Jawaban Salah! Kombo diriset ke 0.');
   }
 
+  addBonus(points = 0) {
+    this.currentScore += points;
+    console.log(`ScoreManager: Bonus +${points}, Total Skor: ${this.currentScore}`);
+    return this.currentScore;
+  }
+
   /**
    * Menghitung jumlah bintang emas (1 - 3) berdasarkan perolehan skor dibanding target skor level.
    * @param {number} score - Skor yang didapatkan pemain
