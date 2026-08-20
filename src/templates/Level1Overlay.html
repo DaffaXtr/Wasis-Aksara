@@ -1,33 +1,52 @@
-<div id="level1-overlay" class="absolute inset-0 hidden pointer-events-none select-none overflow-hidden">
+<div id="level1-overlay" class="absolute inset-0 hidden pointer-events-none select-none">
+  <!-- HUD Top Bar -->
   <div id="l1-hud" class="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-5 opacity-0 transition-opacity duration-500">
-    <div class="flex h-[52px] w-[210px] flex-col items-center justify-center shadow-xl" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
+    <div class="flex h-[52px] w-[210px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
       <span class="font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold">Level 1</span>
       <span class="font-poppins text-[10px] font-semibold text-stone-soft">Candi Tikus</span>
     </div>
-    <div class="flex items-center gap-2 pointer-events-auto">
-      <div class="flex h-[52px] w-[110px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Waktu</span>
-        <span id="l1-time-val" class="font-cinzel text-[14px] font-bold text-majapahit-cream">00:00</span>
+    <div class="flex items-center gap-3.5 pointer-events-auto">
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Waktu</span>
+        <span id="l1-time-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">00:00</span>
       </div>
-      <div class="flex h-[52px] w-[110px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Jejak</span>
-        <span id="l1-progress-val" class="font-cinzel text-[14px] font-bold text-majapahit-cream">0 / 4</span>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Jejak</span>
+        <span id="l1-progress-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">0 / 4</span>
       </div>
-      <div class="flex h-[52px] w-[120px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Skor</span>
-        <span id="l1-score-val" class="font-cinzel text-[14px] font-bold text-majapahit-light-gold">0</span>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Skor</span>
+        <span id="l1-score-val" class="font-cinzel text-[15px] font-bold text-majapahit-light-gold leading-tight">0</span>
       </div>
-      <button id="l1-btn-exit" class="kenney-icon-button flex h-10 w-10 items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-dark/85 font-poppins text-lg text-stone-soft transition hover:border-majapahit-gold hover:text-majapahit-cream" title="Kembali ke peta" aria-label="Kembali ke peta"></button>
+      <!-- Tombol Keluar Kotak -->
+      <button id="l1-btn-exit" class="kenney-icon-button ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-majapahit-dark-gold/80 bg-stone-dark/85 font-poppins text-lg text-stone-soft transition hover:scale-105 hover:border-majapahit-gold hover:text-majapahit-cream active:scale-95" title="Kembali ke peta" aria-label="Kembali ke peta"></button>
     </div>
   </div>
 
+  <!-- Interactive Gate Glow -->
   <div id="l1-gate-glow" class="absolute z-1 hidden pointer-events-none animate-wa-gate-glow" style="left:545px;top:190px;width:190px;height:150px;background:radial-gradient(ellipse at center,rgba(242,210,138,.85),rgba(212,166,74,.32) 45%,transparent 70%);filter:blur(2px)"></div>
 
-  <button id="l1-ornament" class="wa-click-pointer absolute left-[606px] top-[50%] z-10 hidden h-[92px] w-[68px] cursor-pointer pointer-events-auto border-0 bg-transparent p-0 outline-none" title="Klik bagian tengah bangunan">
-    <span class="font-poppins text-[9px] font-bold uppercase tracking-widest text-majapahit-cream">Klik</span>
-    <img src="/assets/kenney/ui-rpg-expansion/PNG/cursorHand_beige.png" alt="Pointer klik" class="kenney-click-cursor" />
+  <!-- Interactive Monument Click Pointer -->
+  <button id="l1-ornament" class="group absolute left-[640px] top-[375px] -translate-x-1/2 -translate-y-1/2 z-15 hidden flex-col items-center justify-center cursor-pointer border-0 bg-transparent p-0 outline-none pointer-events-auto transition-all duration-300" title="Klik bagian tengah bangunan Candi Tikus">
+    <!-- Pulsing Radar Glow Behind -->
+    <span class="absolute h-20 w-20 rounded-full border-2 border-majapahit-gold/70 animate-ping pointer-events-none"></span>
+    <span class="absolute h-14 w-14 rounded-full bg-majapahit-gold/25 animate-pulse pointer-events-none"></span>
+    
+    <!-- Top Pill Badge -->
+    <div class="relative z-10 mb-1.5 flex items-center gap-1.5 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 px-3 py-0.5 shadow-[0_4px_12px_rgba(0,0,0,0.85)] backdrop-blur-xs transition-transform duration-200 group-hover:scale-110">
+      <span class="inline-block h-2 w-2 rounded-full bg-majapahit-light-gold animate-pulse"></span>
+      <span class="font-poppins text-[10px] font-bold uppercase tracking-widest text-majapahit-cream">KLIK</span>
+    </div>
+
+    <!-- Crisp Pointing Hand Vector Icon -->
+    <div class="relative z-10 animate-wa-pointer-bounce transition-transform duration-200 group-hover:scale-115">
+      <svg class="h-12 w-12 filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.9)]" viewBox="0 0 24 24" fill="none">
+        <path d="M10 2v9.5l-2.6-2.6a1.8 1.8 0 0 0-2.5 0 1.8 1.8 0 0 0 0 2.5l5.5 5.5c1.4 1.4 3 2.1 5.6 2.1h1c3.9 0 7-3.1 7-7v-5a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0a2 2 0 0 0-2-2 2 2 0 0 0-2 2V4a2 2 0 0 0-4 0z" fill="#F2D28A" stroke="#2B211A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </button>
 
+  <!-- Prologue & Story Dialog -->
   <div id="l1-dialog" class="absolute inset-x-0 bottom-0 z-20 hidden justify-center pb-3 opacity-0 transition-opacity duration-500 pointer-events-auto">
     <div class="relative aspect-[6122/1690] w-[800px]" style="background-image:url('/assets/images/bingkai-prolog.webp');background-size:100% 100%">
       <div class="flex h-full w-full justify-start px-10 pb-14 pt-25"><p id="l1-dialog-text" class="font-poppins text-[15px] font-semibold leading-relaxed text-stone-dark"></p></div>
@@ -37,37 +56,449 @@
     </div>
   </div>
 
+  <!-- Interactive Writing Board (Revamped & Optimized Layout) -->
   <div id="l1-board" class="absolute inset-x-0 bottom-0 z-30 hidden h-[368px] translate-y-full transition-transform duration-500 ease-out pointer-events-auto">
-    <div class="l1-board-solid relative flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-4 pt-3 shadow-[0_-14px_44px_rgba(0,0,0,.6)]">
-      <div class="flex h-full w-[398px] flex-col">
-        <div class="flex items-baseline justify-between"><h2 id="l1-board-title" class="font-cinzel text-[15px] font-bold uppercase tracking-widest text-majapahit-gold">Tantangan 1</h2><span id="l1-board-step" class="font-poppins text-[10px] font-semibold text-stone-soft/70">Tembung 1 / 4</span></div>
-        <div class="mt-1.5 rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2">
-          <span id="l1-target-label" class="font-poppins text-[10px] uppercase tracking-wider text-stone-soft/80">Tulisen ing Aksara Jawa:</span>
-          <p id="l1-target-latin" class="font-poppins text-[21px] font-bold leading-tight text-majapahit-cream">Candi Tikus</p>
-          <div id="l1-wordchips" class="mt-1.5 flex gap-1.5"></div>
+    <div class="l1-board-solid relative flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-4 pt-3.5 shadow-[0_-14px_44px_rgba(0,0,0,.65)]">
+      
+      <!-- LEFT PANEL: Challenge Target & Mission Info -->
+      <div class="flex h-full w-[360px] flex-col justify-between">
+        <!-- Header: Title & Step -->
+        <div class="flex items-center justify-between border-b border-stone-light/40 pb-2">
+          <div class="flex items-center gap-2">
+            <h2 id="l1-board-title" class="font-cinzel text-[14px] font-bold uppercase tracking-wider text-majapahit-gold">Tantangan 1</h2>
+          </div>
+          <span id="l1-board-step" class="rounded-md border border-majapahit-dark-gold/70 bg-stone-dark/80 px-2 py-0.5 font-poppins text-[10px] font-semibold text-majapahit-light-gold">Tembung 1 / 4</span>
         </div>
-        <div id="l1-answer-box" class="mt-2 min-h-[64px] flex-1 overflow-hidden rounded-lg border-2 border-majapahit-dark-gold/80 bg-[#2b211a] px-3 py-1.5">
-          <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/60">Aksaramu:</span><div id="l1-answer" class="break-words font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></div>
+
+        <!-- Target Challenge Card -->
+        <div id="l1-target-card" class="mt-2 flex flex-1 flex-col justify-between rounded-xl border border-majapahit-gold/40 bg-stone-dark/90 p-3.5 shadow-inner">
+          <div>
+            <div class="flex items-center justify-between">
+              <span id="l1-target-label" class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/90">Tulisen ing Aksara Jawa:</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider text-stone-soft/50">Sasaran</span>
+            </div>
+            <div class="mt-2 flex min-h-[64px] items-center justify-center rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2 text-center">
+              <p id="l1-target-latin" class="font-poppins text-[22px] font-bold leading-snug text-majapahit-cream">Candi Tikus</p>
+            </div>
+          </div>
+          
+          <!-- Word Chips for Step 1-4 -->
+          <div id="l1-wordchips" class="mt-2 flex flex-wrap items-center justify-center gap-1.5"></div>
         </div>
-        <p id="l1-board-msg" class="mt-1 h-[16px] font-poppins text-[11px] font-semibold"></p>
+
+        <!-- Quick Tips & Feedback Box -->
+        <div class="mt-2 flex flex-col gap-1.5">
+          <div id="l1-target-tips" class="flex items-center gap-2 rounded-lg border border-stone-light/30 bg-stone-light/15 px-2.5 py-1.5 text-[10px] text-stone-soft/75">
+            <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>Tulis aksara Jawa ing kanvas kanthi niru wujud sing bener.</span>
+          </div>
+          <div id="l1-board-msg-box" class="flex min-h-[28px] items-center justify-center rounded-lg border border-stone-light/30 bg-stone-dark/90 px-2.5 py-1">
+            <p id="l1-board-msg" class="font-poppins text-[11px] font-semibold text-stone-soft/80"></p>
+          </div>
+        </div>
       </div>
-      <div class="flex h-full flex-1 flex-col gap-1">
-        <div class="l1-palette-heading">Aksara Legena</div>
-        <div id="l1-palette-legena" class="grid grid-cols-10 gap-1.5"></div>
-        <div class="l1-palette-heading">Sandhangan</div>
-        <div id="l1-palette-sandhangan" class="flex flex-wrap gap-1.5"></div>
-        <div class="l1-palette-heading">Pasangan</div>
-        <div id="l1-palette-pasangan" class="grid grid-cols-10 gap-1.5"></div>
-        <div class="mt-auto flex items-stretch gap-2">
-          <button id="l1-btn-space" class="wa-util flex-1">Spasi</button><button id="l1-btn-backspace" class="wa-util flex-1">⌫ Hapus</button><button id="l1-btn-clear" class="wa-util flex-1">Bersihkan</button><button id="l1-btn-hint" class="wa-util w-[110px] text-majapahit-light-gold"><span>Hint</span> <small id="l1-hint-label"></small></button>
-          <button id="l1-btn-submit" class="kenney-button h-11 w-[150px] cursor-pointer font-poppins text-[14px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Kirim <img src="/assets/kenney/game-icons/PNG/White/1x/checkmark.png" alt="" class="inline-block h-4 w-4" /></button>
+
+      <!-- RIGHT PANEL: Canvas Studio & Controls -->
+      <div class="flex h-full flex-1 flex-col justify-between gap-2">
+        <!-- Canvas Studio Header with Tool Switchers -->
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-baseline gap-2">
+            <span class="font-cinzel text-[13px] font-bold uppercase tracking-wider text-majapahit-light-gold">Papan Tulisan Tangan</span>
+            <span class="font-poppins text-[10px] text-stone-soft/60">Gunakan mouse, stylus, utawa sentuhan</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="l1-btn-pen" class="wa-util wa-tool-active flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Pena Tulisan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+              </svg>
+              <span>Tulis</span>
+            </button>
+            <button id="l1-btn-eraser" class="wa-util flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Penghapus Goresan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/>
+                <path d="M22 21H7"/>
+                <path d="m5 11 9 9"/>
+              </svg>
+              <span>Penghapus</span>
+            </button>
+            <button id="l1-btn-clear" class="wa-util flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Bersihkan Seluruh Papan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Bersihkan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Writing Canvas Box -->
+        <div id="l1-canvas-wrap" class="l1-canvas-wrap">
+          <canvas id="l1-writing-canvas" width="820" height="230"></canvas>
+          <div id="l1-canvas-placeholder" class="l1-canvas-placeholder">
+            <span>Tulis Aksara Jawa ing kene</span>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button id="l1-btn-hint" class="wa-util flex h-10 w-[120px] items-center justify-center gap-1.5 text-majapahit-light-gold" title="Lihat conto aksara">
+              <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+              </svg>
+              <span>Hint</span>
+              <small id="l1-hint-label" class="font-bold text-majapahit-cream"></small>
+            </button>
+            <button id="l1-btn-materi-board" class="wa-util flex h-10 items-center justify-center gap-1.5 px-3.5 text-majapahit-light-gold hover:text-majapahit-cream" title="Lihat Kitab Materi">
+              <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+              <span>Materi</span>
+            </button>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <span class="font-poppins text-[10.5px] italic text-stone-soft/50">Priksa goresanmu sadurunge ngirim</span>
+            <button id="l1-btn-submit" class="kenney-button h-11 w-[160px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">
+              Kirim <img src="/assets/kenney/game-icons/PNG/White/1x/checkmark.png" alt="" class="inline-block h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
-      <div id="l1-hint-preview" class="absolute -top-[118px] left-1/2 z-40 hidden w-[560px] -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 px-4 py-3 shadow-2xl"><span class="font-poppins text-[10px] uppercase tracking-wider text-stone-soft/80">Conto sing bener:</span><p id="l1-hint-preview-text" class="break-words font-local-javanese text-[24px] leading-snug text-majapahit-light-gold"></p></div>
+
+      <!-- Hint Preview Floating Card -->
+      <div id="l1-hint-preview" class="absolute -top-[125px] left-1/2 z-40 hidden w-[560px] -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 p-4 shadow-[0_10px_30px_rgba(0,0,0,.7)] backdrop-blur-sm">
+        <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-1.5">
+          <span class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold">Conto Sing Bener:</span>
+          <span class="font-poppins text-[9px] text-stone-soft/60">Tiru wujud aksara iki ing papan kanvas</span>
+        </div>
+        <p id="l1-hint-preview-text" class="mt-2 text-center break-words font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></p>
+      </div>
+
     </div>
   </div>
 
-  <div id="l1-sentence-intro" class="absolute inset-0 z-40 hidden items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 pointer-events-auto">
+  <!-- Materi Aksara Jawa Modal Overlay (Fullscreen 100% Backdrop) -->
+  <div id="l1-materi-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+    <div class="kenney-panel relative flex h-[580px] w-[940px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg border border-majapahit-gold bg-stone-light/40 shadow-inner">
+            <svg class="h-5 w-5 text-majapahit-light-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-cinzel text-[17px] font-bold uppercase tracking-wider text-majapahit-light-gold">Kitab Materi Aksara Jawa</h2>
+            <p class="font-poppins text-[10.5px] text-stone-soft/70">Level 1 — Candi Tikus: Aksara Legena, Pasangan, & Sandhangan</p>
+          </div>
+        </div>
+        
+        <!-- Tab Switcher -->
+        <div class="flex items-center gap-2 rounded-xl border border-stone-light/50 bg-stone-light/25 p-1">
+          <button id="l1-tab-legena" class="cursor-pointer rounded-lg px-3.5 py-1 font-poppins text-xs font-bold transition-all duration-200 bg-majapahit-gold text-stone-dark shadow-sm">
+            Aksara & Pasangan (20)
+          </button>
+          <button id="l1-tab-sandhangan" class="cursor-pointer rounded-lg px-3.5 py-1 font-poppins text-xs font-bold text-stone-soft/80 transition-all duration-200 hover:text-majapahit-cream">
+            Sandhangan (11)
+          </button>
+        </div>
+
+        <!-- Close Button -->
+        <button id="l1-btn-close-materi" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-light/40 text-stone-soft transition hover:border-majapahit-gold hover:text-state-error hover:scale-105" title="Tutup Kitab Materi">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tab 1: Aksara Legena & Pasangan (20 Aksara) -->
+      <div id="l1-panel-legena" class="grid flex-1 grid-cols-5 gap-2.5 overflow-y-auto py-3 pr-1">
+        <!-- Card 1: ha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦲ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦲ꧀ꦲ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ha</span>
+        </div>
+        <!-- Card 2: na -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦤ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦤ꧀ꦤ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">na</span>
+        </div>
+        <!-- Card 3: ca -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦕ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦕ꧀ꦕ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ca</span>
+        </div>
+        <!-- Card 4: ra -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦫ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦫ꧀ꦫ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ra</span>
+        </div>
+        <!-- Card 5: ka -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦏ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦏ꧀ꦏ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ka</span>
+        </div>
+        <!-- Card 6: da -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦢ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦢ꧀ꦢ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">da</span>
+        </div>
+        <!-- Card 7: ta -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦠ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦠ꧀ꦠ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ta</span>
+        </div>
+        <!-- Card 8: sa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦱ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦱ꧀ꦱ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">sa</span>
+        </div>
+        <!-- Card 9: wa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦮ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦮ꧀ꦮ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">wa</span>
+        </div>
+        <!-- Card 10: la -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦭ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦭ꧀ꦭ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">la</span>
+        </div>
+        <!-- Card 11: pa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦥ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦥ꧀ꦥ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">pa</span>
+        </div>
+        <!-- Card 12: dha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦝ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦝ꧀ꦝ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">dha</span>
+        </div>
+        <!-- Card 13: ja -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦗ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦗ꧀ꦗ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ja</span>
+        </div>
+        <!-- Card 14: ya -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦪ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦪ꧀ꦪ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ya</span>
+        </div>
+        <!-- Card 15: nya -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦚ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦚ꧀ꦚ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">nya</span>
+        </div>
+        <!-- Card 16: ma -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦩ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦩ꧀ꦩ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ma</span>
+        </div>
+        <!-- Card 17: ga -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦒ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦒ꧀ꦒ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ga</span>
+        </div>
+        <!-- Card 18: ba -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦧ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦧ꧀ꦧ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ba</span>
+        </div>
+        <!-- Card 19: tha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦛ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦛ꧀ꦛ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">tha</span>
+        </div>
+        <!-- Card 20: nga -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦔ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦔ꧀ꦔ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">nga</span>
+        </div>
+      </div>
+
+      <!-- Tab 2: Sandhangan (11 Sandhangan) -->
+      <div id="l1-panel-sandhangan" class="hidden flex-1 grid-cols-4 gap-3 overflow-y-auto py-3 pr-1">
+        <!-- 1. Wulu -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦶ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Wulu ( ꦶ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>i</b> (hi)</span>
+        </div>
+        <!-- 2. Suku -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦸ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Suku ( ꦸ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>u</b> (hu)</span>
+        </div>
+        <!-- 3. Taling -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦺꦲ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Taling ( ꦺ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>é</b> (hé)</span>
+        </div>
+        <!-- 4. Pepet -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦼ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Pepet ( ꦼ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>e</b> (he)</span>
+        </div>
+        <!-- 5. Taling Tarung -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦺꦲꦴ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Taling Tarung ( ꦺꦴ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>o</b> (ho)</span>
+        </div>
+        <!-- 6. Layar -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦂ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Layar ( ꦂ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+r</b> (har)</span>
+        </div>
+        <!-- 7. Cecak -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦁ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cecak ( ꦁ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+ng</b> (hang)</span>
+        </div>
+        <!-- 8. Wignyan -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦃ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Wignyan ( ꦃ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+h</b> (hah)</span>
+        </div>
+        <!-- 9. Pangkon -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲ꧀</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Pangkon ( ꧀ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Mateni aksara vokal (h)</span>
+        </div>
+        <!-- 10. Cakra -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦿ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cakra ( ꦿ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Seselan konsonan <b>+ra</b> (hra)</span>
+        </div>
+        <!-- 11. Cakra Keret -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦽ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cakra Keret ( ꦽ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Seselan konsonan <b>+re</b> (hre)</span>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between border-t border-majapahit-dark-gold/40 pt-3">
+        <div class="flex items-center gap-2 text-stone-soft/60">
+          <svg class="h-3.5 w-3.5 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span class="font-poppins text-[10px]">Sinau materi iki kanggo mbantu ngrampungake saben tantangan nulis.</span>
+        </div>
+        <button id="l1-btn-close-materi-bottom" class="kenney-button h-10 w-[180px] cursor-pointer font-poppins text-xs font-bold uppercase tracking-wider text-stone-dark transition hover:scale-105 active:scale-95">
+          Tutup Kitab
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Sentence Challenge Intro Modal (Fullscreen 100% Backdrop) -->
+  <div id="l1-sentence-intro" class="wa-modal-container z-40 hidden opacity-0 transition-opacity duration-300">
     <div class="kenney-panel w-[560px] rounded-2xl border-2 border-majapahit-dark-gold p-6 text-center shadow-2xl">
       <h2 class="font-cinzel text-[20px] font-bold uppercase tracking-widest text-majapahit-gold">Tantangan 2 — Nulis Ukara</h2><div class="mx-auto mt-3 h-px w-2/3 bg-majapahit-dark-gold"></div>
       <p class="mt-3 font-poppins text-[16px] font-bold text-majapahit-cream">"Tulisen ukara iki nganggo aksara Jawa!"</p><p class="mt-2 font-poppins text-[13px] italic leading-relaxed text-stone-soft">"Candi Tikus salah sawijine paninggalan Majapahit kang duweni corak Hindu. Candi iki awujud patirtan."</p>
@@ -75,7 +506,8 @@
     </div>
   </div>
 
-  <div id="l1-reward" class="absolute inset-0 z-50 hidden items-center justify-center bg-black/70 opacity-0 transition-opacity duration-500 pointer-events-auto">
+  <!-- Reward Modal (Fullscreen 100% Backdrop) -->
+  <div id="l1-reward" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-500">
     <div class="kenney-panel relative w-[480px] overflow-hidden rounded-2xl border-2 border-majapahit-gold p-6 text-center shadow-2xl">
       <h2 class="font-cinzel text-[22px] font-bold uppercase tracking-widest text-majapahit-light-gold">Pusaka Kapanggih!</h2><img src="/assets/images/lentera.svg" alt="Lentera pusaka" class="relative mx-auto my-3 h-[150px] w-[150px] animate-wa-float"/><h3 class="font-cinzel text-[17px] font-bold uppercase tracking-wider text-majapahit-gold">Lentera Pusaka</h3><p class="mt-1 mb-4 font-poppins text-[11.5px] leading-relaxed text-stone-soft">Lentera pusaka wis kasil ditemokake. Cahya iki bakal nuntun lakumu ing petualangan sabanjure.</p>
       <button id="l1-btn-claim" class="kenney-button h-11 w-[240px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105">Klaim Pusaka</button>

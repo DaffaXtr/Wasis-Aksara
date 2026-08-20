@@ -195,46 +195,138 @@ return new `+this.key+`();
 
 </div>
 
-<!-- Kamus Aksara Overlay -->
-<div id="kamus-overlay" class="pointer-events-auto hidden w-full max-w-4xl h-[560px] bg-stone-dark border border-stone-light rounded-xl p-6 shadow-2xl transition-all duration-300 transform scale-95 opacity-0">
-  <!-- Header Kamus -->
-  <div class="flex justify-between items-center border-b border-stone-light pb-3">
-    <h2 class="font-cinzel text-2xl text-majapahit-light-gold font-semibold tracking-wider">Kamus Aksara Legena</h2>
-    <button onclick="document.getElementById('kamus-overlay').classList.add('hidden')" class="text-stone-soft hover:text-state-error font-poppins text-sm font-semibold cursor-pointer transition-colors duration-200">
-      ✕ TUTUP
-    </button>
-  </div>
-  
-  <!-- Grid Karakter Aksara -->
-  <div class="grid grid-cols-5 gap-4 mt-6 overflow-y-auto h-[400px] pr-2">
-    <!-- Card 1: ha -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦲ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ha</span>
+<!-- Kamus Aksara Fullscreen Modal Overlay -->
+<div id="kamus-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+  <div id="kamus-overlay" class="pointer-events-auto w-full max-w-4xl h-[560px] bg-stone-dark/98 border-2 border-majapahit-gold rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.85)] flex flex-col justify-between">
+    <!-- Header Kamus -->
+    <div class="flex justify-between items-center border-b border-majapahit-dark-gold/60 pb-3">
+      <div class="flex items-center gap-2.5">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg border border-majapahit-gold bg-stone-light/40 shadow-inner">
+          <svg class="h-4 w-4 text-majapahit-light-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-cinzel text-xl text-majapahit-light-gold font-bold tracking-wider">Kamus Aksara Legena</h2>
+          <p class="font-poppins text-[10px] text-stone-soft/70">20 Aksara Dasar Jawa (Nglegena)</p>
+        </div>
+      </div>
+      <button id="kamus-btn-close" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-light/40 text-stone-soft transition hover:border-majapahit-gold hover:text-state-error hover:scale-105" title="Tutup Kamus">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
-    <!-- Card 2: na -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦤ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">na</span>
-    </div>
-    <!-- Card 3: ca -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦕ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ca</span>
-    </div>
-    <!-- Card 4: ra -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦪ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ra</span>
-    </div>
-    <!-- Card 5: ka -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦦ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ka</span>
+    
+    <!-- Grid Karakter Aksara (20 Aksara Legena) -->
+    <div class="grid grid-cols-5 gap-3 mt-4 overflow-y-auto h-[410px] pr-2">
+      <!-- ha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦲ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ha</span>
+      </div>
+      <!-- na -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦤ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">na</span>
+      </div>
+      <!-- ca -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦕ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ca</span>
+      </div>
+      <!-- ra -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦫ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ra</span>
+      </div>
+      <!-- ka -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦏ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ka</span>
+      </div>
+      <!-- da -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦢ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">da</span>
+      </div>
+      <!-- ta -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦠ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ta</span>
+      </div>
+      <!-- sa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦱ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">sa</span>
+      </div>
+      <!-- wa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦮ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">wa</span>
+      </div>
+      <!-- la -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦭ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">la</span>
+      </div>
+      <!-- pa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦥ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">pa</span>
+      </div>
+      <!-- dha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦝ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">dha</span>
+      </div>
+      <!-- ja -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦗ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ja</span>
+      </div>
+      <!-- ya -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦪ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ya</span>
+      </div>
+      <!-- nya -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦚ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">nya</span>
+      </div>
+      <!-- ma -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦩ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ma</span>
+      </div>
+      <!-- ga -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦒ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ga</span>
+      </div>
+      <!-- ba -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦧ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ba</span>
+      </div>
+      <!-- tha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦛ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">tha</span>
+      </div>
+      <!-- nga -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦔ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">nga</span>
+      </div>
     </div>
   </div>
 </div>
-`,h=class extends l.default.Scene{constructor(){super(`MainMenuScene`)}create(){console.log(`MainMenuScene: created.`),this.cameras.main.fadeIn(500,0,0,0);let e=document.getElementById(`ui-overlay-container`);e&&(e.innerHTML=m);let t=d.load();t.lastActiveScene=`MainMenuScene`,d.save(t),p.init(this.sound),p.bgmVolume=.15,p.playBGM(`backsound`,!0);let n=()=>{this.sound&&this.sound.context&&this.sound.context.state===`suspended`&&this.sound.context.resume().then(()=>{console.log(`AudioContext resumed successfully on user gesture.`)}),document.removeEventListener(`click`,n),document.removeEventListener(`touchstart`,n)};document.addEventListener(`click`,n),document.addEventListener(`touchstart`,n);let r=document.getElementById(`wasis-aksara-game`)?.parentElement;r&&(r.style.backgroundImage=`url('/assets/images/BG_MainMenu.webp')`,r.style.backgroundSize=`cover`,r.style.backgroundPosition=`center`);let i=this.add.image(320,520,`baskara-idle`);i.setScale(.95),i.setOrigin(.5,.5),this.tweens.add({targets:i,y:532,duration:2200,yoyo:!0,repeat:-1,ease:`Sine.easeInOut`});let a=[{name:`leaf-green`,color:`#3f5d47`},{name:`leaf-gold`,color:`#d4a64a`},{name:`leaf-dark`,color:`#243a2c`}];a.forEach(e=>{if(!this.textures.exists(e.name)){let t=this.textures.createCanvas(e.name,16,16),n=t.context;n.fillStyle=e.color,n.beginPath(),n.moveTo(8,0),n.quadraticCurveTo(16,6,8,12),n.quadraticCurveTo(0,6,8,0),n.fill(),n.strokeStyle=e.color,n.lineWidth=1,n.beginPath(),n.moveTo(8,12),n.lineTo(8,15),n.stroke(),t.refresh()}}),a.forEach(e=>{this.add.particles(0,0,e.name,{x:{min:0,max:1280},y:-20,lifespan:1e4,speedY:{min:40,max:100},speedX:{min:-20,max:20},scale:{min:.3,max:.8},quantity:1,frequency:800+Math.random()*400,angle:{min:0,max:360},rotate:{start:0,end:360},rotateSpeed:{min:30,max:120},gravityY:15,alpha:{min:.6,max:.9}})});let o=document.getElementById(`main-menu-overlay`);o&&(o.classList.remove(`hidden`),o.classList.add(`flex`,`flex-col`,`justify-between`),o.style.opacity=`0`,this.time.delayedCall(50,()=>{o.style.transition=`opacity 0.5s ease-in-out`,o.style.opacity=`1`}));let s=e=>{o&&(o.style.transition=`opacity 0.5s ease-in-out`,o.style.opacity=`0`),this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(e)})},c=()=>{let e=document.getElementById(`kamus-overlay`);e&&(e.classList.remove(`hidden`),e.classList.add(`flex`),this.time.delayedCall(10,()=>{e.classList.remove(`scale-95`,`opacity-0`),e.classList.add(`scale-100`,`opacity-100`)}))},u=document.getElementById(`menu-btn-mulai`);u&&(u.onclick=()=>{console.log(`MainMenuScene: Starting PrologScene with fade...`),s(`PrologScene`)});let f=document.getElementById(`menu-btn-kamus`);f&&(f.onclick=c);let h=document.getElementById(`nav-btn-kamus`);h&&(h.onclick=c);let g=document.getElementById(`nav-btn-achievement`);g&&(g.onclick=()=>{console.log(`MainMenuScene: Navigating to AchievementScene with fade...`),s(`AchievementScene`)});let _=document.getElementById(`nav-btn-koleksi`);_&&(_.onclick=()=>{console.log(`MainMenuScene: Navigating to InventoryScene with fade...`),s(`InventoryScene`)});let v=()=>{alert(`Pengaturan Game Wasis Aksara: Volume BGM & SFX dapat diatur di sini.`)},y=document.getElementById(`menu-btn-pengaturan`);y&&(y.onclick=v);let b=document.getElementById(`nav-btn-pengaturan`);b&&(b.onclick=v);let x=document.getElementById(`quick-btn-tutorial`);x&&(x.onclick=()=>{alert(`Panduan Singkat: Pasangkan Aksara Jawa dengan Latin, selesaikan 5 Candi, dan kumpulkan pusaka Majapahit!`)});let S=document.getElementById(`quick-btn-about`);S&&(S.onclick=()=>{alert(`Tentang Game: Wasis Aksara v1.0.0. Game Edukasi Sejarah & Aksara Jawa Kerajaan Majapahit.`)}),this.events.once(`shutdown`,()=>{o&&(o.classList.add(`hidden`),o.classList.remove(`flex`,`flex-col`,`justify-between`),o.style.opacity=`0`),r&&(r.style.backgroundImage=`none`),e&&(e.innerHTML=``),[`menu-btn-mulai`,`menu-btn-kamus`,`nav-btn-kamus`,`nav-btn-achievement`,`nav-btn-koleksi`,`nav-btn-pengaturan`,`menu-btn-pengaturan`,`quick-btn-tutorial`,`quick-btn-about`].forEach(e=>{let t=document.getElementById(e);t&&(t.onclick=null)})})}},g=`<div id="prolog-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-all duration-300 select-none flex-col justify-between">
+`;function h(e,t=500,n=null){let r=document.getElementById(`global-curtain`);r&&(r.style.transitionDuration=`${t}ms`,r.classList.remove(`opacity-0`),r.classList.add(`opacity-100`)),e?.cameras?.main&&e.cameras.main.resetFX(),n&&setTimeout(()=>{n()},t)}function g(e,t=500){let n=document.getElementById(`global-curtain`);n&&(n.style.transitionDuration=`${t}ms`,requestAnimationFrame(()=>{n.classList.remove(`opacity-100`),n.classList.add(`opacity-0`)})),e?.cameras?.main&&e.cameras.main.resetFX()}var _=class extends l.default.Scene{constructor(){super(`MainMenuScene`)}create(){console.log(`MainMenuScene: created.`),g(this,500);let e=document.getElementById(`ui-overlay-container`);e&&(e.innerHTML=m);let t=d.load();t.lastActiveScene=`MainMenuScene`,d.save(t),p.init(this.sound),p.bgmVolume=.15,p.playBGM(`backsound`,!0);let n=()=>{this.sound&&this.sound.context&&this.sound.context.state===`suspended`&&this.sound.context.resume().then(()=>{console.log(`AudioContext resumed successfully on user gesture.`)}),document.removeEventListener(`click`,n),document.removeEventListener(`touchstart`,n)};document.addEventListener(`click`,n),document.addEventListener(`touchstart`,n);let r=document.getElementById(`wasis-aksara-game`)?.parentElement;r&&(r.style.backgroundImage=`url('/assets/images/bg_home.png')`,r.style.backgroundSize=`cover`,r.style.backgroundPosition=`center`);let i=this.add.image(320,520,`baskara-idle`);i.setScale(.95),i.setOrigin(.5,.5),this.tweens.add({targets:i,y:532,duration:2200,yoyo:!0,repeat:-1,ease:`Sine.easeInOut`});let a=[{name:`leaf-green`,color:`#3f5d47`},{name:`leaf-gold`,color:`#d4a64a`},{name:`leaf-dark`,color:`#243a2c`}];a.forEach(e=>{if(!this.textures.exists(e.name)){let t=this.textures.createCanvas(e.name,16,16),n=t.context;n.fillStyle=e.color,n.beginPath(),n.moveTo(8,0),n.quadraticCurveTo(16,6,8,12),n.quadraticCurveTo(0,6,8,0),n.fill(),n.strokeStyle=e.color,n.lineWidth=1,n.beginPath(),n.moveTo(8,12),n.lineTo(8,15),n.stroke(),t.refresh()}}),a.forEach(e=>{this.add.particles(0,0,e.name,{x:{min:0,max:1280},y:-20,lifespan:1e4,speedY:{min:40,max:100},speedX:{min:-20,max:20},scale:{min:.3,max:.8},quantity:1,frequency:800+Math.random()*400,angle:{min:0,max:360},rotate:{start:0,end:360},rotateSpeed:{min:30,max:120},gravityY:15,alpha:{min:.6,max:.9}})});let o=document.getElementById(`main-menu-overlay`);o&&(o.classList.remove(`hidden`),o.classList.add(`flex`,`flex-col`,`justify-between`),o.style.opacity=`0`,this.time.delayedCall(50,()=>{o.style.transition=`opacity 0.5s ease-in-out`,o.style.opacity=`1`}));let s=e=>{o&&(o.style.transition=`opacity 0.5s ease-in-out`,o.style.opacity=`0`),h(this,500,()=>{this.scene.start(e)})},c=()=>{let e=document.getElementById(`kamus-modal`);e&&(e.classList.remove(`hidden`),e.classList.add(`flex`),requestAnimationFrame(()=>{e.classList.remove(`opacity-0`),e.classList.add(`opacity-100`)}))},l=()=>{let e=document.getElementById(`kamus-modal`);e&&(e.classList.replace(`opacity-100`,`opacity-0`),this.time.delayedCall(300,()=>{e.classList.add(`hidden`),e.classList.remove(`flex`)}))},u=document.getElementById(`kamus-btn-close`);u&&(u.onclick=l);let f=document.getElementById(`menu-btn-mulai`);f&&(f.onclick=()=>{console.log(`MainMenuScene: Starting PrologScene with fade...`),s(`PrologScene`)});let _=document.getElementById(`menu-btn-kamus`);_&&(_.onclick=c);let v=document.getElementById(`nav-btn-kamus`);v&&(v.onclick=c);let y=document.getElementById(`nav-btn-achievement`);y&&(y.onclick=()=>{console.log(`MainMenuScene: Navigating to AchievementScene with fade...`),s(`AchievementScene`)});let b=document.getElementById(`nav-btn-koleksi`);b&&(b.onclick=()=>{console.log(`MainMenuScene: Navigating to InventoryScene with fade...`),s(`InventoryScene`)});let x=()=>{alert(`Pengaturan Game Wasis Aksara: Volume BGM & SFX dapat diatur di sini.`)},S=document.getElementById(`menu-btn-pengaturan`);S&&(S.onclick=x);let C=document.getElementById(`nav-btn-pengaturan`);C&&(C.onclick=x);let w=document.getElementById(`quick-btn-tutorial`);w&&(w.onclick=()=>{alert(`Panduan Singkat: Pasangkan Aksara Jawa dengan Latin, selesaikan 5 Candi, dan kumpulkan pusaka Majapahit!`)});let T=document.getElementById(`quick-btn-about`);T&&(T.onclick=()=>{alert(`Tentang Game: Wasis Aksara v1.0.0. Game Edukasi Sejarah & Aksara Jawa Kerajaan Majapahit.`)}),this.events.once(`shutdown`,()=>{o&&(o.classList.add(`hidden`),o.classList.remove(`flex`,`flex-col`,`justify-between`),o.style.opacity=`0`),r&&(r.style.backgroundImage=`none`),e&&(e.innerHTML=``),[`menu-btn-mulai`,`menu-btn-kamus`,`nav-btn-kamus`,`nav-btn-achievement`,`nav-btn-koleksi`,`nav-btn-pengaturan`,`menu-btn-pengaturan`,`quick-btn-tutorial`,`quick-btn-about`].forEach(e=>{let t=document.getElementById(e);t&&(t.onclick=null)})})}},v=`<div id="prolog-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-all duration-300 select-none flex-col justify-between">
   
   <!-- TOP ROW: Prolog Step & Skip Button -->
   <div class="flex justify-between items-start w-full">
@@ -281,7 +373,7 @@ return new `+this.key+`();
   </div>
 
 </div>
-`,_=class extends l.default.Scene{constructor(){super(`PrologScene`),this.narrativeSteps=[`Baskara menemukan sebuah batu bertuliskan aksara Jawa kuno.`,`Saat menyentuh permukaan batu yang kasar, tiba-tiba aksara Jawa kuno di batu tersebut mulai bersinar keemasan.`,`Tanah di sekitarnya berguncang, dan sebuah pusaran angin magis muncul di hadapannya.`,`Sebuah gerbang lintas waktu (portal) terbuka lebar, menarik Baskara masuk ke dalam pusaran cahaya.`,`Baskara terbangun di tengah hutan yang rimbun dengan pemandangan Candi Trowulan yang megah di kejauhan.`,`Seorang tetua desa mendekatinya dan berkata: 'Selamat datang, Sang Penyelamat. Kerajaan Majapahit sedang dalam bahaya.'`,`Tetua menjelaskan: 'Kekuatan magis pelindung kerajaan terpecah menjadi 5 pusaka aksara yang tersebar di 5 candi suci.'`,`Baskara dibekali sebuah kitab kamus aksara kuno untuk membantunya memecahkan teka-teki sandi.`,`Petualangan dimulai! Bantu Baskara mengumpulkan 5 pusaka aksara Jawa kuno untuk menyelamatkan Majapahit!`],this.currentStep=0,this.typewriterTimer=null}create(){console.log(`PrologScene: created.`),this.currentStep=0,this.cameras.main.fadeIn(500,0,0,0);let e=document.getElementById(`ui-overlay-container`);e&&(e.innerHTML=g);let t=d.load();t.lastActiveScene=`PrologScene`,d.save(t);let n=document.getElementById(`wasis-aksara-game`)?.parentElement,r=document.getElementById(`prolog-bg-layer-a`),i=document.getElementById(`prolog-bg-layer-b`);n&&(n.style.backgroundImage=`none`,r||(r=document.createElement(`div`),r.id=`prolog-bg-layer-a`,r.className=`absolute inset-0 w-full h-full bg-cover bg-center z-0 pointer-events-none transition-opacity duration-500 ease-in-out opacity-0`,n.insertBefore(r,n.firstChild)),i||(i=document.createElement(`div`),i.id=`prolog-bg-layer-b`,i.className=`absolute inset-0 w-full h-full bg-cover bg-center z-0 pointer-events-none transition-opacity duration-500 ease-in-out opacity-0`,n.insertBefore(i,r)));let a=document.getElementById(`prolog-overlay`);a&&(a.classList.remove(`hidden`),a.classList.add(`flex`),a.style.opacity=`0`,this.time.delayedCall(50,()=>{a.style.transition=`opacity 0.5s ease-in-out`,a.style.opacity=`1`}));let o=document.getElementById(`prolog-text`),s=document.getElementById(`prolog-step-text`),c=document.getElementById(`prolog-progress-bar`),u=document.getElementById(`prolog-btn-next`),f=document.getElementById(`prolog-btn-skip`),p=document.getElementById(`prolog-next-label`),m=(e,t=25)=>{this.typewriterTimer&&clearInterval(this.typewriterTimer),o.innerHTML=``;let n=0;this.typewriterTimer=setInterval(()=>{n<e.length?(o.innerHTML+=e.charAt(n),n++):(clearInterval(this.typewriterTimer),this.typewriterTimer=null)},t)},h=()=>{if(s&&(s.innerText=`${this.currentStep+1} / 9`),c&&(c.style.width=`${(this.currentStep+1)/9*100}%`),p&&(p.innerText=this.currentStep===8?`MULAI`:`LANJUT`),r&&i){let e=`url('/assets/images/prolog${this.currentStep+1}.webp')`;r.classList.contains(`opacity-100`)?(i.style.backgroundImage=e,i.classList.remove(`opacity-0`),i.classList.add(`opacity-100`),r.classList.remove(`opacity-100`),r.classList.add(`opacity-0`)):(r.style.backgroundImage=e,r.classList.remove(`opacity-0`),r.classList.add(`opacity-100`),i.classList.remove(`opacity-100`),i.classList.add(`opacity-0`))}m(this.narrativeSteps[this.currentStep])};h();let _=()=>{a&&(a.style.transition=`opacity 0.5s ease-in-out`,a.style.opacity=`0`),r&&(r.style.transition=`opacity 0.5s ease-in-out`,r.style.opacity=`0`),i&&(i.style.transition=`opacity 0.5s ease-in-out`,i.style.opacity=`0`),this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`MapScene`)})};u&&(u.onclick=()=>{this.typewriterTimer?(clearInterval(this.typewriterTimer),this.typewriterTimer=null,o.innerHTML=this.narrativeSteps[this.currentStep]):this.currentStep<8?(this.currentStep++,h()):(console.log(`PrologScene: Finished. Starting MapScene with fade...`),_())}),f&&(f.onclick=()=>{console.log(`PrologScene: Skipped. Starting MapScene with fade...`),_()}),this.events.once(`shutdown`,()=>{this.typewriterTimer&&=(clearInterval(this.typewriterTimer),null),a&&(a.classList.add(`hidden`),a.classList.remove(`flex`),a.style.opacity=`0`),n&&(n.style.backgroundImage=`none`),r&&r.remove(),i&&i.remove(),e&&(e.innerHTML=``),[u,f].forEach(e=>{e&&(e.onclick=null)})})}},v=`<div id="map-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-opacity duration-300 select-none w-full h-full">
+`,y=class extends l.default.Scene{constructor(){super(`PrologScene`),this.narrativeSteps=[`Baskara menemukan sebuah batu bertuliskan aksara Jawa kuno.`,`Saat menyentuh permukaan batu yang kasar, tiba-tiba aksara Jawa kuno di batu tersebut mulai bersinar keemasan.`,`Tanah di sekitarnya berguncang, dan sebuah pusaran angin magis muncul di hadapannya.`,`Sebuah gerbang lintas waktu (portal) terbuka lebar, menarik Baskara masuk ke dalam pusaran cahaya.`,`Baskara terbangun di tengah hutan yang rimbun dengan pemandangan Candi Trowulan yang megah di kejauhan.`,`Seorang tetua desa mendekatinya dan berkata: 'Selamat datang, Sang Penyelamat. Kerajaan Majapahit sedang dalam bahaya.'`,`Tetua menjelaskan: 'Kekuatan magis pelindung kerajaan terpecah menjadi 5 pusaka aksara yang tersebar di 5 candi suci.'`,`Baskara dibekali sebuah kitab kamus aksara kuno untuk membantunya memecahkan teka-teki sandi.`,`Petualangan dimulai! Bantu Baskara mengumpulkan 5 pusaka aksara Jawa kuno untuk menyelamatkan Majapahit!`],this.currentStep=0,this.typewriterTimer=null}create(){console.log(`PrologScene: created.`),this.currentStep=0,g(this,500);let e=document.getElementById(`ui-overlay-container`);e&&(e.innerHTML=v);let t=d.load();t.lastActiveScene=`PrologScene`,d.save(t);let n=document.getElementById(`wasis-aksara-game`)?.parentElement,r=document.getElementById(`prolog-bg-layer-a`),i=document.getElementById(`prolog-bg-layer-b`);n&&(n.style.backgroundImage=`none`,r||(r=document.createElement(`div`),r.id=`prolog-bg-layer-a`,r.className=`absolute inset-0 w-full h-full bg-cover bg-center z-0 pointer-events-none transition-opacity duration-500 ease-in-out opacity-0`,n.insertBefore(r,n.firstChild)),i||(i=document.createElement(`div`),i.id=`prolog-bg-layer-b`,i.className=`absolute inset-0 w-full h-full bg-cover bg-center z-0 pointer-events-none transition-opacity duration-500 ease-in-out opacity-0`,n.insertBefore(i,r)));let a=document.getElementById(`prolog-overlay`);a&&(a.classList.remove(`hidden`),a.classList.add(`flex`),a.style.opacity=`0`,this.time.delayedCall(50,()=>{a.style.transition=`opacity 0.5s ease-in-out`,a.style.opacity=`1`}));let o=document.getElementById(`prolog-text`),s=document.getElementById(`prolog-step-text`),c=document.getElementById(`prolog-progress-bar`),l=document.getElementById(`prolog-btn-next`),u=document.getElementById(`prolog-btn-skip`),f=document.getElementById(`prolog-next-label`),p=(e,t=25)=>{this.typewriterTimer&&clearInterval(this.typewriterTimer),o.innerHTML=``;let n=0;this.typewriterTimer=setInterval(()=>{n<e.length?(o.innerHTML+=e.charAt(n),n++):(clearInterval(this.typewriterTimer),this.typewriterTimer=null)},t)},m=()=>{if(s&&(s.innerText=`${this.currentStep+1} / 9`),c&&(c.style.width=`${(this.currentStep+1)/9*100}%`),f&&(f.innerText=this.currentStep===8?`MULAI`:`LANJUT`),r&&i){let e=`url('/assets/images/prolog${this.currentStep+1}.png')`;r.classList.contains(`opacity-100`)?(i.style.backgroundImage=e,i.classList.remove(`opacity-0`),i.classList.add(`opacity-100`),r.classList.remove(`opacity-100`),r.classList.add(`opacity-0`)):(r.style.backgroundImage=e,r.classList.remove(`opacity-0`),r.classList.add(`opacity-100`),i.classList.remove(`opacity-100`),i.classList.add(`opacity-0`))}p(this.narrativeSteps[this.currentStep])};m(),l&&(l.onclick=()=>{this.typewriterTimer?(clearInterval(this.typewriterTimer),this.typewriterTimer=null,o.innerHTML=this.narrativeSteps[this.currentStep]):this.currentStep<8?(this.currentStep++,m()):(console.log(`PrologScene: Finished. Starting MapScene with fade...`),startMapSceneWithFade())}),u&&(u.onclick=()=>{console.log(`PrologScene: Skipped. Starting MapScene with fade...`),startMapSceneWithFade()}),this.events.once(`shutdown`,()=>{this.typewriterTimer&&=(clearInterval(this.typewriterTimer),null),a&&(a.classList.add(`hidden`),a.classList.remove(`flex`),a.style.opacity=`0`),n&&(n.style.backgroundImage=`none`),r&&r.remove(),i&&i.remove(),e&&(e.innerHTML=``),[l,u].forEach(e=>{e&&(e.onclick=null)})})}},b=`<div id="map-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-opacity duration-300 select-none w-full h-full">
   <!-- TOP ROW: Home Button & Beautiful Title -->
   <div class="flex justify-between items-start w-full relative z-30">
     <!-- Home Button -->
@@ -523,36 +615,64 @@ return new `+this.key+`();
     </div>
   </div>
 </div>
-`,y=class extends l.default.Scene{constructor(){super(`MapScene`)}create(){console.log(`MapScene: created.`),this.cameras.main.fadeIn(500,0,0,0);let e=d.load();e.lastActiveScene=`MapScene`,d.save(e);let t=document.getElementById(`wasis-aksara-game`)?.parentElement;t&&(t.style.backgroundImage=`url('/assets/images/map.webp')`,t.style.backgroundSize=`cover`,t.style.backgroundPosition=`center`);let n=document.getElementById(`ui-overlay-container`);n&&(n.innerHTML=v);let r=document.getElementById(`map-overlay`);r&&(r.classList.remove(`hidden`),r.classList.add(`flex`),r.style.opacity=`0`,this.time.delayedCall(50,()=>{r.style.transition=`opacity 0.5s ease-in-out`,r.style.opacity=`1`}));let i=e=>{r&&(r.style.transition=`opacity 0.5s ease-in-out`,r.style.opacity=`0`),this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(e)})},a=document.getElementById(`map-btn-home`);a&&(a.onclick=()=>{console.log(`MapScene: Navigating to MainMenuScene with fade...`),i(`MainMenuScene`)});let o=e.currentLevel||1,s=e.stars||[0,0,0,0,0],c=e.scores||[0,0,0,0,0];for(let e=1;e<=5;e++){let t=document.getElementById(`map-node-${e}`),n=document.getElementById(`btn-node-${e}`),r=document.getElementById(`node-${e}-lock`),a=document.getElementById(`node-${e}-pulse`),l=document.getElementById(`node-${e}-stars`),u=document.getElementById(`node-${e}-score`),d=document.getElementById(`node-${e}-action-text`),f=e<=o,p=s[e-1]||0,m=c[e-1]||0;if(t){if(f?(t.classList.remove(`opacity-60`),r&&(r.classList.add(`hidden`),r.classList.remove(`flex`)),e===o?(a&&a.classList.remove(`hidden`),d&&(d.innerText=`Mainkan`,d.className=`text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-gold/40 rounded-md py-1 border border-majapahit-gold/30 uppercase tracking-wider animate-pulse`)):(a&&a.classList.add(`hidden`),d&&(d.innerText=`Main Lagi`,d.className=`text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-nature-light-forest/30 rounded-md py-1 border border-nature-light-forest/20 uppercase tracking-wider`)),n&&(n.onclick=()=>{console.log(`MapScene: Starting Level ${e}Scene with fade...`),i(`Level${e}Scene`)})):(t.classList.add(`opacity-60`),r&&(r.classList.remove(`hidden`),r.classList.add(`flex`)),a&&a.classList.add(`hidden`),n&&(n.disabled=!0,n.classList.remove(`cursor-pointer`,`active:scale-95`,`hover:scale-110`),n.classList.add(`cursor-not-allowed`)),d&&(d.innerText=`Terkunci`,d.className=`text-center font-poppins text-[10px] text-stone-soft/40 font-bold mt-2.5 bg-stone-light/20 rounded-md py-1 border border-stone-light/10 uppercase tracking-wider`)),l){l.innerHTML=``;for(let e=0;e<3;e++){let t=document.createElement(`span`);e<p?(t.className=`text-majapahit-gold`,t.innerText=`★`):(t.className=`text-stone-light`,t.innerText=`★`),l.appendChild(t)}}u&&(u.innerText=`Skor Terbaik: ${m}`)}}this.events.once(`shutdown`,()=>{r&&(r.classList.add(`hidden`),r.classList.remove(`flex`),r.style.opacity=`0`),t&&(t.style.backgroundImage=`none`),n&&(n.innerHTML=``),a&&(a.onclick=null);for(let e=1;e<=5;e++){let t=document.getElementById(`btn-node-${e}`);t&&(t.onclick=null)}})}},b=new class{constructor(){this.currentScore=0,this.comboCount=0,this.baseScorePerAction=100}resetLevelScore(){this.currentScore=0,this.comboCount=0,console.log(`ScoreManager: Skor level diriset.`)}addCorrectAnswer(){this.comboCount+=1;let e=Math.min(3,1+(this.comboCount-1)*.2),t=Math.round(this.baseScorePerAction*e);return this.currentScore+=t,console.log(`ScoreManager: Jawaban Benar! Kombo: x${this.comboCount}, Skor Ditambah: ${t}, Total Skor: ${this.currentScore}`),{addedScore:t,currentScore:this.currentScore,comboCount:this.comboCount}}addWrongAnswer(){this.comboCount=0,console.log(`ScoreManager: Jawaban Salah! Kombo diriset ke 0.`)}addBonus(e=0){return this.currentScore+=e,console.log(`ScoreManager: Bonus +${e}, Total Skor: ${this.currentScore}`),this.currentScore}calculateStars(e,t){return e>=t?3:e>=t*.7?2:+(e>=t*.4)}},x=new class{constructor(){this.cooldownDuration=15,this.lastHintTime=0}canUseHint(e=Date.now()){return(e-this.lastHintTime)/1e3>=this.cooldownDuration}getRemainingCooldown(e=Date.now()){let t=(e-this.lastHintTime)/1e3,n=this.cooldownDuration-t;return Math.max(0,Math.ceil(n))}triggerHint(e=Date.now()){return this.canUseHint(e)?(this.lastHintTime=e,console.log(`HintManager: Bantuan digunakan. Cooldown dimulai.`),!0):(console.warn(`HintManager: Gagal memanggil bantuan, tombol masih dalam durasi cooldown.`),!1)}resetCooldown(){this.lastHintTime=0,console.log(`HintManager: Cooldown bantuan diriset.`)}},S={narrative:[`Kowe wis teka ing Candi Tikus. Ing tengah Candi iki ana bangunan sing nduweni isi pusaka kaping pisan.`,`Nanging, dalan tumuju tengah bangunan durung ana. Temokna aksara ing sakupenge Candi kanggo mbuka dalan kasebut.`],words:[{latin:`Candi Tikus`,aksara:`ꦕꦤ꧀ꦢꦶ ꦠꦶꦏꦸꦱ꧀`},{latin:`Patirtan`,aksara:`ꦥꦠꦶꦂꦠꦤ꧀`},{latin:`Majapahit`,aksara:`ꦩꦗꦥꦲꦶꦠ꧀`},{latin:`Hindu`,aksara:`ꦲꦶꦤ꧀ꦢꦸ`}],sentence:{latin:`Candi Tikus salah sawijine paninggalan Majapahit kang duweni corak Hindu. Candi iki awujud patirtan.`,aksara:`ꦕꦤ꧀ꦢꦶꦠꦶꦏꦸꦱ꧀ꦱꦭꦃꦱꦮꦶꦗꦶꦤꦺꦥꦤꦶꦁꦒꦭꦤ꧀ꦩꦗꦥꦲꦶꦠ꧀ꦏꦁꦢꦸꦮꦺꦤꦶꦕꦺꦴꦫꦏ꧀ꦲꦶꦤ꧀ꦢꦸ꧉ ꦕꦤ꧀ꦢꦶꦲꦶꦏꦶꦲꦮꦸꦗꦸꦢ꧀ꦥꦠꦶꦂꦠꦤ꧀꧉`},palette:{legena:[[`ꦲ`,`ha`],[`ꦤ`,`na`],[`ꦕ`,`ca`],[`ꦫ`,`ra`],[`ꦏ`,`ka`],[`ꦢ`,`da`],[`ꦠ`,`ta`],[`ꦱ`,`sa`],[`ꦮ`,`wa`],[`ꦭ`,`la`],[`ꦥ`,`pa`],[`ꦝ`,`dha`],[`ꦗ`,`ja`],[`ꦪ`,`ya`],[`ꦚ`,`nya`],[`ꦩ`,`ma`],[`ꦒ`,`ga`],[`ꦧ`,`ba`],[`ꦛ`,`tha`],[`ꦔ`,`nga`]],sandhangan:[[`ꦶ`,`wulu`],[`ꦸ`,`suku`],[`ꦺ`,`taling`],[`ꦼ`,`pepet`],[`ꦺꦴ`,`tarung`],[`ꦂ`,`layar`],[`ꦁ`,`cecak`],[`ꦃ`,`wignyan`],[`ꦿ`,`cakra`],[`ꦽ`,`keret`],[`꧀`,`pangkon`],[`꧉`,`pada`]],pasangan:[[`꧀ꦲ`,`ha`],[`꧀ꦤ`,`na`],[`꧀ꦕ`,`ca`],[`꧀ꦫ`,`ra`],[`꧀ꦏ`,`ka`],[`꧀ꦢ`,`da`],[`꧀ꦠ`,`ta`],[`꧀ꦱ`,`sa`],[`꧀ꦮ`,`wa`],[`꧀ꦭ`,`la`],[`꧀ꦥ`,`pa`],[`꧀ꦝ`,`dha`],[`꧀ꦗ`,`ja`],[`꧀ꦪ`,`ya`],[`꧀ꦚ`,`nya`],[`꧀ꦩ`,`ma`],[`꧀ꦒ`,`ga`],[`꧀ꦧ`,`ba`],[`꧀ꦛ`,`tha`],[`꧀ꦔ`,`nga`]]},reward:{id:`lentera`,name:`Lentera Pusaka`}},C=[{level:1,candiName:`Candi Tikus`,title:`Aksara Legena lan Pasangan (Papan Tulis)`,description:`Baskara teka ing Candi Tikus. Temokna jejak aksara, tulis tembung Latin dadi Aksara Jawa, banjur tulis ukara kanggo entuk pusaka Lentera.`,timeLimit:60,targetScore:1e3,artifactReward:`lentera`},{level:2,candiName:`Candi Bajang Ratu`,title:`Sandhangan (Complete Link)`,description:`Bantu Baskara memulihkan prasasti di Candi Bajang Ratu dengan memasangkan aksara dengan simbol vokalisasi (Sandhangan) yang sesuai.`,timeLimit:75,targetScore:1200,artifactReward:`cawan_tirta_swara`},{level:3,candiName:`Candi Brahu`,title:`Pasangan (Fill in Blank)`,description:`Tantangan mengisi celah kalimat kuno di Candi Brahu menggunakan bentuk Pasangan aksara untuk mematikan konsonan sebelumnya.`,timeLimit:90,targetScore:1400,artifactReward:`cincin_majapahit`},{level:4,candiName:`Candi Wringin Lawang`,title:`Murda & Rekan (Formula Puzzle)`,description:`Selesaikan teka-teki formula aksara di Candi Wringin Lawang untuk menulis nama-nama tokoh penting (Murda) dan kosakata serapan (Rekan).`,timeLimit:90,targetScore:1500,artifactReward:`prasasti_trowulan`},{level:5,candiName:`Candi Kedaton`,title:`Aksara Swara (Audio Recognition)`,description:`Dengarkan petunjuk suara gaib di Candi Kedaton dan pilihlah Aksara Swara yang tepat untuk membuka jalan masuk ke Altar Pamungkas.`,timeLimit:120,targetScore:1800,artifactReward:`keris_pusaka`}],w=`<div id="level1-overlay" class="absolute inset-0 hidden pointer-events-none select-none overflow-hidden">
+`,x=class extends l.default.Scene{constructor(){super(`MapScene`)}create(){console.log(`MapScene: created.`),g(this,500);let e=d.load();e.lastActiveScene=`MapScene`,d.save(e);let t=document.getElementById(`wasis-aksara-game`)?.parentElement;t&&(t.style.backgroundImage=`url('/assets/images/map.webp')`,t.style.backgroundSize=`cover`,t.style.backgroundPosition=`center`);let n=document.getElementById(`ui-overlay-container`);n&&(n.innerHTML=b);let r=document.getElementById(`map-overlay`);r&&(r.classList.remove(`hidden`),r.classList.add(`flex`),r.style.opacity=`0`,this.time.delayedCall(50,()=>{r.style.transition=`opacity 0.5s ease-in-out`,r.style.opacity=`1`}));let i=e=>{r&&(r.style.transition=`opacity 0.5s ease-in-out`,r.style.opacity=`0`),h(this,500,()=>{this.scene.start(e)})},a=document.getElementById(`map-btn-home`);a&&(a.onclick=()=>{console.log(`MapScene: Navigating to MainMenuScene with fade...`),i(`MainMenuScene`)});let o=e.currentLevel||1,s=e.stars||[0,0,0,0,0],c=e.scores||[0,0,0,0,0];for(let e=1;e<=5;e++){let t=document.getElementById(`map-node-${e}`),n=document.getElementById(`btn-node-${e}`),r=document.getElementById(`node-${e}-lock`),a=document.getElementById(`node-${e}-pulse`),l=document.getElementById(`node-${e}-stars`),u=document.getElementById(`node-${e}-score`),d=document.getElementById(`node-${e}-action-text`),f=e<=o,p=s[e-1]||0,m=c[e-1]||0;if(t){if(f?(t.classList.remove(`opacity-60`),r&&(r.classList.add(`hidden`),r.classList.remove(`flex`)),e===o?(a&&a.classList.remove(`hidden`),d&&(d.innerText=`Mainkan`,d.className=`text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-gold/40 rounded-md py-1 border border-majapahit-gold/30 uppercase tracking-wider animate-pulse`)):(a&&a.classList.add(`hidden`),d&&(d.innerText=`Main Lagi`,d.className=`text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-nature-light-forest/30 rounded-md py-1 border border-nature-light-forest/20 uppercase tracking-wider`)),n&&(n.onclick=()=>{console.log(`MapScene: Starting Level ${e}Scene with fade...`),i(`Level${e}Scene`)})):(t.classList.add(`opacity-60`),r&&(r.classList.remove(`hidden`),r.classList.add(`flex`)),a&&a.classList.add(`hidden`),n&&(n.disabled=!0,n.classList.remove(`cursor-pointer`,`active:scale-95`,`hover:scale-110`),n.classList.add(`cursor-not-allowed`)),d&&(d.innerText=`Terkunci`,d.className=`text-center font-poppins text-[10px] text-stone-soft/40 font-bold mt-2.5 bg-stone-light/20 rounded-md py-1 border border-stone-light/10 uppercase tracking-wider`)),l){l.innerHTML=``;for(let e=0;e<3;e++){let t=document.createElement(`span`);e<p?(t.className=`text-majapahit-gold`,t.innerText=`★`):(t.className=`text-stone-light`,t.innerText=`★`),l.appendChild(t)}}u&&(u.innerText=`Skor Terbaik: ${m}`)}}this.events.once(`shutdown`,()=>{r&&(r.classList.add(`hidden`),r.classList.remove(`flex`),r.style.opacity=`0`),t&&(t.style.backgroundImage=`none`),n&&(n.innerHTML=``),a&&(a.onclick=null);for(let e=1;e<=5;e++){let t=document.getElementById(`btn-node-${e}`);t&&(t.onclick=null)}})}},S=new class{constructor(){this.currentScore=0,this.comboCount=0,this.baseScorePerAction=100}resetLevelScore(){this.currentScore=0,this.comboCount=0,console.log(`ScoreManager: Skor level diriset.`)}addCorrectAnswer(){this.comboCount+=1;let e=Math.min(3,1+(this.comboCount-1)*.2),t=Math.round(this.baseScorePerAction*e);return this.currentScore+=t,console.log(`ScoreManager: Jawaban Benar! Kombo: x${this.comboCount}, Skor Ditambah: ${t}, Total Skor: ${this.currentScore}`),{addedScore:t,currentScore:this.currentScore,comboCount:this.comboCount}}addWrongAnswer(){this.comboCount=0,console.log(`ScoreManager: Jawaban Salah! Kombo diriset ke 0.`)}addBonus(e=0){return this.currentScore+=e,console.log(`ScoreManager: Bonus +${e}, Total Skor: ${this.currentScore}`),this.currentScore}calculateStars(e,t){return e>=t?3:e>=t*.7?2:+(e>=t*.4)}},C=new class{constructor(){this.cooldownDuration=15,this.lastHintTime=0}canUseHint(e=Date.now()){return(e-this.lastHintTime)/1e3>=this.cooldownDuration}getRemainingCooldown(e=Date.now()){let t=(e-this.lastHintTime)/1e3,n=this.cooldownDuration-t;return Math.max(0,Math.ceil(n))}triggerHint(e=Date.now()){return this.canUseHint(e)?(this.lastHintTime=e,console.log(`HintManager: Bantuan digunakan. Cooldown dimulai.`),!0):(console.warn(`HintManager: Gagal memanggil bantuan, tombol masih dalam durasi cooldown.`),!1)}resetCooldown(){this.lastHintTime=0,console.log(`HintManager: Cooldown bantuan diriset.`)}},w={narrative:[`Kowe wis teka ing Candi Tikus. Ing tengah Candi iki ana bangunan sing nduweni isi pusaka kaping pisan.`,`Nanging, dalan tumuju tengah bangunan durung ana. Temokna aksara ing sakupenge Candi kanggo mbuka dalan kasebut.`],words:[{latin:`Candi Tikus`,aksara:`ꦕꦤ꧀ꦢꦶ ꦠꦶꦏꦸꦱ꧀`},{latin:`Patirtan`,aksara:`ꦥꦠꦶꦂꦠꦤ꧀`},{latin:`Majapahit`,aksara:`ꦩꦗꦥꦲꦶꦠ꧀`},{latin:`Hindu`,aksara:`ꦲꦶꦤ꧀ꦢꦸ`}],sentence:{latin:`Candi Tikus salah sawijine paninggalan Majapahit kang duweni corak Hindu. Candi iki awujud patirtan.`,aksara:`ꦕꦤ꧀ꦢꦶꦠꦶꦏꦸꦱ꧀ꦱꦭꦃꦱꦮꦶꦗꦶꦤꦺꦥꦤꦶꦁꦒꦭꦤ꧀ꦩꦗꦥꦲꦶꦠ꧀ꦏꦁꦢꦸꦮꦺꦤꦶꦕꦺꦴꦫꦏ꧀ꦲꦶꦤ꧀ꦢꦸ꧉ ꦕꦤ꧀ꦢꦶꦲꦶꦏꦶꦲꦮꦸꦗꦸꦢ꧀ꦥꦠꦶꦂꦠꦤ꧀꧉`},palette:{legena:[[`ꦲ`,`ha`],[`ꦤ`,`na`],[`ꦕ`,`ca`],[`ꦫ`,`ra`],[`ꦏ`,`ka`],[`ꦢ`,`da`],[`ꦠ`,`ta`],[`ꦱ`,`sa`],[`ꦮ`,`wa`],[`ꦭ`,`la`],[`ꦥ`,`pa`],[`ꦝ`,`dha`],[`ꦗ`,`ja`],[`ꦪ`,`ya`],[`ꦚ`,`nya`],[`ꦩ`,`ma`],[`ꦒ`,`ga`],[`ꦧ`,`ba`],[`ꦛ`,`tha`],[`ꦔ`,`nga`]],sandhangan:[[`ꦶ`,`wulu`],[`ꦸ`,`suku`],[`ꦺ`,`taling`],[`ꦼ`,`pepet`],[`ꦺꦴ`,`tarung`],[`ꦂ`,`layar`],[`ꦁ`,`cecak`],[`ꦃ`,`wignyan`],[`ꦿ`,`cakra`],[`ꦽ`,`keret`],[`꧀`,`pangkon`],[`꧉`,`pada`]],pasangan:[[`꧀ꦲ`,`ha`],[`꧀ꦤ`,`na`],[`꧀ꦕ`,`ca`],[`꧀ꦫ`,`ra`],[`꧀ꦏ`,`ka`],[`꧀ꦢ`,`da`],[`꧀ꦠ`,`ta`],[`꧀ꦱ`,`sa`],[`꧀ꦮ`,`wa`],[`꧀ꦭ`,`la`],[`꧀ꦥ`,`pa`],[`꧀ꦝ`,`dha`],[`꧀ꦗ`,`ja`],[`꧀ꦪ`,`ya`],[`꧀ꦚ`,`nya`],[`꧀ꦩ`,`ma`],[`꧀ꦒ`,`ga`],[`꧀ꦧ`,`ba`],[`꧀ꦛ`,`tha`],[`꧀ꦔ`,`nga`]]},reward:{id:`lentera`,name:`Lentera Pusaka`}},T=[{level:1,candiName:`Candi Tikus`,title:`Aksara Legena lan Pasangan (Papan Tulis)`,description:`Baskara teka ing Candi Tikus. Temokna jejak aksara, tulis tembung Latin dadi Aksara Jawa, banjur tulis ukara kanggo entuk pusaka Lentera.`,timeLimit:60,targetScore:1e3,artifactReward:`lentera`},{level:2,candiName:`Candi Bajang Ratu`,title:`Sandhangan (Complete Link)`,description:`Bantu Baskara memulihkan prasasti di Candi Bajang Ratu dengan memasangkan aksara dengan simbol vokalisasi (Sandhangan) yang sesuai.`,timeLimit:75,targetScore:1200,artifactReward:`cawan_tirta_swara`},{level:3,candiName:`Candi Brahu`,title:`Pasangan (Fill in Blank)`,description:`Tantangan mengisi celah kalimat kuno di Candi Brahu menggunakan bentuk Pasangan aksara untuk mematikan konsonan sebelumnya.`,timeLimit:90,targetScore:1400,artifactReward:`cincin_majapahit`},{level:4,candiName:`Candi Wringin Lawang`,title:`Murda & Rekan (Formula Puzzle)`,description:`Selesaikan teka-teki formula aksara di Candi Wringin Lawang untuk menulis nama-nama tokoh penting (Murda) dan kosakata serapan (Rekan).`,timeLimit:90,targetScore:1500,artifactReward:`prasasti_trowulan`},{level:5,candiName:`Candi Kedaton`,title:`Aksara Swara (Audio Recognition)`,description:`Dengarkan petunjuk suara gaib di Candi Kedaton dan pilihlah Aksara Swara yang tepat untuk membuka jalan masuk ke Altar Pamungkas.`,timeLimit:120,targetScore:1800,artifactReward:`keris_pusaka`}],E=`<div id="level1-overlay" class="absolute inset-0 hidden pointer-events-none select-none">
+  <!-- HUD Top Bar -->
   <div id="l1-hud" class="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-5 opacity-0 transition-opacity duration-500">
     <div class="flex h-[52px] w-[210px] flex-col items-center justify-center shadow-xl" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
       <span class="font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold">Level 1</span>
       <span class="font-poppins text-[10px] font-semibold text-stone-soft">Candi Tikus</span>
     </div>
-    <div class="flex items-center gap-2 pointer-events-auto">
-      <div class="flex h-[52px] w-[110px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Waktu</span>
-        <span id="l1-time-val" class="font-cinzel text-[14px] font-bold text-majapahit-cream">00:00</span>
+    <div class="flex items-center gap-3.5 pointer-events-auto">
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5 shadow-lg" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Waktu</span>
+        <span id="l1-time-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">00:00</span>
       </div>
-      <div class="flex h-[52px] w-[110px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Jejak</span>
-        <span id="l1-progress-val" class="font-cinzel text-[14px] font-bold text-majapahit-cream">0 / 4</span>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5 shadow-lg" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Jejak</span>
+        <span id="l1-progress-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">0 / 4</span>
       </div>
-      <div class="flex h-[52px] w-[120px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
-        <span class="font-poppins text-[8px] uppercase tracking-wider text-stone-soft/70">Skor</span>
-        <span id="l1-score-val" class="font-cinzel text-[14px] font-bold text-majapahit-light-gold">0</span>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5 shadow-lg" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Skor</span>
+        <span id="l1-score-val" class="font-cinzel text-[15px] font-bold text-majapahit-light-gold leading-tight">0</span>
       </div>
-      <button id="l1-btn-exit" class="kenney-icon-button flex h-10 w-10 items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-dark/85 font-poppins text-lg text-stone-soft transition hover:border-majapahit-gold hover:text-majapahit-cream" title="Kembali ke peta" aria-label="Kembali ke peta"></button>
+      <!-- Tombol Kitab Materi -->
+      <button id="l1-btn-materi" class="flex h-10 items-center gap-1.5 rounded-xl border-2 border-majapahit-gold bg-stone-dark/90 px-3 font-poppins text-xs font-bold text-majapahit-light-gold shadow-lg transition hover:scale-105 hover:bg-stone-light hover:text-majapahit-cream active:scale-95 cursor-pointer" title="Lihat Kitab Materi Aksara Jawa">
+        <svg class="h-4 w-4 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+          <path d="M6 6h10"/>
+          <path d="M6 10h10"/>
+        </svg>
+        <span>MATERI</span>
+      </button>
+      <!-- Tombol Keluar -->
+      <button id="l1-btn-exit" class="kenney-icon-button ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-majapahit-dark-gold/80 bg-stone-dark/85 font-poppins text-lg text-stone-soft shadow-lg transition hover:scale-105 hover:border-majapahit-gold hover:text-majapahit-cream active:scale-95" title="Kembali ke peta" aria-label="Kembali ke peta"></button>
     </div>
   </div>
 
+  <!-- Interactive Gate Glow -->
   <div id="l1-gate-glow" class="absolute z-1 hidden pointer-events-none animate-wa-gate-glow" style="left:545px;top:190px;width:190px;height:150px;background:radial-gradient(ellipse at center,rgba(242,210,138,.85),rgba(212,166,74,.32) 45%,transparent 70%);filter:blur(2px)"></div>
 
-  <button id="l1-ornament" class="wa-click-pointer absolute left-[606px] top-[50%] z-10 hidden h-[92px] w-[68px] cursor-pointer pointer-events-auto border-0 bg-transparent p-0 outline-none" title="Klik bagian tengah bangunan">
-    <span class="font-poppins text-[9px] font-bold uppercase tracking-widest text-majapahit-cream">Klik</span>
-    <img src="/assets/kenney/ui-rpg-expansion/PNG/cursorHand_beige.png" alt="Pointer klik" class="kenney-click-cursor" />
+  <!-- Interactive Monument Click Pointer -->
+  <button id="l1-ornament" class="group absolute left-[640px] top-[375px] -translate-x-1/2 -translate-y-1/2 z-15 hidden flex-col items-center justify-center cursor-pointer border-0 bg-transparent p-0 outline-none pointer-events-auto transition-all duration-300" title="Klik bagian tengah bangunan Candi Tikus">
+    <!-- Pulsing Radar Glow Behind -->
+    <span class="absolute h-20 w-20 rounded-full border-2 border-majapahit-gold/70 animate-ping pointer-events-none"></span>
+    <span class="absolute h-14 w-14 rounded-full bg-majapahit-gold/25 animate-pulse pointer-events-none"></span>
+    
+    <!-- Top Pill Badge -->
+    <div class="relative z-10 mb-1.5 flex items-center gap-1.5 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 px-3 py-0.5 shadow-[0_4px_12px_rgba(0,0,0,0.85)] backdrop-blur-xs transition-transform duration-200 group-hover:scale-110">
+      <span class="inline-block h-2 w-2 rounded-full bg-majapahit-light-gold animate-pulse"></span>
+      <span class="font-poppins text-[10px] font-bold uppercase tracking-widest text-majapahit-cream">KLIK</span>
+    </div>
+
+    <!-- Crisp Pointing Hand Vector Icon -->
+    <div class="relative z-10 animate-wa-pointer-bounce transition-transform duration-200 group-hover:scale-115">
+      <svg class="h-12 w-12 filter drop-shadow-[0_5px_10px_rgba(0,0,0,0.9)]" viewBox="0 0 24 24" fill="none">
+        <path d="M10 2v9.5l-2.6-2.6a1.8 1.8 0 0 0-2.5 0 1.8 1.8 0 0 0 0 2.5l5.5 5.5c1.4 1.4 3 2.1 5.6 2.1h1c3.9 0 7-3.1 7-7v-5a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0a2 2 0 0 0-2-2 2 2 0 0 0-2 2v0a2 2 0 0 0-2-2 2 2 0 0 0-2 2V4a2 2 0 0 0-4 0z" fill="#F2D28A" stroke="#2B211A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
   </button>
 
+  <!-- Prologue & Story Dialog -->
   <div id="l1-dialog" class="absolute inset-x-0 bottom-0 z-20 hidden justify-center pb-3 opacity-0 transition-opacity duration-500 pointer-events-auto">
     <div class="relative aspect-[6122/1690] w-[800px]" style="background-image:url('/assets/images/bingkai-prolog.webp');background-size:100% 100%">
       <div class="flex h-full w-full justify-start px-10 pb-14 pt-25"><p id="l1-dialog-text" class="font-poppins text-[15px] font-semibold leading-relaxed text-stone-dark"></p></div>
@@ -562,37 +682,449 @@ return new `+this.key+`();
     </div>
   </div>
 
+  <!-- Interactive Writing Board (Revamped & Optimized Layout) -->
   <div id="l1-board" class="absolute inset-x-0 bottom-0 z-30 hidden h-[368px] translate-y-full transition-transform duration-500 ease-out pointer-events-auto">
-    <div class="l1-board-solid relative flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-4 pt-3 shadow-[0_-14px_44px_rgba(0,0,0,.6)]">
-      <div class="flex h-full w-[398px] flex-col">
-        <div class="flex items-baseline justify-between"><h2 id="l1-board-title" class="font-cinzel text-[15px] font-bold uppercase tracking-widest text-majapahit-gold">Tantangan 1</h2><span id="l1-board-step" class="font-poppins text-[10px] font-semibold text-stone-soft/70">Tembung 1 / 4</span></div>
-        <div class="mt-1.5 rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2">
-          <span id="l1-target-label" class="font-poppins text-[10px] uppercase tracking-wider text-stone-soft/80">Tulisen ing Aksara Jawa:</span>
-          <p id="l1-target-latin" class="font-poppins text-[21px] font-bold leading-tight text-majapahit-cream">Candi Tikus</p>
-          <div id="l1-wordchips" class="mt-1.5 flex gap-1.5"></div>
+    <div class="l1-board-solid relative flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-4 pt-3.5 shadow-[0_-14px_44px_rgba(0,0,0,.65)]">
+      
+      <!-- LEFT PANEL: Challenge Target & Mission Info -->
+      <div class="flex h-full w-[360px] flex-col justify-between">
+        <!-- Header: Title & Step -->
+        <div class="flex items-center justify-between border-b border-stone-light/40 pb-2">
+          <div class="flex items-center gap-2">
+            <h2 id="l1-board-title" class="font-cinzel text-[14px] font-bold uppercase tracking-wider text-majapahit-gold">Tantangan 1</h2>
+          </div>
+          <span id="l1-board-step" class="rounded-md border border-majapahit-dark-gold/70 bg-stone-dark/80 px-2 py-0.5 font-poppins text-[10px] font-semibold text-majapahit-light-gold">Tembung 1 / 4</span>
         </div>
-        <div id="l1-answer-box" class="mt-2 min-h-[64px] flex-1 overflow-hidden rounded-lg border-2 border-majapahit-dark-gold/80 bg-[#2b211a] px-3 py-1.5">
-          <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/60">Aksaramu:</span><div id="l1-answer" class="break-words font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></div>
+
+        <!-- Target Challenge Card -->
+        <div id="l1-target-card" class="mt-2 flex flex-1 flex-col justify-between rounded-xl border border-majapahit-gold/40 bg-stone-dark/90 p-3.5 shadow-inner">
+          <div>
+            <div class="flex items-center justify-between">
+              <span id="l1-target-label" class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/90">Tulisen ing Aksara Jawa:</span>
+              <span class="text-[9px] font-semibold uppercase tracking-wider text-stone-soft/50">Sasaran</span>
+            </div>
+            <div class="mt-2 flex min-h-[64px] items-center justify-center rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2 text-center">
+              <p id="l1-target-latin" class="font-poppins text-[22px] font-bold leading-snug text-majapahit-cream">Candi Tikus</p>
+            </div>
+          </div>
+          
+          <!-- Word Chips for Step 1-4 -->
+          <div id="l1-wordchips" class="mt-2 flex flex-wrap items-center justify-center gap-1.5"></div>
         </div>
-        <p id="l1-board-msg" class="mt-1 h-[16px] font-poppins text-[11px] font-semibold"></p>
+
+        <!-- Quick Tips & Feedback Box -->
+        <div class="mt-2 flex flex-col gap-1.5">
+          <div id="l1-target-tips" class="flex items-center gap-2 rounded-lg border border-stone-light/30 bg-stone-light/15 px-2.5 py-1.5 text-[10px] text-stone-soft/75">
+            <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>Tulis aksara Jawa ing kanvas kanthi niru wujud sing bener.</span>
+          </div>
+          <div id="l1-board-msg-box" class="flex min-h-[28px] items-center justify-center rounded-lg border border-stone-light/30 bg-stone-dark/90 px-2.5 py-1">
+            <p id="l1-board-msg" class="font-poppins text-[11px] font-semibold text-stone-soft/80"></p>
+          </div>
+        </div>
       </div>
-      <div class="flex h-full flex-1 flex-col gap-1">
-        <div class="l1-palette-heading">Aksara Legena</div>
-        <div id="l1-palette-legena" class="grid grid-cols-10 gap-1.5"></div>
-        <div class="l1-palette-heading">Sandhangan</div>
-        <div id="l1-palette-sandhangan" class="flex flex-wrap gap-1.5"></div>
-        <div class="l1-palette-heading">Pasangan</div>
-        <div id="l1-palette-pasangan" class="grid grid-cols-10 gap-1.5"></div>
-        <div class="mt-auto flex items-stretch gap-2">
-          <button id="l1-btn-space" class="wa-util flex-1">Spasi</button><button id="l1-btn-backspace" class="wa-util flex-1">⌫ Hapus</button><button id="l1-btn-clear" class="wa-util flex-1">Bersihkan</button><button id="l1-btn-hint" class="wa-util w-[110px] text-majapahit-light-gold"><span>Hint</span> <small id="l1-hint-label"></small></button>
-          <button id="l1-btn-submit" class="kenney-button h-11 w-[150px] cursor-pointer font-poppins text-[14px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Kirim <img src="/assets/kenney/game-icons/PNG/White/1x/checkmark.png" alt="" class="inline-block h-4 w-4" /></button>
+
+      <!-- RIGHT PANEL: Canvas Studio & Controls -->
+      <div class="flex h-full flex-1 flex-col justify-between gap-2">
+        <!-- Canvas Studio Header with Tool Switchers -->
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-baseline gap-2">
+            <span class="font-cinzel text-[13px] font-bold uppercase tracking-wider text-majapahit-light-gold">Papan Tulisan Tangan</span>
+            <span class="font-poppins text-[10px] text-stone-soft/60">Gunakan mouse, stylus, utawa sentuhan</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="l1-btn-pen" class="wa-util wa-tool-active flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Pena Tulisan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+              </svg>
+              <span>Tulis</span>
+            </button>
+            <button id="l1-btn-eraser" class="wa-util flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Penghapus Goresan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/>
+                <path d="M22 21H7"/>
+                <path d="m5 11 9 9"/>
+              </svg>
+              <span>Penghapus</span>
+            </button>
+            <button id="l1-btn-clear" class="wa-util flex h-8 items-center gap-1.5 px-3 text-[11px]" title="Bersihkan Seluruh Papan">
+              <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+              </svg>
+              <span>Bersihkan</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Writing Canvas Box -->
+        <div id="l1-canvas-wrap" class="l1-canvas-wrap">
+          <canvas id="l1-writing-canvas" width="820" height="230"></canvas>
+          <div id="l1-canvas-placeholder" class="l1-canvas-placeholder">
+            <span>Tulis Aksara Jawa ing kene</span>
+          </div>
+        </div>
+
+        <!-- Action Footer -->
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button id="l1-btn-hint" class="wa-util flex h-10 w-[120px] items-center justify-center gap-1.5 text-majapahit-light-gold" title="Lihat conto aksara">
+              <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6"/>
+                <path d="M10 22h4"/>
+              </svg>
+              <span>Hint</span>
+              <small id="l1-hint-label" class="font-bold text-majapahit-cream"></small>
+            </button>
+            <button id="l1-btn-materi-board" class="wa-util flex h-10 items-center justify-center gap-1.5 px-3.5 text-majapahit-light-gold hover:text-majapahit-cream" title="Lihat Kitab Materi">
+              <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+              <span>Materi</span>
+            </button>
+          </div>
+          
+          <div class="flex items-center gap-3">
+            <span class="font-poppins text-[10.5px] italic text-stone-soft/50">Priksa goresanmu sadurunge ngirim</span>
+            <button id="l1-btn-submit" class="kenney-button h-11 w-[160px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">
+              Kirim <img src="/assets/kenney/game-icons/PNG/White/1x/checkmark.png" alt="" class="inline-block h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
-      <div id="l1-hint-preview" class="absolute -top-[118px] left-1/2 z-40 hidden w-[560px] -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 px-4 py-3 shadow-2xl"><span class="font-poppins text-[10px] uppercase tracking-wider text-stone-soft/80">Conto sing bener:</span><p id="l1-hint-preview-text" class="break-words font-local-javanese text-[24px] leading-snug text-majapahit-light-gold"></p></div>
+
+      <!-- Hint Preview Floating Card -->
+      <div id="l1-hint-preview" class="absolute -top-[125px] left-1/2 z-40 hidden w-[560px] -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 p-4 shadow-[0_10px_30px_rgba(0,0,0,.7)] backdrop-blur-sm">
+        <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-1.5">
+          <span class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold">Conto Sing Bener:</span>
+          <span class="font-poppins text-[9px] text-stone-soft/60">Tiru wujud aksara iki ing papan kanvas</span>
+        </div>
+        <p id="l1-hint-preview-text" class="mt-2 text-center break-words font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></p>
+      </div>
+
     </div>
   </div>
 
-  <div id="l1-sentence-intro" class="absolute inset-0 z-40 hidden items-center justify-center bg-black/60 opacity-0 transition-opacity duration-300 pointer-events-auto">
+  <!-- Materi Aksara Jawa Modal Overlay (Fullscreen 100% Backdrop) -->
+  <div id="l1-materi-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+    <div class="kenney-panel relative flex h-[580px] w-[940px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="flex h-9 w-9 items-center justify-center rounded-lg border border-majapahit-gold bg-stone-light/40 shadow-inner">
+            <svg class="h-5 w-5 text-majapahit-light-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+              <path d="M6 6h10"/>
+              <path d="M6 10h10"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="font-cinzel text-[17px] font-bold uppercase tracking-wider text-majapahit-light-gold">Kitab Materi Aksara Jawa</h2>
+            <p class="font-poppins text-[10.5px] text-stone-soft/70">Level 1 — Candi Tikus: Aksara Legena, Pasangan, & Sandhangan</p>
+          </div>
+        </div>
+        
+        <!-- Tab Switcher -->
+        <div class="flex items-center gap-2 rounded-xl border border-stone-light/50 bg-stone-light/25 p-1">
+          <button id="l1-tab-legena" class="cursor-pointer rounded-lg px-3.5 py-1 font-poppins text-xs font-bold transition-all duration-200 bg-majapahit-gold text-stone-dark shadow-sm">
+            Aksara & Pasangan (20)
+          </button>
+          <button id="l1-tab-sandhangan" class="cursor-pointer rounded-lg px-3.5 py-1 font-poppins text-xs font-bold text-stone-soft/80 transition-all duration-200 hover:text-majapahit-cream">
+            Sandhangan (11)
+          </button>
+        </div>
+
+        <!-- Close Button -->
+        <button id="l1-btn-close-materi" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-light/40 text-stone-soft transition hover:border-majapahit-gold hover:text-state-error hover:scale-105" title="Tutup Kitab Materi">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Tab 1: Aksara Legena & Pasangan (20 Aksara) -->
+      <div id="l1-panel-legena" class="grid flex-1 grid-cols-5 gap-2.5 overflow-y-auto py-3 pr-1">
+        <!-- Card 1: ha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦲ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦲ꧀ꦲ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ha</span>
+        </div>
+        <!-- Card 2: na -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦤ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦤ꧀ꦤ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">na</span>
+        </div>
+        <!-- Card 3: ca -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦕ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦕ꧀ꦕ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ca</span>
+        </div>
+        <!-- Card 4: ra -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦫ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦫ꧀ꦫ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ra</span>
+        </div>
+        <!-- Card 5: ka -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦏ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦏ꧀ꦏ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ka</span>
+        </div>
+        <!-- Card 6: da -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦢ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦢ꧀ꦢ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">da</span>
+        </div>
+        <!-- Card 7: ta -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦠ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦠ꧀ꦠ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ta</span>
+        </div>
+        <!-- Card 8: sa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦱ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦱ꧀ꦱ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">sa</span>
+        </div>
+        <!-- Card 9: wa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦮ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦮ꧀ꦮ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">wa</span>
+        </div>
+        <!-- Card 10: la -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦭ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦭ꧀ꦭ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">la</span>
+        </div>
+        <!-- Card 11: pa -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦥ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦥ꧀ꦥ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">pa</span>
+        </div>
+        <!-- Card 12: dha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦝ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦝ꧀ꦝ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">dha</span>
+        </div>
+        <!-- Card 13: ja -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦗ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦗ꧀ꦗ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ja</span>
+        </div>
+        <!-- Card 14: ya -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦪ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦪ꧀ꦪ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ya</span>
+        </div>
+        <!-- Card 15: nya -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦚ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦚ꧀ꦚ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">nya</span>
+        </div>
+        <!-- Card 16: ma -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦩ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦩ꧀ꦩ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ma</span>
+        </div>
+        <!-- Card 17: ga -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦒ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦒ꧀ꦒ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ga</span>
+        </div>
+        <!-- Card 18: ba -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦧ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦧ꧀ꦧ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">ba</span>
+        </div>
+        <!-- Card 19: tha -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦛ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦛ꧀ꦛ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">tha</span>
+        </div>
+        <!-- Card 20: nga -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-2 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[26px] leading-tight text-majapahit-cream">ꦔ</span>
+          <div class="mt-0.5 flex items-baseline gap-1 text-[11px]">
+            <span class="font-poppins text-[9px] uppercase tracking-wider text-stone-soft/50">Pas:</span>
+            <span class="font-local-javanese text-[17px] text-majapahit-light-gold">ꦔ꧀ꦔ</span>
+          </div>
+          <span class="mt-0.5 font-poppins text-xs font-bold text-majapahit-gold uppercase">nga</span>
+        </div>
+      </div>
+
+      <!-- Tab 2: Sandhangan (11 Sandhangan) -->
+      <div id="l1-panel-sandhangan" class="hidden flex-1 grid-cols-4 gap-3 overflow-y-auto py-3 pr-1">
+        <!-- 1. Wulu -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦶ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Wulu ( ꦶ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>i</b> (hi)</span>
+        </div>
+        <!-- 2. Suku -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦸ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Suku ( ꦸ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>u</b> (hu)</span>
+        </div>
+        <!-- 3. Taling -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦺꦲ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Taling ( ꦺ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>é</b> (hé)</span>
+        </div>
+        <!-- 4. Pepet -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦼ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Pepet ( ꦼ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>e</b> (he)</span>
+        </div>
+        <!-- 5. Taling Tarung -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦺꦲꦴ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Taling Tarung ( ꦺꦴ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Swara vokal <b>o</b> (ho)</span>
+        </div>
+        <!-- 6. Layar -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦂ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Layar ( ꦂ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+r</b> (har)</span>
+        </div>
+        <!-- 7. Cecak -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦁ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cecak ( ꦁ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+ng</b> (hang)</span>
+        </div>
+        <!-- 8. Wignyan -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦃ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Wignyan ( ꦃ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Sigeg pungkasan <b>+h</b> (hah)</span>
+        </div>
+        <!-- 9. Pangkon -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲ꧀</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Pangkon ( ꧀ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Mateni aksara vokal (h)</span>
+        </div>
+        <!-- 10. Cakra -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦿ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cakra ( ꦿ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Seselan konsonan <b>+ra</b> (hra)</span>
+        </div>
+        <!-- 11. Cakra Keret -->
+        <div class="flex flex-col items-center justify-center rounded-xl border border-majapahit-dark-gold/70 bg-[#251d16] p-3 text-center shadow-md transition hover:border-majapahit-gold hover:bg-stone-light/30">
+          <span class="font-local-javanese text-[34px] leading-none text-majapahit-light-gold mb-1">ꦲꦽ</span>
+          <span class="font-poppins text-xs font-bold text-majapahit-cream uppercase">Cakra Keret ( ꦽ )</span>
+          <span class="font-poppins text-[10.5px] text-stone-soft/70">Seselan konsonan <b>+re</b> (hre)</span>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between border-t border-majapahit-dark-gold/40 pt-3">
+        <div class="flex items-center gap-2 text-stone-soft/60">
+          <svg class="h-3.5 w-3.5 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <span class="font-poppins text-[10px]">Sinau materi iki kanggo mbantu ngrampungake saben tantangan nulis.</span>
+        </div>
+        <button id="l1-btn-close-materi-bottom" class="kenney-button h-10 w-[180px] cursor-pointer font-poppins text-xs font-bold uppercase tracking-wider text-stone-dark transition hover:scale-105 active:scale-95">
+          Tutup Kitab
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Sentence Challenge Intro Modal (Fullscreen 100% Backdrop) -->
+  <div id="l1-sentence-intro" class="wa-modal-container z-40 hidden opacity-0 transition-opacity duration-300">
     <div class="kenney-panel w-[560px] rounded-2xl border-2 border-majapahit-dark-gold p-6 text-center shadow-2xl">
       <h2 class="font-cinzel text-[20px] font-bold uppercase tracking-widest text-majapahit-gold">Tantangan 2 — Nulis Ukara</h2><div class="mx-auto mt-3 h-px w-2/3 bg-majapahit-dark-gold"></div>
       <p class="mt-3 font-poppins text-[16px] font-bold text-majapahit-cream">"Tulisen ukara iki nganggo aksara Jawa!"</p><p class="mt-2 font-poppins text-[13px] italic leading-relaxed text-stone-soft">"Candi Tikus salah sawijine paninggalan Majapahit kang duweni corak Hindu. Candi iki awujud patirtan."</p>
@@ -600,11 +1132,12 @@ return new `+this.key+`();
     </div>
   </div>
 
-  <div id="l1-reward" class="absolute inset-0 z-50 hidden items-center justify-center bg-black/70 opacity-0 transition-opacity duration-500 pointer-events-auto">
+  <!-- Reward Modal (Fullscreen 100% Backdrop) -->
+  <div id="l1-reward" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-500">
     <div class="kenney-panel relative w-[480px] overflow-hidden rounded-2xl border-2 border-majapahit-gold p-6 text-center shadow-2xl">
       <h2 class="font-cinzel text-[22px] font-bold uppercase tracking-widest text-majapahit-light-gold">Pusaka Kapanggih!</h2><img src="/assets/images/lentera.svg" alt="Lentera pusaka" class="relative mx-auto my-3 h-[150px] w-[150px] animate-wa-float"/><h3 class="font-cinzel text-[17px] font-bold uppercase tracking-wider text-majapahit-gold">Lentera Pusaka</h3><p class="mt-1 mb-4 font-poppins text-[11.5px] leading-relaxed text-stone-soft">Lentera pusaka wis kasil ditemokake. Cahya iki bakal nuntun lakumu ing petualangan sabanjure.</p>
       <button id="l1-btn-claim" class="kenney-button h-11 w-[240px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105">Klaim Pusaka</button>
     </div>
   </div>
 </div>
-`,T;function E(e,t=.1,n=`sine`,r=.15,i=0,a){try{let o=window.AudioContext||window.webkitAudioContext;if(!o)return;T||=new o,T.state===`suspended`&&T.resume();let s=T.createOscillator(),c=T.createGain(),l=T.currentTime+i;s.type=n,s.frequency.setValueAtTime(e,l),a&&s.frequency.exponentialRampToValueAtTime(a,l+t),c.gain.setValueAtTime(.001,l),c.gain.exponentialRampToValueAtTime(r,l+.01),c.gain.exponentialRampToValueAtTime(.001,l+t),s.connect(c).connect(T.destination),s.start(l),s.stop(l+t+.03)}catch{}}var D=()=>E(820,.04,`triangle`,.08),O=()=>E(340,.18,`sine`,.14,0,680),k=()=>{E(660,.12,`triangle`,.16),E(880,.16,`triangle`,.16,.09)},A=()=>E(190,.22,`sawtooth`,.12,0,100),j=()=>[523,659,784,1047].forEach((e,t)=>E(e,.2,`triangle`,.14,t*.1));function M(e){try{if(!window.speechSynthesis)return;window.speechSynthesis.cancel();let t=new SpeechSynthesisUtterance(e);t.lang=`id-ID`,t.rate=.95,window.speechSynthesis.speak(t)}catch{}}function N(){try{window.speechSynthesis?.cancel()}catch{}}var P=e=>e.replace(/\s+/g,``),F=class extends l.default.Scene{constructor(){super(`Level1Scene`)}create(){this.cameras.main.fadeIn(500,0,0,0),b.resetLevelScore(),x.resetCooldown(),this.state={phase:`narrative`,step:0,mode:`words`,wordIndex:0,solved:0,tokens:[],busy:!1},this.elapsed=0,this.hintInterval=null,this.typewriterInterval=null;let e=d.load();e.lastActiveScene=`Level1Scene`,d.save(e),this.gameContainer=document.getElementById(`wasis-aksara-game`)?.parentElement,this.gameContainer&&(this.gameContainer.style.backgroundImage=`url('/assets/images/Bg_CandiTikusNew.png')`,this.gameContainer.style.backgroundSize=`cover`,this.gameContainer.style.backgroundPosition=`center`),this.uiContainer=document.getElementById(`ui-overlay-container`),this.uiContainer&&(this.uiContainer.innerHTML=w),this.$=e=>document.getElementById(e),this.cacheElements(),this.els[`level1-overlay`]?.classList.remove(`hidden`),this.buildPalette(),this.buildWordChips(),this.bindEvents(),this.updateHud(),this.time.delayedCall(150,()=>this.els[`l1-hud`]?.classList.replace(`opacity-0`,`opacity-100`)),this.time.delayedCall(400,()=>this.showNarrative(0)),this.time.addEvent({delay:1e3,loop:!0,callback:()=>this.updateTime()}),this.events.once(`shutdown`,()=>this.cleanup())}cacheElements(){let e=`level1-overlay.l1-hud.l1-time-val.l1-score-val.l1-progress-val.l1-btn-exit.l1-dialog.l1-dialog-text.l1-dialog-next.l1-dialog-next-label.l1-ornament.l1-gate-glow.l1-board.l1-board-title.l1-board-step.l1-target-label.l1-target-latin.l1-wordchips.l1-answer-box.l1-answer.l1-board-msg.l1-palette-legena.l1-palette-sandhangan.l1-palette-pasangan.l1-btn-space.l1-btn-backspace.l1-btn-clear.l1-btn-hint.l1-hint-label.l1-btn-submit.l1-hint-preview.l1-hint-preview-text.l1-sentence-intro.l1-btn-open-sentence.l1-reward.l1-btn-claim`.split(`.`);this.els=Object.fromEntries(e.map(e=>[e,this.$(e)]))}buildPalette(){let e=(e,[t,n])=>{let r=document.createElement(`button`);r.className=`wa-key`,r.innerHTML=`<span class="wa-glyph">${t}</span><span class="wa-latin">${n}</span>`,r.onclick=()=>{this.state.phase!==`board`||this.state.busy||(this.state.tokens.push(t),D(),this.updateAnswer())},e.appendChild(r)};S.palette.legena.forEach(t=>e(this.els[`l1-palette-legena`],t)),S.palette.sandhangan.forEach(t=>e(this.els[`l1-palette-sandhangan`],t)),S.palette.pasangan.forEach(t=>e(this.els[`l1-palette-pasangan`],t))}buildWordChips(){S.words.forEach((e,t)=>{let n=document.createElement(`span`);n.id=`l1-chip-${t}`,n.className=`wa-chip`,n.textContent=e.latin,this.els[`l1-wordchips`].appendChild(n)})}bindEvents(){this.els[`l1-dialog-next`].onclick=()=>this.nextNarrative(),this.els[`l1-ornament`].onclick=()=>this.openWordsBoard(),this.els[`l1-btn-space`].onclick=()=>this.addToken(` `),this.els[`l1-btn-backspace`].onclick=()=>{this.state.tokens.pop(),this.updateAnswer()},this.els[`l1-btn-clear`].onclick=()=>{this.state.tokens=[],this.updateAnswer()},this.els[`l1-btn-submit`].onclick=()=>this.submitAnswer(),this.els[`l1-btn-hint`].onclick=()=>this.useHint(),this.els[`l1-btn-open-sentence`].onclick=()=>{this.hideModal(this.els[`l1-sentence-intro`]),this.openBoard(`sentence`)},this.els[`l1-btn-claim`].onclick=()=>this.claimReward(),this.els[`l1-btn-exit`].onclick=()=>this.leaveToMap(),this.boundElements=Object.values(this.els).filter(Boolean)}showNarrative(e){this.state.step=e,this.state.phase=`narrative`;let t=this.els[`l1-dialog`];t.classList.remove(`hidden`),t.classList.add(`flex`),this.els[`l1-dialog-next-label`].textContent=e===S.narrative.length-1?`MULAI`:`LANJUT`,this.typeText(S.narrative[e]),M(S.narrative[e]),this.fadeIn(t)}typeText(e){clearInterval(this.typewriterInterval),this.els[`l1-dialog-text`].textContent=``;let t=0;this.typewriterInterval=setInterval(()=>{this.els[`l1-dialog-text`].textContent+=e[t++],t>=e.length&&(clearInterval(this.typewriterInterval),this.typewriterInterval=null)},22)}nextNarrative(){if(this.typewriterInterval){clearInterval(this.typewriterInterval),this.typewriterInterval=null,this.els[`l1-dialog-text`].textContent=S.narrative[this.state.step];return}if(this.state.step<S.narrative.length-1){this.showNarrative(this.state.step+1);return}N(),this.state.phase=`transition`,this.fadeOut(this.els[`l1-dialog`],!0),O(),this.time.delayedCall(500,()=>{this.state.phase=`explore`,this.els[`l1-ornament`].classList.remove(`hidden`)})}openWordsBoard(){this.state.phase===`explore`&&this.openBoard(`words`)}openBoard(e){this.state.phase=`board`,this.state.mode=e,this.state.busy=!1,this.state.tokens=[];let t=e===`sentence`;this.els[`l1-board-title`].textContent=t?`Tantangan 2 — Nulis Ukara`:`Tantangan 1 — Mbuka Dalan`,this.els[`l1-target-label`].textContent=t?`Tulisen ukara iki:`:`Tulisen ing Aksara Jawa:`,this.els[`l1-target-latin`].textContent=t?S.sentence.latin:S.words[this.state.wordIndex].latin,this.els[`l1-target-latin`].style.fontSize=t?`13px`:`21px`,this.els[`l1-wordchips`].classList.toggle(`hidden`,t),this.els[`l1-board-step`].textContent=t?`Ukara`:`Tembung ${this.state.wordIndex+1} / 4`,this.updateChipStates(),this.updateAnswer();let n=this.els[`l1-board`];n.classList.remove(`hidden`),requestAnimationFrame(()=>n.classList.remove(`translate-y-full`)),O()}updateChipStates(){S.words.forEach((e,t)=>{let n=this.$(`l1-chip-${t}`);n.classList.toggle(`wa-chip-active`,this.state.mode===`words`&&t===this.state.wordIndex),n.classList.toggle(`wa-chip-done`,t<this.state.solved)})}addToken(e){this.state.phase!==`board`||this.state.busy||(this.state.tokens.push(e),this.updateAnswer())}updateAnswer(){this.els[`l1-answer`].textContent=this.state.tokens.join(``)}submitAnswer(){if(this.state.phase!==`board`||this.state.busy)return;let e=this.state.mode===`sentence`?S.sentence.aksara:S.words[this.state.wordIndex].aksara,t=this.state.tokens.join(``);if(!t)return this.wrongAnswer(`Isian isih kosong.`);if(P(t)!==P(e))return this.wrongAnswer(`Durung bener, coba maneh.`);this.correctAnswer()}wrongAnswer(e){b.addWrongAnswer(),A(),this.els[`l1-board-msg`].textContent=e,this.els[`l1-board-msg`].className=`mt-1 h-[16px] font-poppins text-[11px] font-semibold text-state-error`,this.els[`l1-answer-box`].classList.remove(`animate-wa-shake`),this.els[`l1-answer-box`].offsetWidth,this.els[`l1-answer-box`].classList.add(`animate-wa-shake`)}correctAnswer(){if(this.state.busy=!0,k(),b.addCorrectAnswer(),this.els[`l1-board-msg`].textContent=`Sagestremen! Jawabanmu bener.`,this.els[`l1-board-msg`].className=`mt-1 h-[16px] font-poppins text-[11px] font-semibold text-state-success`,this.updateHud(),this.state.mode===`sentence`){b.addBonus(400),this.updateHud(),this.time.delayedCall(700,()=>{this.closeBoard(),this.time.delayedCall(550,()=>this.showReward())});return}this.state.wordIndex,this.state.solved+=1,this.updateHud(),this.state.solved<S.words.length?this.time.delayedCall(700,()=>{this.state.wordIndex=this.state.solved,this.state.tokens=[],this.els[`l1-target-latin`].textContent=S.words[this.state.wordIndex].latin,this.els[`l1-board-step`].textContent=`Tembung ${this.state.wordIndex+1} / 4`,this.updateChipStates(),this.updateAnswer(),this.state.busy=!1}):this.time.delayedCall(900,()=>{this.closeBoard(),this.completePath()})}completePath(){this.state.phase=`path`,this.els[`l1-ornament`].classList.add(`opacity-40`),this.els[`l1-ornament`].disabled=!0,this.time.delayedCall(300,()=>{this.els[`l1-gate-glow`].classList.remove(`hidden`),this.cameras.main.flash(450,242,210,138),j(),this.time.delayedCall(1500,()=>this.showSentenceIntro())})}showSentenceIntro(){this.state.phase=`intro`,this.showModal(this.els[`l1-sentence-intro`])}useHint(){if(this.state.phase!==`board`||!x.triggerHint())return;let e=this.state.mode===`sentence`?S.sentence.aksara:S.words[this.state.wordIndex].aksara;this.els[`l1-hint-preview-text`].textContent=e,this.els[`l1-hint-preview`].classList.remove(`hidden`),this.time.delayedCall(4e3,()=>this.els[`l1-hint-preview`].classList.add(`hidden`)),clearInterval(this.hintInterval),this.hintInterval=setInterval(()=>{let e=x.getRemainingCooldown();this.els[`l1-hint-label`].textContent=e?`${e}s`:``,e||clearInterval(this.hintInterval)},500)}showReward(){this.state.phase=`reward`,j(),this.showModal(this.els[`l1-reward`])}claimReward(){let e=d.load();e.artifacts||=[],e.artifacts.includes(S.reward.id)||e.artifacts.push(S.reward.id),d.save(e);let t=C.find(e=>e.level===1)?.targetScore||1e3,n=b.currentScore,r=b.calculateStars(n,t);this.state.phase=`finished`,this.els[`level1-overlay`].style.opacity=`0`,this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>this.scene.start(`ResultScene`,{level:1,score:n,stars:r}))}leaveToMap(){this.state.phase!==`finished`&&(N(),this.cameras.main.fadeOut(350,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>this.scene.start(`MapScene`)))}showModal(e){e.classList.remove(`hidden`),e.classList.add(`flex`),requestAnimationFrame(()=>e.classList.replace(`opacity-0`,`opacity-100`))}hideModal(e){e.classList.replace(`opacity-100`,`opacity-0`),this.time.delayedCall(300,()=>{e.classList.add(`hidden`),e.classList.remove(`flex`)})}closeBoard(){this.els[`l1-board`].classList.add(`translate-y-full`),this.time.delayedCall(500,()=>this.els[`l1-board`].classList.add(`hidden`))}fadeIn(e){requestAnimationFrame(()=>e.classList.replace(`opacity-0`,`opacity-100`))}fadeOut(e,t=!1){e.classList.replace(`opacity-100`,`opacity-0`),t&&this.time.delayedCall(500,()=>{e.classList.add(`hidden`),e.classList.remove(`flex`)})}updateHud(){this.els?.[`l1-score-val`]&&(this.els[`l1-score-val`].textContent=b.currentScore),this.els?.[`l1-progress-val`]&&(this.els[`l1-progress-val`].textContent=`${this.state?.solved||0} / 4`)}updateTime(){this.elapsed+=1;let e=String(Math.floor(this.elapsed/60)).padStart(2,`0`),t=String(this.elapsed%60).padStart(2,`0`);this.els?.[`l1-time-val`]&&(this.els[`l1-time-val`].textContent=`${e}:${t}`)}cleanup(){N(),clearInterval(this.typewriterInterval),clearInterval(this.hintInterval),this.boundElements?.forEach(e=>{e.onclick=null}),this.uiContainer&&(this.uiContainer.innerHTML=``),this.gameContainer&&(this.gameContainer.style.backgroundImage=`none`)}},I=class extends l.default.Scene{constructor(){super(`Level2Scene`)}create(){console.log(`Level2Scene: created.`),this.cameras.main.fadeIn(500,0,0,0),this.add.text(640,100,`LEVEL 2: SANDHANGAN`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Complete Link - Hubungkan Aksara dengan Sandhangan yang Tepat]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`ResultScene`,{level:2,score:800,stars:2})})})}},L=class extends l.default.Scene{constructor(){super(`Level3Scene`)}create(){console.log(`Level3Scene: created.`),this.cameras.main.fadeIn(500,0,0,0),this.add.text(640,100,`LEVEL 3: PASANGAN`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Fill in Blank - Lengkapi Pasangan Aksara]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`ResultScene`,{level:3,score:950,stars:3})})})}},R=class extends l.default.Scene{constructor(){super(`Level4Scene`)}create(){console.log(`Level4Scene: created.`),this.cameras.main.fadeIn(500,0,0,0),this.add.text(640,100,`LEVEL 4: MURDA & REKAN`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Formula Puzzle - Susun Aksara Murda & Rekan]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`ResultScene`,{level:4,score:700,stars:2})})})}},z=class extends l.default.Scene{constructor(){super(`Level5Scene`)}create(){console.log(`Level5Scene: created.`),this.cameras.main.fadeIn(500,0,0,0),this.add.text(640,100,`LEVEL 5: AKSARA SWARA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Audio Recognition - Dengar Suara dan Pilih Aksara Swara yang Benar]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`ResultScene`,{level:5,score:1200,stars:3})})})}},B=class extends l.default.Scene{constructor(){super(`ResultScene`)}create(e){console.log(`ResultScene: created. Received data:`,e),this.cameras.main.fadeIn(500,0,0,0);let t=e.level||1,n=e.score||0,r=e.stars||0,i=d.load();i.stars=i.stars||[0,0,0,0,0],i.scores=i.scores||[0,0,0,0,0],r>i.stars[t-1]&&(i.stars[t-1]=r),n>i.scores[t-1]&&(i.scores[t-1]=n);let a=t+1;t===i.currentLevel&&a<=5&&(i.currentLevel=a),i.score=i.scores.reduce((e,t)=>e+t,0),d.save(i),this.add.text(640,150,`HASIL TANTANGAN`,{fontFamily:`Cinzel`,fontSize:`40px`,color:`#d4a64a`,fontWeight:`bold`}).setOrigin(.5),this.add.text(640,230,`Level ${t} Menyelesaikan Candi`,{fontFamily:`Marcellus`,fontSize:`24px`,color:`#fff2cc`}).setOrigin(.5);let o=`★`.repeat(r)+`☆`.repeat(3-r);this.add.text(640,320,o,{fontFamily:`Poppins`,fontSize:`48px`,color:`#f2d28a`}).setOrigin(.5),this.add.text(640,400,`Skor Diperoleh: ${n}`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.cameras.main.fadeOut(500,0,0,0),this.cameras.main.once(l.default.Cameras.Scene2D.Events.FADE_OUT_COMPLETE,()=>{this.scene.start(`MapScene`)})})}},V=class extends l.default.Scene{constructor(){super(`InventoryScene`)}create(){console.log(`InventoryScene: created.`),this.add.text(640,100,`ALBUM KELENGKAPAN PUSAKA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[5 Pusaka Majapahit: Miniatur Wringin Lawang, Cawan Tirta Swara, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.scene.start(`MapScene`)})}},H=class extends l.default.Scene{constructor(){super(`KamusScene`)}create(){console.log(`KamusScene: created.`),this.add.text(640,100,`KAMUS AKSARA JAWA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Panduan Referensi Aksara Legena, Sandhangan, Pasangan, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.scene.start(`MapScene`)})}},U=class extends l.default.Scene{constructor(){super(`AchievementScene`)}create(){console.log(`AchievementScene: created.`),this.add.text(640,100,`PENCAPAIAN DAN BADGE`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Badges: Pionir Aksara, Pemburu Bintang, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.scene.start(`MapScene`)})}},W=class extends l.default.Scene{constructor(){super(`FinalChallengeScene`)}create(){console.log(`FinalChallengeScene: created.`),this.add.text(640,100,`ALTAR PAMUNGKAS`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Penyusunan Kalimat Filosofis Jawa]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Menyelesaikan Game`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.scene.start(`EndingScene`)})}},G=class extends l.default.Scene{constructor(){super(`EndingScene`)}create(){console.log(`EndingScene: created.`),this.add.text(640,200,`SELAMAT!`,{fontFamily:`Cinzel`,fontSize:`48px`,color:`#d4a64a`,fontWeight:`bold`}).setOrigin(.5),this.add.text(640,300,`Anda Telah Menyelesaikan Petualangan Wasis Aksara`,{fontFamily:`Marcellus`,fontSize:`24px`,color:`#fff2cc`}).setOrigin(.5),this.add.text(640,400,`Baskara berhasil mengumpulkan pusaka leluhur Majapahit.`,{fontFamily:`Poppins`,fontSize:`18px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Menu Utama`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{this.scene.start(`MainMenuScene`)})}},K={type:l.default.AUTO,width:1280,height:720,parent:`wasis-aksara-game`,transparent:!0,scale:{mode:l.default.Scale.FIT,autoCenter:l.default.Scale.CENTER_BOTH},physics:{default:`arcade`,arcade:{gravity:{y:0},debug:!1}},scene:[u,f,h,_,y,F,I,L,R,z,B,V,H,U,W,G]},q=class extends l.default.Game{constructor(){super(K)}};window.addEventListener(`load`,()=>{screen.orientation&&screen.orientation.lock&&screen.orientation.lock(`landscape`).catch(e=>{console.warn(`Screen orientation lock to landscape failed/unsupported:`,e)});let e=()=>{let e=document.getElementById(`ui-overlay-container`);if(!e)return;let t=window.innerWidth,n=window.innerHeight,r=t/n,i=1;i=r>1.7777777777777777?n/720:t/1280,e.style.transform=`translate(-50%, -50%) scale(${i})`};e(),window.addEventListener(`resize`,e),window.addEventListener(`orientationchange`,e),window.game=new q,console.log(`Wasis Aksara Game Initialized Successfully.`)});
+`,D;function O(e,t=.1,n=`sine`,r=.15,i=0,a){try{let o=window.AudioContext||window.webkitAudioContext;if(!o)return;D||=new o,D.state===`suspended`&&D.resume();let s=D.createOscillator(),c=D.createGain(),l=D.currentTime+i;s.type=n,s.frequency.setValueAtTime(e,l),a&&s.frequency.exponentialRampToValueAtTime(a,l+t),c.gain.setValueAtTime(.001,l),c.gain.exponentialRampToValueAtTime(r,l+.01),c.gain.exponentialRampToValueAtTime(.001,l+t),s.connect(c).connect(D.destination),s.start(l),s.stop(l+t+.03)}catch{}}var k=()=>O(820,.04,`triangle`,.08),A=()=>O(340,.18,`sine`,.14,0,680),j=()=>{O(660,.12,`triangle`,.16),O(880,.16,`triangle`,.16,.09)},M=()=>O(190,.22,`sawtooth`,.12,0,100),N=()=>[523,659,784,1047].forEach((e,t)=>O(e,.2,`triangle`,.14,t*.1)),P=class extends l.default.Scene{constructor(){super(`Level1Scene`)}create(){g(this,500),S.resetLevelScore(),C.resetCooldown(),this.state={phase:`narrative`,step:0,mode:`words`,wordIndex:0,solved:0,tokens:[],busy:!1},this.elapsed=0,this.hintInterval=null,this.typewriterInterval=null;let e=d.load();e.lastActiveScene=`Level1Scene`,d.save(e),this.gameContainer=document.getElementById(`wasis-aksara-game`)?.parentElement,this.gameContainer&&(this.gameContainer.style.backgroundImage=`url('/assets/images/Bg_CandiTikusNew.png')`,this.gameContainer.style.backgroundSize=`cover`,this.gameContainer.style.backgroundPosition=`center`),this.uiContainer=document.getElementById(`ui-overlay-container`),this.uiContainer&&(this.uiContainer.innerHTML=E),this.$=e=>document.getElementById(e),this.cacheElements(),this.els[`level1-overlay`]?.classList.remove(`hidden`),this.setupWritingCanvas(),this.buildWordChips(),this.bindEvents(),this.updateHud(),this.time.delayedCall(150,()=>this.els[`l1-hud`]?.classList.replace(`opacity-0`,`opacity-100`)),this.time.delayedCall(400,()=>this.showNarrative(0)),this.time.addEvent({delay:1e3,loop:!0,callback:()=>this.updateTime()}),this.events.once(`shutdown`,()=>this.cleanup())}cacheElements(){let e=`level1-overlay.l1-hud.l1-time-val.l1-score-val.l1-progress-val.l1-btn-exit.l1-btn-materi.l1-dialog.l1-dialog-text.l1-dialog-next.l1-dialog-next-label.l1-ornament.l1-gate-glow.l1-board.l1-board-title.l1-board-step.l1-target-card.l1-target-label.l1-target-latin.l1-wordchips.l1-board-msg-box.l1-board-msg.l1-canvas-wrap.l1-writing-canvas.l1-canvas-placeholder.l1-btn-pen.l1-btn-eraser.l1-btn-clear.l1-btn-hint.l1-hint-label.l1-btn-materi-board.l1-btn-submit.l1-hint-preview.l1-hint-preview-text.l1-sentence-intro.l1-btn-open-sentence.l1-reward.l1-btn-claim.l1-materi-modal.l1-btn-close-materi.l1-btn-close-materi-bottom.l1-tab-legena.l1-tab-sandhangan.l1-panel-legena.l1-panel-sandhangan`.split(`.`);this.els=Object.fromEntries(e.map(e=>[e,this.$(e)]))}setupWritingCanvas(){let e=this.els[`l1-writing-canvas`];this.canvasContext=e.getContext(`2d`),this.referenceCanvas=document.createElement(`canvas`),this.referenceCanvas.width=e.width,this.referenceCanvas.height=e.height,this.referenceContext=this.referenceCanvas.getContext(`2d`),this.canvasState={drawing:!1,hasInk:!1,tool:`pen`},e.style.touchAction=`none`,e.addEventListener(`pointerdown`,t=>{if(this.state.phase!==`board`||this.state.busy)return;this.canvasState.drawing=!0,this.canvasState.tool===`pen`&&(this.canvasState.hasInk=!0),e.setPointerCapture(t.pointerId);let n=this.canvasPoint(t);this.canvasContext.globalCompositeOperation=this.canvasState.tool===`eraser`?`destination-out`:`source-over`,this.canvasContext.lineWidth=this.canvasState.tool===`eraser`?28:5,this.canvasContext.beginPath(),this.canvasContext.moveTo(n.x,n.y),this.els[`l1-canvas-placeholder`].classList.add(`hidden`),k()}),e.addEventListener(`pointermove`,e=>{if(!this.canvasState.drawing)return;let t=this.canvasPoint(e);this.canvasContext.lineTo(t.x,t.y),this.canvasContext.stroke()});let t=()=>{this.canvasState.drawing=!1,this.canvasContext.closePath(),this.canvasState.tool===`eraser`&&this.refreshInkState()};e.addEventListener(`pointerup`,t),e.addEventListener(`pointercancel`,t),e.addEventListener(`pointerleave`,()=>{this.canvasState.drawing&&t()}),this.canvasContext.lineWidth=5,this.canvasContext.lineCap=`round`,this.canvasContext.lineJoin=`round`,this.canvasContext.strokeStyle=`#fff2cc`}buildWordChips(){w.words.forEach((e,t)=>{let n=document.createElement(`span`);n.id=`l1-chip-${t}`,n.className=`wa-chip`,n.textContent=e.latin,this.els[`l1-wordchips`].appendChild(n)})}bindEvents(){this.els[`l1-dialog-next`].onclick=()=>this.nextNarrative(),this.els[`l1-ornament`].onclick=()=>this.openWordsBoard(),this.els[`l1-btn-pen`].onclick=()=>this.setDrawingTool(`pen`),this.els[`l1-btn-eraser`].onclick=()=>this.setDrawingTool(`eraser`),this.els[`l1-btn-clear`].onclick=()=>this.clearCanvas(),this.els[`l1-btn-submit`].onclick=()=>this.submitAnswer(),this.els[`l1-btn-hint`].onclick=()=>this.useHint(),this.els[`l1-btn-materi`]&&(this.els[`l1-btn-materi`].onclick=()=>this.openMateriModal()),this.els[`l1-btn-materi-board`]&&(this.els[`l1-btn-materi-board`].onclick=()=>this.openMateriModal()),this.els[`l1-btn-close-materi`]&&(this.els[`l1-btn-close-materi`].onclick=()=>this.closeMateriModal()),this.els[`l1-btn-close-materi-bottom`]&&(this.els[`l1-btn-close-materi-bottom`].onclick=()=>this.closeMateriModal()),this.els[`l1-tab-legena`]&&(this.els[`l1-tab-legena`].onclick=()=>this.switchMateriTab(`legena`)),this.els[`l1-tab-sandhangan`]&&(this.els[`l1-tab-sandhangan`].onclick=()=>this.switchMateriTab(`sandhangan`)),this.els[`l1-btn-open-sentence`].onclick=()=>{this.hideModal(this.els[`l1-sentence-intro`]),this.openBoard(`sentence`)},this.els[`l1-btn-claim`].onclick=()=>this.claimReward(),this.els[`l1-btn-exit`].onclick=()=>this.leaveToMap(),this.boundElements=Object.values(this.els).filter(Boolean)}showNarrative(e){this.state.step=e,this.state.phase=`narrative`;let t=this.els[`l1-dialog`];t.classList.remove(`hidden`),t.classList.add(`flex`),this.els[`l1-dialog-next-label`].textContent=e===w.narrative.length-1?`MULAI`:`LANJUT`,this.typeText(w.narrative[e]),this.fadeIn(t),this.els[`l1-ornament`]&&(this.els[`l1-ornament`].classList.add(`hidden`),this.els[`l1-ornament`].classList.remove(`flex`))}typeText(e){clearInterval(this.typewriterInterval),this.els[`l1-dialog-text`].textContent=``;let t=0;this.typewriterInterval=setInterval(()=>{this.els[`l1-dialog-text`].textContent+=e[t++],t>=e.length&&(clearInterval(this.typewriterInterval),this.typewriterInterval=null)},22)}nextNarrative(){if(this.typewriterInterval){clearInterval(this.typewriterInterval),this.typewriterInterval=null,this.els[`l1-dialog-text`].textContent=w.narrative[this.state.step];return}if(this.state.step<w.narrative.length-1){this.showNarrative(this.state.step+1);return}this.state.phase=`transition`,this.fadeOut(this.els[`l1-dialog`],!0),A(),this.time.delayedCall(500,()=>{this.state.phase=`explore`,this.els[`l1-ornament`]&&(this.els[`l1-ornament`].classList.remove(`hidden`),this.els[`l1-ornament`].classList.add(`flex`))})}openWordsBoard(){this.state.phase===`explore`&&(this.els[`l1-ornament`]&&(this.els[`l1-ornament`].classList.add(`hidden`),this.els[`l1-ornament`].classList.remove(`flex`)),this.openBoard(`words`))}openBoard(e){this.state.phase=`board`,this.state.mode=e,this.state.busy=!1,this.state.tokens=[];let t=e===`sentence`;this.els[`l1-board-title`].textContent=t?`Tantangan 2 — Nulis Ukara`:`Tantangan 1 — Mbuka Dalan`,this.els[`l1-target-label`].textContent=t?`Tulisen ukara iki:`:`Tulisen ing Aksara Jawa:`,this.els[`l1-target-latin`].textContent=t?w.sentence.latin:w.words[this.state.wordIndex].latin,this.els[`l1-target-latin`].style.fontSize=t?`13px`:`21px`,this.els[`l1-wordchips`].classList.toggle(`hidden`,t),this.els[`l1-board-step`].textContent=t?`Ukara`:`Tembung ${this.state.wordIndex+1} / 4`,this.els[`l1-board-msg`]&&(this.els[`l1-board-msg`].textContent=``),this.updateChipStates(),this.clearCanvas(),this.drawGuide(t?w.sentence.aksara:w.words[this.state.wordIndex].aksara);let n=this.els[`l1-board`];n.classList.remove(`hidden`),requestAnimationFrame(()=>n.classList.remove(`translate-y-full`)),A()}updateChipStates(){w.words.forEach((e,t)=>{let n=this.$(`l1-chip-${t}`);n.classList.toggle(`wa-chip-active`,this.state.mode===`words`&&t===this.state.wordIndex),n.classList.toggle(`wa-chip-done`,t<this.state.solved)})}canvasPoint(e){let t=this.els[`l1-writing-canvas`],n=t.getBoundingClientRect();return{x:(e.clientX-n.left)*t.width/n.width,y:(e.clientY-n.top)*t.height/n.height}}setDrawingTool(e){this.canvasState.tool=e,this.els[`l1-btn-pen`].classList.toggle(`wa-tool-active`,e===`pen`),this.els[`l1-btn-eraser`].classList.toggle(`wa-tool-active`,e===`eraser`),this.els[`l1-writing-canvas`].classList.toggle(`is-erasing`,e===`eraser`),this.canvasContext.globalCompositeOperation=e===`eraser`?`destination-out`:`source-over`,this.canvasContext.lineWidth=e===`eraser`?28:5}refreshInkState(){let e=this.els[`l1-writing-canvas`],t=this.canvasContext.getImageData(0,0,e.width,e.height).data;this.canvasState.hasInk=!1;for(let e=3;e<t.length;e+=16)if(t[e]>24){this.canvasState.hasInk=!0;break}this.els[`l1-canvas-placeholder`].classList.toggle(`hidden`,this.canvasState.hasInk)}clearCanvas(){let e=this.els[`l1-writing-canvas`];this.canvasContext.clearRect(0,0,e.width,e.height),this.canvasState.hasInk=!1,this.canvasState.drawing=!1,this.canvasContext.globalCompositeOperation=`source-over`,this.setDrawingTool(`pen`),this.els[`l1-canvas-placeholder`].classList.remove(`hidden`),this.drawGuide(this.state.mode===`sentence`?w.sentence.aksara:w.words[this.state.wordIndex].aksara)}drawGuide(e){let t=this.els[`l1-writing-canvas`];this.referenceContext.clearRect(0,0,t.width,t.height),this.referenceContext.save(),this.referenceContext.font=this.state.mode===`sentence`?`28px javanese`:`58px javanese`,this.referenceContext.textAlign=`center`,this.referenceContext.textBaseline=`middle`,this.referenceContext.fillStyle=`#ffffff`,this.referenceContext.fillText(e,t.width/2,t.height/2),this.referenceContext.restore()}submitAnswer(){if(this.state.phase!==`board`||this.state.busy)return;if(!this.canvasState.hasInk)return this.wrongAnswer(`Tulisen dhisik ing papan.`);let e=this.measureWritingSimilarity();if(!e.valid)return this.wrongAnswer(`Tulisanmu durung cedhak karo conto (${Math.round(e.score*100)}%). Coba tiru maneh.`);this.correctAnswer()}measureWritingSimilarity(){let e=this.els[`l1-writing-canvas`].width,t=this.els[`l1-writing-canvas`].height,n=this.canvasContext.getImageData(0,0,e,t).data,r=this.referenceContext.getImageData(0,0,e,t).data,i=n=>{let r=e,i=t,a=-1,o=-1;for(let s=0;s<t;s+=2)for(let t=0;t<e;t+=2)n[(s*e+t)*4+3]>24&&(r=Math.min(r,t),i=Math.min(i,s),a=Math.max(a,t),o=Math.max(o,s));if(a<0)return null;let s=Array.from({length:20},()=>Array(64).fill(!1)),c=Math.max(1,a-r+1),l=Math.max(1,o-i+1);for(let t=0;t<20;t+=1)for(let a=0;a<64;a+=1){let o=Math.floor(r+a*c/64),u=Math.ceil(r+(a+1)*c/64),d=Math.floor(i+t*l/20),f=Math.ceil(i+(t+1)*l/20);for(let r=d;r<f;r+=2)for(let i=o;i<u;i+=2)n[(r*e+i)*4+3]>24&&(s[t][a]=!0)}let u=s.flat().filter(Boolean).length;return{mask:s,active:u,aspect:c/l,density:u/1280}},a=i(n),o=i(r);if(!a||!o)return{score:0,valid:!1};let s=a.mask,c=o.mask,l=(e,t,n)=>{for(let r=Math.max(0,t-1);r<=Math.min(19,t+1);r+=1)for(let t=Math.max(0,n-1);t<=Math.min(63,n+1);t+=1)if(e[r][t])return!0;return!1},u=0,d=0,f=0,p=0,m=0,h=0;for(let e=0;e<20;e+=1)for(let t=0;t<64;t+=1)s[e][t]&&(u+=1,l(c,e,t)&&(f+=1)),c[e][t]&&(d+=1,l(s,e,t)&&(p+=1)),s[e][t]&&c[e][t]&&(m+=1),(s[e][t]||c[e][t])&&(h+=1);if(!u||!d)return{score:0,valid:!1};let g=f/u,_=p/d,v=2*g*_/Math.max(.001,g+_),y=m/Math.max(1,h),b=Math.min(a.aspect,o.aspect)/Math.max(a.aspect,o.aspect),x=Math.min(a.density,o.density)/Math.max(a.density,o.density),S=e=>{let t=e===`row`?20:64,n=e===`row`?64:20,r=0;for(let i=0;i<t;i+=1){let t=0,a=0;for(let r=0;r<n;r+=1){let n=e===`row`?i:r,o=e===`row`?r:i;s[n][o]&&(t+=1),c[n][o]&&(a+=1)}r+=Math.abs(t-a)/n}return Math.max(0,1-r/t)},C=(S(`row`)+S(`column`))/2,w=y*.35+v*.3+C*.2+b*.08+x*.07;return{score:w,valid:w>=.64&&y>=.25&&g>=.56&&_>=.52&&C>=.82&&b>=.68&&x>=.6}}wrongAnswer(e){S.addWrongAnswer(),M(),this.els[`l1-board-msg`]&&(this.els[`l1-board-msg`].textContent=e,this.els[`l1-board-msg`].className=`font-poppins text-[11px] font-semibold text-state-error`);let t=this.els[`l1-target-card`]||this.els[`l1-board-msg-box`];t&&(t.classList.remove(`animate-wa-shake`),t.offsetWidth,t.classList.add(`animate-wa-shake`))}correctAnswer(){if(this.state.busy=!0,j(),S.addCorrectAnswer(),this.els[`l1-board-msg`]&&(this.els[`l1-board-msg`].textContent=`Sagestremen! Jawabanmu bener.`,this.els[`l1-board-msg`].className=`font-poppins text-[11px] font-semibold text-state-success`),this.updateHud(),this.state.mode===`sentence`){S.addBonus(400),this.updateHud(),this.time.delayedCall(700,()=>{this.closeBoard(),this.time.delayedCall(550,()=>this.showReward())});return}this.state.wordIndex,this.state.solved+=1,this.updateHud(),this.state.solved<w.words.length?this.time.delayedCall(700,()=>{this.state.wordIndex=this.state.solved,this.state.tokens=[],this.els[`l1-target-latin`].textContent=w.words[this.state.wordIndex].latin,this.els[`l1-board-step`].textContent=`Tembung ${this.state.wordIndex+1} / 4`,this.els[`l1-board-msg`]&&(this.els[`l1-board-msg`].textContent=``),this.updateChipStates(),this.clearCanvas(),this.state.busy=!1}):this.time.delayedCall(900,()=>{this.closeBoard(),this.completePath()})}completePath(){this.state.phase=`path`,this.els[`l1-ornament`]&&(this.els[`l1-ornament`].classList.add(`hidden`),this.els[`l1-ornament`].classList.remove(`flex`)),this.time.delayedCall(300,()=>{this.els[`l1-gate-glow`].classList.remove(`hidden`),N(),this.time.delayedCall(1500,()=>this.showSentenceIntro())})}showSentenceIntro(){this.state.phase=`intro`,this.showModal(this.els[`l1-sentence-intro`])}useHint(){if(this.state.phase!==`board`||!C.triggerHint())return;let e=this.state.mode===`sentence`?w.sentence.aksara:w.words[this.state.wordIndex].aksara;this.els[`l1-hint-preview-text`].textContent=e,this.els[`l1-hint-preview`].classList.remove(`hidden`),this.time.delayedCall(4e3,()=>this.els[`l1-hint-preview`].classList.add(`hidden`)),clearInterval(this.hintInterval),this.hintInterval=setInterval(()=>{let e=C.getRemainingCooldown();this.els[`l1-hint-label`].textContent=e?`${e}s`:``,e||clearInterval(this.hintInterval)},500)}showReward(){this.state.phase=`reward`,N(),this.showModal(this.els[`l1-reward`])}claimReward(){let e=d.load();e.artifacts||=[],e.artifacts.includes(w.reward.id)||e.artifacts.push(w.reward.id),d.save(e);let t=T.find(e=>e.level===1)?.targetScore||1e3,n=S.currentScore,r=S.calculateStars(n,t);this.state.phase=`finished`,this.els[`level1-overlay`].style.opacity=`0`,h(this,500,()=>this.scene.start(`ResultScene`,{level:1,score:n,stars:r}))}leaveToMap(){this.state.phase!==`finished`&&h(this,350,()=>this.scene.start(`MapScene`))}showModal(e){e&&(e.classList.remove(`hidden`),e.classList.add(`flex`),requestAnimationFrame(()=>e.classList.replace(`opacity-0`,`opacity-100`)))}hideModal(e){e&&(e.classList.replace(`opacity-100`,`opacity-0`),this.time.delayedCall(300,()=>{e.classList.add(`hidden`),e.classList.remove(`flex`)}))}openMateriModal(){this.showModal(this.els[`l1-materi-modal`])}closeMateriModal(){this.hideModal(this.els[`l1-materi-modal`])}switchMateriTab(e){let t=e===`legena`;this.els[`l1-tab-legena`]&&(this.els[`l1-tab-legena`].classList.toggle(`bg-majapahit-gold`,t),this.els[`l1-tab-legena`].classList.toggle(`text-stone-dark`,t),this.els[`l1-tab-legena`].classList.toggle(`text-stone-soft/80`,!t)),this.els[`l1-tab-sandhangan`]&&(this.els[`l1-tab-sandhangan`].classList.toggle(`bg-majapahit-gold`,!t),this.els[`l1-tab-sandhangan`].classList.toggle(`text-stone-dark`,!t),this.els[`l1-tab-sandhangan`].classList.toggle(`text-stone-soft/80`,t)),this.els[`l1-panel-legena`]&&(this.els[`l1-panel-legena`].classList.toggle(`hidden`,!t),this.els[`l1-panel-legena`].classList.toggle(`grid`,t)),this.els[`l1-panel-sandhangan`]&&(this.els[`l1-panel-sandhangan`].classList.toggle(`hidden`,t),this.els[`l1-panel-sandhangan`].classList.toggle(`grid`,!t))}closeBoard(){this.els[`l1-board`].classList.add(`translate-y-full`),this.time.delayedCall(500,()=>this.els[`l1-board`].classList.add(`hidden`))}fadeIn(e){requestAnimationFrame(()=>e.classList.replace(`opacity-0`,`opacity-100`))}fadeOut(e,t=!1){e.classList.replace(`opacity-100`,`opacity-0`),t&&this.time.delayedCall(500,()=>{e.classList.add(`hidden`),e.classList.remove(`flex`)})}updateHud(){this.els?.[`l1-score-val`]&&(this.els[`l1-score-val`].textContent=S.currentScore),this.els?.[`l1-progress-val`]&&(this.els[`l1-progress-val`].textContent=`${this.state?.solved||0} / 4`)}updateTime(){this.elapsed+=1;let e=String(Math.floor(this.elapsed/60)).padStart(2,`0`),t=String(this.elapsed%60).padStart(2,`0`);this.els?.[`l1-time-val`]&&(this.els[`l1-time-val`].textContent=`${e}:${t}`)}cleanup(){clearInterval(this.typewriterInterval),clearInterval(this.hintInterval),this.boundElements?.forEach(e=>{e.onclick=null}),this.uiContainer&&(this.uiContainer.innerHTML=``),this.gameContainer&&(this.gameContainer.style.backgroundImage=`none`)}},F=class extends l.default.Scene{constructor(){super(`Level2Scene`)}create(){console.log(`Level2Scene: created.`),g(this,500),this.add.text(640,100,`LEVEL 2: SANDHANGAN`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Complete Link - Hubungkan Aksara dengan Sandhangan yang Tepat]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`ResultScene`,{level:2,score:800,stars:2})})})}},I=class extends l.default.Scene{constructor(){super(`Level3Scene`)}create(){console.log(`Level3Scene: created.`),g(this,500),this.add.text(640,100,`LEVEL 3: PASANGAN AKSARA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Word Puzzle - Susun Pasangan Aksara Jawa Membentuk Kata]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`ResultScene`,{level:3,score:850,stars:3})})})}},L=class extends l.default.Scene{constructor(){super(`Level4Scene`)}create(){console.log(`Level4Scene: created.`),g(this,500),this.add.text(640,100,`LEVEL 4: MURDA & REKAN`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Formula Puzzle - Susun Aksara Murda & Rekan]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`ResultScene`,{level:4,score:700,stars:2})})})}},R=class extends l.default.Scene{constructor(){super(`Level5Scene`)}create(){console.log(`Level5Scene: created.`),g(this,500),this.add.text(640,100,`LEVEL 5: AKSARA SWARA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Audio Recognition - Dengar Suara dan Pilih Aksara Swara yang Benar]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk menyelesaikan level`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`ResultScene`,{level:5,score:1200,stars:3})})})}},z=class extends l.default.Scene{constructor(){super(`ResultScene`)}create(e){console.log(`ResultScene: created. Received data:`,e),g(this,500);let t=e.level||1,n=e.score||0,r=e.stars||0,i=d.load();i.stars=i.stars||[0,0,0,0,0],i.scores=i.scores||[0,0,0,0,0],r>i.stars[t-1]&&(i.stars[t-1]=r),n>i.scores[t-1]&&(i.scores[t-1]=n);let a=t+1;t===i.currentLevel&&a<=5&&(i.currentLevel=a),i.score=i.scores.reduce((e,t)=>e+t,0),d.save(i),this.add.text(640,150,`HASIL TANTANGAN`,{fontFamily:`Cinzel`,fontSize:`40px`,color:`#d4a64a`,fontWeight:`bold`}).setOrigin(.5),this.add.text(640,230,`Level ${t} Menyelesaikan Candi`,{fontFamily:`Marcellus`,fontSize:`24px`,color:`#fff2cc`}).setOrigin(.5);let o=`★`.repeat(r)+`☆`.repeat(3-r);this.add.text(640,320,o,{fontFamily:`Poppins`,fontSize:`48px`,color:`#f2d28a`}).setOrigin(.5),this.add.text(640,400,`Skor Diperoleh: ${n}`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`MapScene`)})})}},B=class extends l.default.Scene{constructor(){super(`InventoryScene`)}create(){console.log(`InventoryScene: created.`),g(this,500),this.add.text(640,100,`ALBUM KELENGKAPAN PUSAKA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[5 Pusaka Majapahit: Miniatur Wringin Lawang, Cawan Tirta Swara, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`MapScene`)})})}},V=class extends l.default.Scene{constructor(){super(`KamusScene`)}create(){console.log(`KamusScene: created.`),g(this,500),this.add.text(640,100,`KAMUS AKSARA JAWA`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Panduan Referensi Aksara Legena, Sandhangan, Pasangan, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`MapScene`)})})}},H=class extends l.default.Scene{constructor(){super(`AchievementScene`)}create(){console.log(`AchievementScene: created.`),g(this,500),this.add.text(640,100,`PENCAPAIAN DAN BADGE`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Badges: Pionir Aksara, Pemburu Bintang, dll.]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Peta`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`MapScene`)})})}},U=class extends l.default.Scene{constructor(){super(`FinalChallengeScene`)}create(){console.log(`FinalChallengeScene: created.`),g(this,500),this.add.text(640,100,`ALTAR PAMUNGKAS`,{fontFamily:`Cinzel`,fontSize:`32px`,color:`#d4a64a`,fontWeight:`semibold`}).setOrigin(.5),this.add.text(640,360,`[Gameplay: Penyusunan Kalimat Filosofis Jawa]`,{fontFamily:`Poppins`,fontSize:`20px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Menyelesaikan Game`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`EndingScene`)})})}},W=class extends l.default.Scene{constructor(){super(`EndingScene`)}create(){console.log(`EndingScene: created.`),g(this,500),this.add.text(640,200,`SELAMAT!`,{fontFamily:`Cinzel`,fontSize:`48px`,color:`#d4a64a`,fontWeight:`bold`}).setOrigin(.5),this.add.text(640,300,`Anda Telah Menyelesaikan Petualangan Wasis Aksara`,{fontFamily:`Marcellus`,fontSize:`24px`,color:`#fff2cc`}).setOrigin(.5),this.add.text(640,400,`Baskara berhasil mengumpulkan pusaka leluhur Majapahit.`,{fontFamily:`Poppins`,fontSize:`18px`,color:`#e8e1d4`}).setOrigin(.5),this.add.text(640,600,`Klik untuk Kembali ke Menu Utama`,{fontFamily:`Poppins`,fontSize:`14px`,color:`#fff2cc`}).setOrigin(.5),this.input.once(`pointerdown`,()=>{h(this,500,()=>{this.scene.start(`MainMenuScene`)})})}},G={type:l.default.AUTO,width:1280,height:720,parent:`wasis-aksara-game`,transparent:!0,scale:{mode:l.default.Scale.FIT,autoCenter:l.default.Scale.CENTER_BOTH},physics:{default:`arcade`,arcade:{gravity:{y:0},debug:!1}},scene:[u,f,_,y,x,P,F,I,L,R,z,B,V,H,U,W]},K=class extends l.default.Game{constructor(){super(G)}};window.addEventListener(`load`,()=>{screen.orientation&&screen.orientation.lock&&screen.orientation.lock(`landscape`).catch(e=>{console.warn(`Screen orientation lock to landscape failed/unsupported:`,e)});let e=()=>{let e=document.getElementById(`ui-overlay-container`);if(!e)return;let t=window.innerWidth,n=window.innerHeight,r=t/n,i=1;i=r>1.7777777777777777?n/720:t/1280,e.style.transform=`translate(-50%, -50%) scale(${i})`};e(),window.addEventListener(`resize`,e),window.addEventListener(`orientationchange`,e),window.game=new K,console.log(`Wasis Aksara Game Initialized Successfully.`)});

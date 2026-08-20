@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * Level5Scene: Modul gameplay Level 5 (Aksara Swara - Audio Recognition)
@@ -11,8 +12,8 @@ export default class Level5Scene extends Phaser.Scene {
   create() {
     console.log('Level5Scene: created.');
     
-    // Fade in camera
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
     this.add.text(640, 100, 'LEVEL 5: AKSARA SWARA', {
       fontFamily: 'Cinzel',
@@ -34,8 +35,7 @@ export default class Level5Scene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start('ResultScene', { level: 5, score: 1200, stars: 3 });
       });
     });

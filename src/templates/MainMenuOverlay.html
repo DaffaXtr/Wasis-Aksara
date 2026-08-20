@@ -128,42 +128,134 @@
 
 </div>
 
-<!-- Kamus Aksara Overlay -->
-<div id="kamus-overlay" class="pointer-events-auto hidden w-full max-w-4xl h-[560px] bg-stone-dark border border-stone-light rounded-xl p-6 shadow-2xl transition-all duration-300 transform scale-95 opacity-0">
-  <!-- Header Kamus -->
-  <div class="flex justify-between items-center border-b border-stone-light pb-3">
-    <h2 class="font-cinzel text-2xl text-majapahit-light-gold font-semibold tracking-wider">Kamus Aksara Legena</h2>
-    <button onclick="document.getElementById('kamus-overlay').classList.add('hidden')" class="text-stone-soft hover:text-state-error font-poppins text-sm font-semibold cursor-pointer transition-colors duration-200">
-      ✕ TUTUP
-    </button>
-  </div>
-  
-  <!-- Grid Karakter Aksara -->
-  <div class="grid grid-cols-5 gap-4 mt-6 overflow-y-auto h-[400px] pr-2">
-    <!-- Card 1: ha -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦲ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ha</span>
+<!-- Kamus Aksara Fullscreen Modal Overlay -->
+<div id="kamus-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+  <div id="kamus-overlay" class="pointer-events-auto w-full max-w-4xl h-[560px] bg-stone-dark/98 border-2 border-majapahit-gold rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.85)] flex flex-col justify-between">
+    <!-- Header Kamus -->
+    <div class="flex justify-between items-center border-b border-majapahit-dark-gold/60 pb-3">
+      <div class="flex items-center gap-2.5">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg border border-majapahit-gold bg-stone-light/40 shadow-inner">
+          <svg class="h-4 w-4 text-majapahit-light-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+            <path d="M6 6h10"/>
+            <path d="M6 10h10"/>
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-cinzel text-xl text-majapahit-light-gold font-bold tracking-wider">Kamus Aksara Legena</h2>
+          <p class="font-poppins text-[10px] text-stone-soft/70">20 Aksara Dasar Jawa (Nglegena)</p>
+        </div>
+      </div>
+      <button id="kamus-btn-close" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-light/40 text-stone-soft transition hover:border-majapahit-gold hover:text-state-error hover:scale-105" title="Tutup Kamus">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
     </div>
-    <!-- Card 2: na -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦤ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">na</span>
-    </div>
-    <!-- Card 3: ca -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦕ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ca</span>
-    </div>
-    <!-- Card 4: ra -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦪ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ra</span>
-    </div>
-    <!-- Card 5: ka -->
-    <div class="bg-stone-light border border-majapahit-dark-gold rounded-lg p-4 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-dark/40 transition-all duration-300 cursor-pointer">
-      <span class="text-4xl text-majapahit-cream mb-2 font-local-javanese">ꦦ</span>
-      <span class="font-poppins text-xs text-stone-soft tracking-wider uppercase font-semibold">ka</span>
+    
+    <!-- Grid Karakter Aksara (20 Aksara Legena) -->
+    <div class="grid grid-cols-5 gap-3 mt-4 overflow-y-auto h-[410px] pr-2">
+      <!-- ha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦲ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ha</span>
+      </div>
+      <!-- na -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦤ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">na</span>
+      </div>
+      <!-- ca -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦕ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ca</span>
+      </div>
+      <!-- ra -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦫ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ra</span>
+      </div>
+      <!-- ka -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦏ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ka</span>
+      </div>
+      <!-- da -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦢ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">da</span>
+      </div>
+      <!-- ta -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦠ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ta</span>
+      </div>
+      <!-- sa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦱ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">sa</span>
+      </div>
+      <!-- wa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦮ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">wa</span>
+      </div>
+      <!-- la -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦭ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">la</span>
+      </div>
+      <!-- pa -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦥ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">pa</span>
+      </div>
+      <!-- dha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦝ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">dha</span>
+      </div>
+      <!-- ja -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦗ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ja</span>
+      </div>
+      <!-- ya -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦪ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ya</span>
+      </div>
+      <!-- nya -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦚ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">nya</span>
+      </div>
+      <!-- ma -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦩ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ma</span>
+      </div>
+      <!-- ga -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦒ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ga</span>
+      </div>
+      <!-- ba -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦧ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">ba</span>
+      </div>
+      <!-- tha -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦛ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">tha</span>
+      </div>
+      <!-- nga -->
+      <div class="bg-[#251d16] border border-majapahit-dark-gold/70 rounded-xl p-3 flex flex-col items-center justify-center hover:border-majapahit-gold hover:bg-stone-light/30 transition-all duration-200">
+        <span class="text-3xl text-majapahit-cream mb-1 font-local-javanese">ꦔ</span>
+        <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">nga</span>
+      </div>
     </div>
   </div>
 </div>

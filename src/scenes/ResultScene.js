@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import SaveManager from '../managers/SaveManager.js';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * ResultScene: Tampilan kalkulasi skor, bintang, & artefak per level.
@@ -12,8 +13,8 @@ export default class ResultScene extends Phaser.Scene {
   create(data) {
     console.log('ResultScene: created. Received data:', data);
     
-    // 0. FADE IN MAIN CAMERA
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // 0. FADE IN MAIN CAMERA & FULLSCREEN CURTAIN
+    fadeTransitionIn(this, 500);
 
     const level = data.level || 1;
     const score = data.score || 0;
@@ -80,8 +81,7 @@ export default class ResultScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start('MapScene');
       });
     });

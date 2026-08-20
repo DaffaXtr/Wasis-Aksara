@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import AudioManager from '../managers/AudioManager.js';
 import mainMenuTemplate from '../templates/MainMenuOverlay.html?raw';
 import SaveManager from '../managers/SaveManager.js';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * MainMenuScene: Halaman menu utama interaktif.
@@ -14,8 +15,8 @@ export default class MainMenuScene extends Phaser.Scene {
   create() {
     console.log('MainMenuScene: created.');
 
-    // 0. FADE IN MAIN CAMERA
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // 0. FADE IN MAIN CAMERA & FULLSCREEN CURTAIN
+    fadeTransitionIn(this, 500);
 
     // Inject Main Menu & Kamus HTML template
     const uiContainer = document.getElementById('ui-overlay-container');
@@ -50,7 +51,7 @@ export default class MainMenuScene extends Phaser.Scene {
     // Set background on HTML container for full viewport coverage (covers side bars)
     const gameContainer = document.getElementById('wasis-aksara-game')?.parentElement;
     if (gameContainer) {
-      gameContainer.style.backgroundImage = "url('/assets/images/BG_MainMenu.webp')";
+      gameContainer.style.backgroundImage = "url('/assets/images/bg_home.png')";
       gameContainer.style.backgroundSize = "cover";
       gameContainer.style.backgroundPosition = "center";
     }
@@ -134,30 +135,43 @@ export default class MainMenuScene extends Phaser.Scene {
       });
     }
 
-    // Helper function for smooth scene transitions
+    // Helper function for smooth scene transitions (100% fullscreen)
     const startSceneWithFade = (sceneKey) => {
       if (overlay) {
         overlay.style.transition = 'opacity 0.5s ease-in-out';
         overlay.style.opacity = '0';
       }
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start(sceneKey);
       });
     };
 
-    // Callback untuk membuka Kamus Overlay
+    // Callback untuk membuka dan menutup Kamus Overlay
     const openKamusOverlay = () => {
-      const kamusOverlay = document.getElementById('kamus-overlay');
-      if (kamusOverlay) {
-        kamusOverlay.classList.remove('hidden');
-        kamusOverlay.classList.add('flex');
-        this.time.delayedCall(10, () => {
-          kamusOverlay.classList.remove('scale-95', 'opacity-0');
-          kamusOverlay.classList.add('scale-100', 'opacity-100');
+      const kamusModal = document.getElementById('kamus-modal');
+      if (kamusModal) {
+        kamusModal.classList.remove('hidden');
+        kamusModal.classList.add('flex');
+        requestAnimationFrame(() => {
+          kamusModal.classList.remove('opacity-0');
+          kamusModal.classList.add('opacity-100');
         });
       }
     };
+
+    const closeKamusOverlay = () => {
+      const kamusModal = document.getElementById('kamus-modal');
+      if (kamusModal) {
+        kamusModal.classList.replace('opacity-100', 'opacity-0');
+        this.time.delayedCall(300, () => {
+          kamusModal.classList.add('hidden');
+          kamusModal.classList.remove('flex');
+        });
+      }
+    };
+
+    const kamusBtnClose = document.getElementById('kamus-btn-close');
+    if (kamusBtnClose) kamusBtnClose.onclick = closeKamusOverlay;
 
     // Mapping Tombol DOM ke Aksi Phaser
     const btnMulai = document.getElementById('menu-btn-mulai');

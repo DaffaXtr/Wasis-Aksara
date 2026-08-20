@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * FinalChallengeScene: Babak altar pamungkas penyusunan kalimat filosofis.
@@ -10,6 +11,9 @@ export default class FinalChallengeScene extends Phaser.Scene {
 
   create() {
     console.log('FinalChallengeScene: created.');
+
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
     this.add.text(640, 100, 'ALTAR PAMUNGKAS', {
       fontFamily: 'Cinzel',
@@ -31,7 +35,9 @@ export default class FinalChallengeScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.scene.start('EndingScene');
+      fadeTransitionOut(this, 500, () => {
+        this.scene.start('EndingScene');
+      });
     });
   }
 }

@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * Level4Scene: Modul gameplay Level 4 (Murda & Rekan - Formula Puzzle)
@@ -11,8 +12,8 @@ export default class Level4Scene extends Phaser.Scene {
   create() {
     console.log('Level4Scene: created.');
     
-    // Fade in camera
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
     this.add.text(640, 100, 'LEVEL 4: MURDA & REKAN', {
       fontFamily: 'Cinzel',
@@ -34,8 +35,7 @@ export default class Level4Scene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start('ResultScene', { level: 4, score: 700, stars: 2 });
       });
     });

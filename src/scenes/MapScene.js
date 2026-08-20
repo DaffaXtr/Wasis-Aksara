@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import SaveManager from '../managers/SaveManager.js';
 import mapOverlayTemplate from '../templates/MapOverlay.html?raw';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * MapScene: Hub peta interaktif pemilihan level candi Trowulan.
@@ -13,8 +14,8 @@ export default class MapScene extends Phaser.Scene {
   create() {
     console.log('MapScene: created.');
 
-    // 0. FADE IN MAIN CAMERA
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // 0. FADE IN MAIN CAMERA & FULLSCREEN CURTAIN
+    fadeTransitionIn(this, 500);
 
     // Save last active scene state
     const currentSave = SaveManager.load();
@@ -47,14 +48,13 @@ export default class MapScene extends Phaser.Scene {
       });
     }
 
-    // Helper for smooth transitions
+    // Helper for smooth transitions (100% fullscreen)
     const startSceneWithFade = (sceneKey) => {
       if (overlay) {
         overlay.style.transition = 'opacity 0.5s ease-in-out';
         overlay.style.opacity = '0';
       }
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start(sceneKey);
       });
     };

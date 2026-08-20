@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * KamusScene: Overlay kamus panduan referensi Aksara Jawa.
@@ -10,6 +11,9 @@ export default class KamusScene extends Phaser.Scene {
 
   create() {
     console.log('KamusScene: created.');
+
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
     this.add.text(640, 100, 'KAMUS AKSARA JAWA', {
       fontFamily: 'Cinzel',
@@ -31,7 +35,9 @@ export default class KamusScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.scene.start('MapScene');
+      fadeTransitionOut(this, 500, () => {
+        this.scene.start('MapScene');
+      });
     });
   }
 }

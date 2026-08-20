@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
- * Level3Scene: Modul gameplay Level 3 (Pasangan - Fill in Blank)
+ * Level3Scene: Modul gameplay Level 3 (Pasangan - Word Puzzle)
  */
 export default class Level3Scene extends Phaser.Scene {
   constructor() {
@@ -11,17 +12,17 @@ export default class Level3Scene extends Phaser.Scene {
   create() {
     console.log('Level3Scene: created.');
     
-    // Fade in camera
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
-    this.add.text(640, 100, 'LEVEL 3: PASANGAN', {
+    this.add.text(640, 100, 'LEVEL 3: PASANGAN AKSARA', {
       fontFamily: 'Cinzel',
       fontSize: '32px',
       color: '#d4a64a',
       fontWeight: 'semibold'
     }).setOrigin(0.5);
 
-    this.add.text(640, 360, '[Gameplay: Fill in Blank - Lengkapi Pasangan Aksara]', {
+    this.add.text(640, 360, '[Gameplay: Word Puzzle - Susun Pasangan Aksara Jawa Membentuk Kata]', {
       fontFamily: 'Poppins',
       fontSize: '20px',
       color: '#e8e1d4'
@@ -34,9 +35,8 @@ export default class Level3Scene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
-        this.scene.start('ResultScene', { level: 3, score: 950, stars: 3 });
+      fadeTransitionOut(this, 500, () => {
+        this.scene.start('ResultScene', { level: 3, score: 850, stars: 3 });
       });
     });
   }

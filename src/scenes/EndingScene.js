@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * EndingScene: Cutscene sinematik penutup cerita game.
@@ -10,6 +11,9 @@ export default class EndingScene extends Phaser.Scene {
 
   create() {
     console.log('EndingScene: created.');
+
+    // Fade in camera & fullscreen curtain
+    fadeTransitionIn(this, 500);
 
     this.add.text(640, 200, 'SELAMAT!', {
       fontFamily: 'Cinzel',
@@ -37,7 +41,9 @@ export default class EndingScene extends Phaser.Scene {
     }).setOrigin(0.5);
 
     this.input.once('pointerdown', () => {
-      this.scene.start('MainMenuScene');
+      fadeTransitionOut(this, 500, () => {
+        this.scene.start('MainMenuScene');
+      });
     });
   }
 }

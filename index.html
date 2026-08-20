@@ -20,7 +20,8 @@
       <!-- LAYER 2: Tailwind DOM UI Overlay (Hidden by default, controlled via JS) -->
       <div id="ui-overlay-container" class="absolute z-20 pointer-events-none flex items-center justify-center origin-center select-none" style="width: 1280px; height: 720px; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(1);"></div>
 
-      </div>
+      <!-- LAYER 3: Global Fullscreen Transition Curtain (Covers 100% of entire viewport) -->
+      <div id="global-curtain" class="fixed inset-0 z-90 bg-black pointer-events-none opacity-0 transition-opacity duration-500 ease-in-out"></div>
     </div>
 
     <!-- Portrait Orientation Warning Overlay (Only visible in Portrait on mobile/tablet) -->

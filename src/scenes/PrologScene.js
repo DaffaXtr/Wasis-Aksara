@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import prologOverlayTemplate from '../templates/PrologOverlay.html?raw';
 import SaveManager from '../managers/SaveManager.js';
+import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * PrologScene: Animasi dialog visual cerita awal Baskara.
@@ -27,8 +28,8 @@ export default class PrologScene extends Phaser.Scene {
     console.log('PrologScene: created.');
     this.currentStep = 0;
 
-    // 0. FADE IN MAIN CAMERA
-    this.cameras.main.fadeIn(500, 0, 0, 0);
+    // 0. FADE IN MAIN CAMERA & FULLSCREEN CURTAIN
+    fadeTransitionIn(this, 500);
 
     // Inject Prolog HTML template
     const uiContainer = document.getElementById('ui-overlay-container');
@@ -115,7 +116,7 @@ export default class PrologScene extends Phaser.Scene {
       // Update background image with smooth cross-fade transition
       if (bgLayerA && bgLayerB) {
         const stepNum = this.currentStep + 1;
-        const newBgUrl = `url('/assets/images/prolog${stepNum}.webp')`;
+        const newBgUrl = `url('/assets/images/prolog${stepNum}.png')`;
         const isLayerAActive = bgLayerA.classList.contains('opacity-100');
 
         if (isLayerAActive) {
@@ -139,8 +140,8 @@ export default class PrologScene extends Phaser.Scene {
     // Initialize first step
     updateStep();
 
-    // Transition out helper
-    const startMapSceneWithFade = () => {
+    // Helper to transition to MapScene with smooth fade
+    const finishProlog = () => {
       if (overlay) {
         overlay.style.transition = 'opacity 0.5s ease-in-out';
         overlay.style.opacity = '0';
@@ -153,8 +154,7 @@ export default class PrologScene extends Phaser.Scene {
         bgLayerB.style.transition = 'opacity 0.5s ease-in-out';
         bgLayerB.style.opacity = '0';
       }
-      this.cameras.main.fadeOut(500, 0, 0, 0);
-      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, () => {
+      fadeTransitionOut(this, 500, () => {
         this.scene.start('MapScene');
       });
     };
