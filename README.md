@@ -1,6 +1,6 @@
 # Wasis Aksara - Petualangan Belajar Aksara Jawa 🏛️
 
-**Wasis Aksara** adalah sebuah game edukasi interaktif berbasis web browser bertema sejarah Kerajaan Majapahit. Game ini dirancang khusus untuk membantu pemain mempelajari Aksara Jawa kuno melalui petualangan karakter Baskara dalam mengumpulkan 5 pusaka aksara yang tersebar di candi-candi suci.
+**Wasis Aksara** adalah sebuah game edukasi interaktif berbasis web browser bertema sejarah Kerajaan Majapahit. Game ini dirancang khusus untuk membantu pemain mempelajari Aksara Jawa kuno melalui petualangan karakter Baskara dalam mengumpulkan 4 pusaka (Kunci, Kaca Pembesar, Gulungan Kertas, Mahkota) melalui 4 tantangan di Candi Tikus.
 
 Game ini dikembangkan menggunakan **Phaser 3** untuk rendering grafis kanvas (gameplay) dan **Tailwind CSS v4** untuk rendering antarmuka pengguna (UI) DOM overlay yang responsif dan berestetika premium.
 
@@ -9,11 +9,11 @@ Game ini dikembangkan menggunakan **Phaser 3** untuk rendering grafis kanvas (ga
 ## 🚀 Fitur Utama
 
 - **Transisi Scene yang Mulus (Smooth Transitions)**: Perpindahan antar scene disinkronkan secara presisi menggunakan kombinasi efek Phaser Camera Fade (`fadeIn`/`fadeOut`) dan transisi opacity CSS pada UI overlay DOM.
-- **Peta Seleksi Level Interaktif**: Peta seleksi tingkat permainan berbasis gambar `map.webp` lengkap dengan:
+- **Peta Seleksi Level Interaktif**: Peta seleksi tingkat permainan berbasis gambar `map-4candi.webp` (dibuat dari `map.webp` dengan `tools/clean_map.py`) lengkap dengan:
   - **Logic Penguncian**: Level baru hanya akan terbuka jika level sebelumnya telah berhasil diselesaikan.
-  - **Visual State**: Cincin denyut cahaya emas (`animate-ping`) untuk level aktif dan overlay gembok untuk level terkunci.
+  - **Visual State**: Cincin denyut + pita "Saat Ini" untuk level aktif, kabut + gembok untuk level terkunci, bintang + ikon item untuk level rampung.
   - **Tooltip Detail**: Hover card yang menampilkan informasi tantangan, deskripsi materi, perolehan bintang, dan skor terbaik.
-- **Autosave Progress**: Penyimpanan otomatis data permainan (tingkat level terbuka, perolehan bintang emas, skor terbaik, total skor) yang terintegrasi dengan LocalStorage browser.
+- **Autosave Progress**: Penyimpanan otomatis data permainan (level terbuka, bintang, skor terbaik, rekap jawaban, item) ke LocalStorage browser; save versi lama dikonversi otomatis.
 - **Latar Belakang Prolog Dinamis**: Alur cerita prolog 9 langkah yang memuat gambar latar belakang dinamis (`prolog1.webp` s.d `prolog9.webp`) secara halus dengan efek cross-fade dual-layer CSS.
 - **Penguncian Orientasi Layar (Landscape Orientation Lock)**: Game berjalan optimal pada mode lanskap. Jika mendeteksi orientasi potret pada perangkat mobile, layar peringatan rotasi interaktif akan muncul.
 - **Manajemen Audio Cerdas**: Dukungan musik latar belakang (BGM) dengan bypass kebijakan autoplay browser modern (diaktifkan otomatis saat interaksi pertama pengguna).

@@ -3,13 +3,19 @@ import SaveManager from '../managers/SaveManager.js';
 import ScoreManager from '../managers/ScoreManager.js';
 import HintManager from '../managers/HintManager.js';
 import { level1Data } from '../data/level1Data.js';
-import { levelData } from '../data/levelData.js';
 import level1Template from '../templates/Level1Overlay.html?raw';
-import { sfxError, sfxOpen, sfxReward, sfxSuccess, sfxWrite } from '../utils/sfx.js';
+import { showFeedback, showHistoryPopup } from '../ui/overlayKit.js';
+import { sfxError, sfxOpen, sfxReward, sfxWrite } from '../utils/sfx.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
-const normalize = (value) => value.replace(/\s+/g, '');
+const WORDS = level1Data.words;
+const MOSS_COLORS = ['#2f4a1f', '#3b5a28', '#4f7a35', '#5f8f3f', '#26401a', '#6d9a45'];
 
+/**
+ * Level1Scene: "Misteri Cathetan Patirtan".
+ * Alur: sejarah candi → dialog permukaan → nyilem ke dhasar blumbang → usap lumut ing watu
+ *       → nulis 5 tembung ing papan tulis (sepisan kirim, umpan balik saben tembung) → papan skor.
+ */
 export default class Level1Scene extends Phaser.Scene {
   constructor() {
     super('Level1Scene');
@@ -19,7 +25,8 @@ export default class Level1Scene extends Phaser.Scene {
     fadeTransitionIn(this, 500);
     ScoreManager.resetLevelScore();
     HintManager.resetCooldown();
-    this.state = { phase: 'narrative', step: 0, mode: 'words', wordIndex: 0, solved: 0, tokens: [], busy: false };
+    this.state = { phase: 'history', step: 0, wordIndex: 0, busy: false, hintUsed: false, timerRunning: false };
+    this.answers = [];
     this.elapsed = 0;
     this.hintInterval = null;
     this.typewriterInterval = null;
@@ -30,7 +37,7 @@ export default class Level1Scene extends Phaser.Scene {
 
     this.gameContainer = document.getElementById('wasis-aksara-game')?.parentElement;
     if (this.gameContainer) {
-      this.gameContainer.style.backgroundImage = "url('/assets/images/Bg_CandiTikusNew.png')";
+      this.gameContainer.style.backgroundImage = "url('/assets/images/Bg_CandiTikusNew.webp')";
       this.gameContainer.style.backgroundSize = 'cover';
       this.gameContainer.style.backgroundPosition = 'center';
     }
@@ -41,28 +48,368 @@ export default class Level1Scene extends Phaser.Scene {
     this.cacheElements();
     this.els['level1-overlay']?.classList.remove('hidden');
     this.setupWritingCanvas();
+    this.setupMoss();
+    this.buildStone();
+    this.buildUnderwaterDecor();
     this.buildWordChips();
     this.bindEvents();
     this.updateHud();
 
     this.time.delayedCall(150, () => this.els['l1-hud']?.classList.replace('opacity-0', 'opacity-100'));
-    this.time.delayedCall(400, () => this.showNarrative(0));
+    this.time.delayedCall(400, async () => {
+      await showHistoryPopup(1);
+      if (this.sys.isActive()) this.showNarrative(0);
+    });
     this.time.addEvent({ delay: 1000, loop: true, callback: () => this.updateTime() });
     this.events.once('shutdown', () => this.cleanup());
   }
 
   cacheElements() {
-    const ids = ['level1-overlay', 'l1-hud', 'l1-time-val', 'l1-score-val', 'l1-progress-val', 'l1-btn-exit', 'l1-btn-materi', 'l1-dialog', 'l1-dialog-text', 'l1-dialog-next', 'l1-dialog-next-label', 'l1-ornament', 'l1-gate-glow', 'l1-board', 'l1-board-title', 'l1-board-step', 'l1-target-card', 'l1-target-label', 'l1-target-latin', 'l1-wordchips', 'l1-board-msg-box', 'l1-board-msg', 'l1-canvas-wrap', 'l1-writing-canvas', 'l1-canvas-placeholder', 'l1-btn-pen', 'l1-btn-eraser', 'l1-btn-clear', 'l1-btn-hint', 'l1-hint-label', 'l1-btn-materi-board', 'l1-btn-submit', 'l1-hint-preview', 'l1-hint-preview-text', 'l1-sentence-intro', 'l1-btn-open-sentence', 'l1-reward', 'l1-btn-claim', 'l1-materi-modal', 'l1-btn-close-materi', 'l1-btn-close-materi-bottom', 'l1-tab-legena', 'l1-tab-sandhangan', 'l1-panel-legena', 'l1-panel-sandhangan'];
+    const ids = ['level1-overlay', 'l1-hud', 'l1-time-val', 'l1-score-val', 'l1-progress-val', 'l1-btn-exit', 'l1-underwater', 'l1-weeds', 'l1-bubbles', 'l1-stone-wrap', 'l1-stone-title', 'l1-stone-instruction', 'l1-stone-words', 'l1-moss', 'l1-moss-hint', 'l1-moss-progress', 'l1-start-wrap', 'l1-btn-start-board', 'l1-dialog', 'l1-dialog-text', 'l1-dialog-next', 'l1-dialog-next-label', 'l1-board', 'l1-board-title', 'l1-board-step', 'l1-target-card', 'l1-target-label', 'l1-target-latin', 'l1-wordchips', 'l1-board-msg-box', 'l1-board-msg', 'l1-canvas-wrap', 'l1-writing-canvas', 'l1-canvas-placeholder', 'l1-btn-pen', 'l1-btn-eraser', 'l1-btn-clear', 'l1-btn-hint', 'l1-hint-label', 'l1-btn-materi-board', 'l1-btn-submit', 'l1-hint-preview', 'l1-hint-preview-text', 'l1-materi-modal', 'l1-btn-close-materi', 'l1-btn-close-materi-bottom', 'l1-tab-legena', 'l1-tab-sandhangan', 'l1-panel-legena', 'l1-panel-sandhangan'];
     this.els = Object.fromEntries(ids.map((id) => [id, this.$(id)]));
   }
 
+  bindEvents() {
+    this.els['l1-dialog-next'].onclick = () => this.nextNarrative();
+    this.els['l1-btn-start-board'].onclick = () => this.startBoard();
+    this.els['l1-btn-pen'].onclick = () => this.setDrawingTool('pen');
+    this.els['l1-btn-eraser'].onclick = () => this.setDrawingTool('eraser');
+    this.els['l1-btn-clear'].onclick = () => this.clearCanvas();
+    this.els['l1-btn-submit'].onclick = () => this.submitAnswer();
+    this.els['l1-btn-hint'].onclick = () => this.useHint();
+    this.els['l1-btn-materi-board'].onclick = () => this.showModal(this.els['l1-materi-modal']);
+    this.els['l1-btn-close-materi'].onclick = () => this.hideModal(this.els['l1-materi-modal']);
+    this.els['l1-btn-close-materi-bottom'].onclick = () => this.hideModal(this.els['l1-materi-modal']);
+    this.els['l1-tab-legena'].onclick = () => this.switchMateriTab('legena');
+    this.els['l1-tab-sandhangan'].onclick = () => this.switchMateriTab('sandhangan');
+    this.els['l1-btn-exit'].onclick = () => this.leaveToMap();
+    this.boundElements = Object.values(this.els).filter(Boolean);
+  }
+
+  // ─── 1. Dialog ing permukaan blumbang ───────────────────────────────────────
+
+  showNarrative(step) {
+    this.state.step = step;
+    this.state.phase = 'narrative';
+    const dialog = this.els['l1-dialog'];
+    dialog.classList.remove('hidden');
+    dialog.classList.add('flex');
+    this.els['l1-dialog-next-label'].textContent = step === level1Data.narrative.length - 1 ? 'NYILEM' : 'LANJUT';
+    this.typeText(level1Data.narrative[step]);
+    this.fadeIn(dialog);
+  }
+
+  typeText(text) {
+    clearInterval(this.typewriterInterval);
+    this.els['l1-dialog-text'].textContent = '';
+    let index = 0;
+    this.typewriterInterval = setInterval(() => {
+      this.els['l1-dialog-text'].textContent += text[index++];
+      if (index >= text.length) {
+        clearInterval(this.typewriterInterval);
+        this.typewriterInterval = null;
+      }
+    }, 22);
+  }
+
+  nextNarrative() {
+    if (this.state.phase !== 'narrative') return;
+    if (this.typewriterInterval) {
+      clearInterval(this.typewriterInterval);
+      this.typewriterInterval = null;
+      this.els['l1-dialog-text'].textContent = level1Data.narrative[this.state.step];
+      return;
+    }
+    if (this.state.step < level1Data.narrative.length - 1) {
+      this.showNarrative(this.state.step + 1);
+      return;
+    }
+    this.dive();
+  }
+
+  // ─── 2. Nyilem: ganti tampilan dadi dhasar blumbang ─────────────────────────
+
+  dive() {
+    this.state.phase = 'dive';
+    this.fadeOut(this.els['l1-dialog'], true);
+    sfxOpen();
+    const underwater = this.els['l1-underwater'];
+    underwater.classList.remove('hidden');
+    this.fadeIn(underwater);
+    this.time.delayedCall(1000, () => {
+      // Sisi layar di luar rasio 16:9 ikut bernuansa air
+      if (this.gameContainer) this.gameContainer.style.backgroundImage = 'linear-gradient(180deg, #1d5f68 0%, #0b3238 100%)';
+      this.state.phase = 'moss';
+      this.els['l1-moss-hint'].classList.replace('opacity-0', 'opacity-100');
+    });
+  }
+
+  buildUnderwaterDecor() {
+    // Gelembung naik dengan ukuran, posisi, dan kecepatan acak
+    for (let i = 0; i < 18; i += 1) {
+      const bubble = document.createElement('span');
+      const size = Phaser.Math.Between(6, 18);
+      bubble.className = 'l1-bubble';
+      Object.assign(bubble.style, {
+        left: `${Phaser.Math.Between(2, 98)}%`,
+        width: `${size}px`,
+        height: `${size}px`,
+        animationDuration: `${Phaser.Math.Between(7, 15)}s`,
+        animationDelay: `-${Phaser.Math.Between(0, 15)}s`
+      });
+      bubble.style.setProperty('--drift', `${Phaser.Math.Between(-40, 40)}px`);
+      this.els['l1-bubbles'].appendChild(bubble);
+    }
+    // Ganggang yang bergoyang di dasar kolam
+    const weeds = [8, 15, 22, 74, 81, 88, 94].map((left) => {
+      const height = Phaser.Math.Between(90, 170);
+      const delay = Phaser.Math.FloatBetween(0, 3).toFixed(2);
+      const bend = Phaser.Math.Between(-18, 18);
+      return `<svg class="l1-weed absolute bottom-0" style="left:${left}%;animation-delay:-${delay}s" width="40" height="${height}" viewBox="0 0 40 ${height}">
+        <path d="M20 ${height} Q${20 + bend} ${height * 0.5} 20 0" stroke="#2f5a2c" stroke-width="7" fill="none" stroke-linecap="round" opacity=".85"/>
+        <path d="M14 ${height} Q${8 - bend} ${height * 0.6} 10 ${height * 0.25}" stroke="#3f7038" stroke-width="5" fill="none" stroke-linecap="round" opacity=".7"/>
+      </svg>`;
+    });
+    this.els['l1-weeds'].innerHTML = weeds.join('');
+  }
+
+  // ─── 3. Usap lumut ing watu kanggo maca cathetan ────────────────────────────
+
+  buildStone() {
+    this.els['l1-stone-title'].textContent = level1Data.stone.title;
+    this.els['l1-stone-instruction'].textContent = level1Data.stone.instruction;
+    WORDS.forEach((word) => {
+      const item = document.createElement('span');
+      item.className = 'l1-stone-text font-marcellus text-[18px] font-bold';
+      item.textContent = word.latin;
+      this.els['l1-stone-words'].appendChild(item);
+    });
+  }
+
+  setupMoss() {
+    const canvas = this.els['l1-moss'];
+    const context = canvas.getContext('2d', { willReadFrequently: true });
+    this.moss = { canvas, context, scrubbing: false, last: null, moves: 0 };
+
+    // Lapisan lumut prosedural: dasar hijau + gumpalan + bintik halus
+    context.fillStyle = '#3b5a28';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    for (let i = 0; i < 700; i += 1) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const radius = 6 + Math.random() * 24;
+      const gradient = context.createRadialGradient(x, y, 0, x, y, radius);
+      gradient.addColorStop(0, MOSS_COLORS[i % MOSS_COLORS.length]);
+      gradient.addColorStop(1, 'rgba(59,90,40,0)');
+      context.globalAlpha = 0.45 + Math.random() * 0.45;
+      context.fillStyle = gradient;
+      context.beginPath();
+      context.arc(x, y, radius, 0, Math.PI * 2);
+      context.fill();
+    }
+    for (let i = 0; i < 2600; i += 1) {
+      context.globalAlpha = 0.5;
+      context.fillStyle = Math.random() > 0.5 ? '#86b85a' : '#1d3313';
+      context.fillRect(Math.random() * canvas.width, Math.random() * canvas.height, 1.5, 1.5);
+    }
+    context.globalAlpha = 1;
+
+    const scrub = (event) => {
+      if (!this.moss.scrubbing || this.state.phase !== 'moss') return;
+      const rect = canvas.getBoundingClientRect();
+      const point = { x: (event.clientX - rect.left) * canvas.width / rect.width, y: (event.clientY - rect.top) * canvas.height / rect.height };
+      context.globalCompositeOperation = 'destination-out';
+      context.lineCap = 'round';
+      context.lineWidth = 58;
+      context.beginPath();
+      context.moveTo((this.moss.last || point).x, (this.moss.last || point).y);
+      context.lineTo(point.x, point.y);
+      context.stroke();
+      this.moss.last = point;
+      this.moss.moves += 1;
+      if (this.moss.moves % 8 === 0) {
+        sfxWrite();
+        this.updateMossProgress();
+      }
+    };
+    canvas.addEventListener('pointerdown', (event) => {
+      if (this.state.phase !== 'moss') return;
+      this.moss.scrubbing = true;
+      this.moss.last = null;
+      canvas.setPointerCapture(event.pointerId);
+      scrub(event);
+    });
+    canvas.addEventListener('pointermove', scrub);
+    const stop = () => {
+      if (!this.moss.scrubbing) return;
+      this.moss.scrubbing = false;
+      this.updateMossProgress();
+    };
+    canvas.addEventListener('pointerup', stop);
+    canvas.addEventListener('pointercancel', stop);
+  }
+
+  /** Persentase lumut yang sudah bersih, dihitung hanya di dalam bentuk elips watu. */
+  measureMossCleared() {
+    const { canvas, context } = this.moss;
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    let total = 0;
+    let cleared = 0;
+    for (let y = 0; y < canvas.height; y += 6) {
+      for (let x = 0; x < canvas.width; x += 6) {
+        if (((x - cx) / cx) ** 2 + ((y - cy) / cy) ** 2 > 0.9) continue;
+        total += 1;
+        if (pixels[(y * canvas.width + x) * 4 + 3] < 40) cleared += 1;
+      }
+    }
+    return total ? cleared / total : 0;
+  }
+
+  updateMossProgress() {
+    if (this.state.phase !== 'moss') return;
+    const cleared = this.measureMossCleared();
+    const target = level1Data.mossClearTarget;
+    this.els['l1-moss-progress'].textContent = `${Math.min(100, Math.round((cleared / target) * 100))}%`;
+    if (cleared >= target) this.revealStone();
+  }
+
+  revealStone() {
+    this.state.phase = 'revealed';
+    this.moss.scrubbing = false;
+    this.els['l1-moss'].style.opacity = '0';
+    this.els['l1-moss'].classList.remove('pointer-events-auto');
+    this.els['l1-moss-hint'].classList.replace('opacity-100', 'opacity-0');
+    sfxReward();
+    this.time.delayedCall(900, () => {
+      this.els['l1-moss'].classList.add('hidden');
+      this.els['l1-start-wrap'].classList.remove('hidden');
+    });
+  }
+
+  // ─── 4. Papan tulis: 5 tembung, sepisan kirim saben tembung ─────────────────
+
+  buildWordChips() {
+    WORDS.forEach((word, index) => {
+      const chip = document.createElement('span');
+      chip.id = `l1-chip-${index}`;
+      chip.className = 'wa-chip';
+      chip.textContent = word.latin;
+      this.els['l1-wordchips'].appendChild(chip);
+    });
+  }
+
+  startBoard() {
+    if (this.state.phase !== 'revealed') return;
+    this.state.phase = 'board';
+    this.state.timerRunning = true;
+    this.els['l1-start-wrap'].classList.add('hidden');
+    // Watu mengecil ke atas supaya cathetan tetap terbaca selama menulis
+    // (properti `scale` terpisah, karena kelas translate Tailwind v4 memakai properti `translate`)
+    Object.assign(this.els['l1-stone-wrap'].style, { top: '178px', scale: '0.52' });
+    this.els['l1-board-title'].textContent = 'Misteri Cathetan Patirtan';
+    this.els['l1-target-label'].textContent = 'Tulisen ing Aksara Jawa:';
+    this.showWord(0);
+    const board = this.els['l1-board'];
+    board.classList.remove('hidden');
+    requestAnimationFrame(() => board.classList.remove('translate-y-full'));
+    sfxOpen();
+  }
+
+  showWord(index) {
+    this.state.wordIndex = index;
+    this.state.hintUsed = false;
+    this.state.busy = false;
+    this.els['l1-target-latin'].textContent = WORDS[index].latin;
+    this.els['l1-board-step'].textContent = `Tembung ${index + 1} / ${WORDS.length}`;
+    this.setBoardMessage('');
+    this.els['l1-hint-preview'].classList.add('hidden');
+    WORDS.forEach((_, chipIndex) => this.$(`l1-chip-${chipIndex}`).classList.toggle('wa-chip-active', chipIndex === index));
+    this.clearCanvas();
+  }
+
+  async submitAnswer() {
+    if (this.state.phase !== 'board' || this.state.busy) return;
+    if (!this.canvasState.hasInk) {
+      sfxError();
+      this.setBoardMessage('Tulisen dhisik ing papan.', 'text-state-error');
+      this.shake(this.els['l1-target-card']);
+      return;
+    }
+
+    this.state.busy = true;
+    const index = this.state.wordIndex;
+    const word = WORDS[index];
+    const correct = this.measureWritingSimilarity().valid;
+    this.answers.push({
+      question: word.latin,
+      playerAnswer: '',
+      playerImage: this.inkSnapshot(),
+      correctAnswer: word.aksara,
+      correct
+    });
+
+    if (correct) {
+      const { correct: full, correctWithHint } = level1Data.scoring;
+      ScoreManager.addBonus(this.state.hintUsed ? correctWithHint : full);
+    } else {
+      ScoreManager.addWrongAnswer();
+    }
+    const chip = this.$(`l1-chip-${index}`);
+    chip.classList.remove('wa-chip-active');
+    chip.classList.add(correct ? 'wa-chip-done' : 'wa-chip-wrong');
+    this.updateHud();
+
+    await showFeedback(correct);
+    if (!this.sys.isActive()) return;
+    if (index < WORDS.length - 1) this.showWord(index + 1);
+    else this.finishLevel();
+  }
+
+  useHint() {
+    if (this.state.phase !== 'board' || this.state.busy || !HintManager.triggerHint()) return;
+    this.state.hintUsed = true;
+    this.els['l1-hint-preview-text'].textContent = WORDS[this.state.wordIndex].aksara;
+    this.els['l1-hint-preview'].classList.remove('hidden');
+    this.setBoardMessage(`Hint dipakai: biji tembung iki dadi ${level1Data.scoring.correctWithHint}.`, 'text-state-warning');
+    this.time.delayedCall(4000, () => this.els['l1-hint-preview']?.classList.add('hidden'));
+    clearInterval(this.hintInterval);
+    this.hintInterval = setInterval(() => {
+      const remaining = HintManager.getRemainingCooldown();
+      this.els['l1-hint-label'].textContent = remaining ? `${remaining}s` : '';
+      if (!remaining) clearInterval(this.hintInterval);
+    }, 500);
+  }
+
+  finishLevel() {
+    this.state.phase = 'finished';
+    this.state.timerRunning = false;
+    this.closeBoard();
+    const correctCount = this.answers.filter((answer) => answer.correct).length;
+    const score = ScoreManager.currentScore;
+    const stars = ScoreManager.starsFromCorrect(correctCount, WORDS.length);
+    this.time.delayedCall(600, () => {
+      this.els['level1-overlay'].style.opacity = '0';
+      fadeTransitionOut(this, 500, () => this.scene.start('ResultScene', { level: 1, score, stars, answers: this.answers }));
+    });
+  }
+
+  leaveToMap() {
+    if (this.state.phase === 'finished') return;
+    this.state.phase = 'finished';
+    fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
+  }
+
+  // ─── Papan tulis: kanvas, alat, lan pangecekan goresan ──────────────────────
+
   setupWritingCanvas() {
     const canvas = this.els['l1-writing-canvas'];
-    this.canvasContext = canvas.getContext('2d');
+    this.canvasContext = canvas.getContext('2d', { willReadFrequently: true });
     this.referenceCanvas = document.createElement('canvas');
     this.referenceCanvas.width = canvas.width;
     this.referenceCanvas.height = canvas.height;
-    this.referenceContext = this.referenceCanvas.getContext('2d');
+    this.referenceContext = this.referenceCanvas.getContext('2d', { willReadFrequently: true });
     this.canvasState = { drawing: false, hasInk: false, tool: 'pen' };
     canvas.style.touchAction = 'none';
     canvas.addEventListener('pointerdown', (event) => {
@@ -98,129 +445,6 @@ export default class Level1Scene extends Phaser.Scene {
     this.canvasContext.lineCap = 'round';
     this.canvasContext.lineJoin = 'round';
     this.canvasContext.strokeStyle = '#fff2cc';
-  }
-
-  buildWordChips() {
-    level1Data.words.forEach((word, index) => {
-      const chip = document.createElement('span');
-      chip.id = `l1-chip-${index}`;
-      chip.className = 'wa-chip';
-      chip.textContent = word.latin;
-      this.els['l1-wordchips'].appendChild(chip);
-    });
-  }
-
-  bindEvents() {
-    this.els['l1-dialog-next'].onclick = () => this.nextNarrative();
-    this.els['l1-ornament'].onclick = () => this.openWordsBoard();
-    this.els['l1-btn-pen'].onclick = () => this.setDrawingTool('pen');
-    this.els['l1-btn-eraser'].onclick = () => this.setDrawingTool('eraser');
-    this.els['l1-btn-clear'].onclick = () => this.clearCanvas();
-    this.els['l1-btn-submit'].onclick = () => this.submitAnswer();
-    this.els['l1-btn-hint'].onclick = () => this.useHint();
-    if (this.els['l1-btn-materi']) this.els['l1-btn-materi'].onclick = () => this.openMateriModal();
-    if (this.els['l1-btn-materi-board']) this.els['l1-btn-materi-board'].onclick = () => this.openMateriModal();
-    if (this.els['l1-btn-close-materi']) this.els['l1-btn-close-materi'].onclick = () => this.closeMateriModal();
-    if (this.els['l1-btn-close-materi-bottom']) this.els['l1-btn-close-materi-bottom'].onclick = () => this.closeMateriModal();
-    if (this.els['l1-tab-legena']) this.els['l1-tab-legena'].onclick = () => this.switchMateriTab('legena');
-    if (this.els['l1-tab-sandhangan']) this.els['l1-tab-sandhangan'].onclick = () => this.switchMateriTab('sandhangan');
-    this.els['l1-btn-open-sentence'].onclick = () => {
-      this.hideModal(this.els['l1-sentence-intro']);
-      this.openBoard('sentence');
-    };
-    this.els['l1-btn-claim'].onclick = () => this.claimReward();
-    this.els['l1-btn-exit'].onclick = () => this.leaveToMap();
-    this.boundElements = Object.values(this.els).filter(Boolean);
-  }
-
-  showNarrative(step) {
-    this.state.step = step;
-    this.state.phase = 'narrative';
-    const dialog = this.els['l1-dialog'];
-    dialog.classList.remove('hidden');
-    dialog.classList.add('flex');
-    this.els['l1-dialog-next-label'].textContent = step === level1Data.narrative.length - 1 ? 'MULAI' : 'LANJUT';
-    this.typeText(level1Data.narrative[step]);
-    this.fadeIn(dialog);
-    if (this.els['l1-ornament']) {
-      this.els['l1-ornament'].classList.add('hidden');
-      this.els['l1-ornament'].classList.remove('flex');
-    }
-  }
-
-  typeText(text) {
-    clearInterval(this.typewriterInterval);
-    this.els['l1-dialog-text'].textContent = '';
-    let index = 0;
-    this.typewriterInterval = setInterval(() => {
-      this.els['l1-dialog-text'].textContent += text[index++];
-      if (index >= text.length) {
-        clearInterval(this.typewriterInterval);
-        this.typewriterInterval = null;
-      }
-    }, 22);
-  }
-
-  nextNarrative() {
-    if (this.typewriterInterval) {
-      clearInterval(this.typewriterInterval);
-      this.typewriterInterval = null;
-      this.els['l1-dialog-text'].textContent = level1Data.narrative[this.state.step];
-      return;
-    }
-    if (this.state.step < level1Data.narrative.length - 1) {
-      this.showNarrative(this.state.step + 1);
-      return;
-    }
-    this.state.phase = 'transition';
-    this.fadeOut(this.els['l1-dialog'], true);
-    sfxOpen();
-    this.time.delayedCall(500, () => {
-      this.state.phase = 'explore';
-      if (this.els['l1-ornament']) {
-        this.els['l1-ornament'].classList.remove('hidden');
-        this.els['l1-ornament'].classList.add('flex');
-      }
-    });
-  }
-
-  openWordsBoard() {
-    if (this.state.phase !== 'explore') return;
-    if (this.els['l1-ornament']) {
-      this.els['l1-ornament'].classList.add('hidden');
-      this.els['l1-ornament'].classList.remove('flex');
-    }
-    this.openBoard('words');
-  }
-
-  openBoard(mode) {
-    this.state.phase = 'board';
-    this.state.mode = mode;
-    this.state.busy = false;
-    this.state.tokens = [];
-    const sentence = mode === 'sentence';
-    this.els['l1-board-title'].textContent = sentence ? 'Tantangan 2 — Nulis Ukara' : 'Tantangan 1 — Mbuka Dalan';
-    this.els['l1-target-label'].textContent = sentence ? 'Tulisen ukara iki:' : 'Tulisen ing Aksara Jawa:';
-    this.els['l1-target-latin'].textContent = sentence ? level1Data.sentence.latin : level1Data.words[this.state.wordIndex].latin;
-    this.els['l1-target-latin'].style.fontSize = sentence ? '13px' : '21px';
-    this.els['l1-wordchips'].classList.toggle('hidden', sentence);
-    this.els['l1-board-step'].textContent = sentence ? 'Ukara' : `Tembung ${this.state.wordIndex + 1} / 4`;
-    if (this.els['l1-board-msg']) this.els['l1-board-msg'].textContent = '';
-    this.updateChipStates();
-    this.clearCanvas();
-    this.drawGuide(sentence ? level1Data.sentence.aksara : level1Data.words[this.state.wordIndex].aksara);
-    const board = this.els['l1-board'];
-    board.classList.remove('hidden');
-    requestAnimationFrame(() => board.classList.remove('translate-y-full'));
-    sfxOpen();
-  }
-
-  updateChipStates() {
-    level1Data.words.forEach((_, index) => {
-      const chip = this.$(`l1-chip-${index}`);
-      chip.classList.toggle('wa-chip-active', this.state.mode === 'words' && index === this.state.wordIndex);
-      chip.classList.toggle('wa-chip-done', index < this.state.solved);
-    });
   }
 
   canvasPoint(event) {
@@ -259,27 +483,49 @@ export default class Level1Scene extends Phaser.Scene {
     this.canvasContext.globalCompositeOperation = 'source-over';
     this.setDrawingTool('pen');
     this.els['l1-canvas-placeholder'].classList.remove('hidden');
-    this.drawGuide(this.state.mode === 'sentence' ? level1Data.sentence.aksara : level1Data.words[this.state.wordIndex].aksara);
+    this.drawGuide(WORDS[this.state.wordIndex].aksara);
   }
 
+  /** Potongan goresan pemain (dipangkas ke area tinta) untuk ditampilkan di papan skor. */
+  inkSnapshot() {
+    const canvas = this.els['l1-writing-canvas'];
+    const pixels = this.canvasContext.getImageData(0, 0, canvas.width, canvas.height).data;
+    let minX = canvas.width;
+    let minY = canvas.height;
+    let maxX = -1;
+    let maxY = -1;
+    for (let y = 0; y < canvas.height; y += 2) {
+      for (let x = 0; x < canvas.width; x += 2) {
+        if (pixels[(y * canvas.width + x) * 4 + 3] > 24) {
+          minX = Math.min(minX, x); minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+        }
+      }
+    }
+    if (maxX < 0) return canvas.toDataURL('image/png');
+    const pad = 12;
+    const x = Math.max(0, minX - pad);
+    const y = Math.max(0, minY - pad);
+    const width = Math.min(canvas.width, maxX + pad) - x;
+    const height = Math.min(canvas.height, maxY + pad) - y;
+    const crop = document.createElement('canvas');
+    crop.width = width;
+    crop.height = height;
+    crop.getContext('2d').drawImage(canvas, x, y, width, height, 0, 0, width, height);
+    return crop.toDataURL('image/png');
+  }
+
+  /** Aksara kunci digambar ke kanvas tersembunyi sebagai pembanding goresan. */
   drawGuide(text) {
     const canvas = this.els['l1-writing-canvas'];
     this.referenceContext.clearRect(0, 0, canvas.width, canvas.height);
     this.referenceContext.save();
-    this.referenceContext.font = this.state.mode === 'sentence' ? '28px javanese' : '58px javanese';
+    this.referenceContext.font = '58px javanese';
     this.referenceContext.textAlign = 'center';
     this.referenceContext.textBaseline = 'middle';
     this.referenceContext.fillStyle = '#ffffff';
     this.referenceContext.fillText(text, canvas.width / 2, canvas.height / 2);
     this.referenceContext.restore();
-  }
-
-  submitAnswer() {
-    if (this.state.phase !== 'board' || this.state.busy) return;
-    if (!this.canvasState.hasInk) return this.wrongAnswer('Tulisen dhisik ing papan.');
-    const similarity = this.measureWritingSimilarity();
-    if (!similarity.valid) return this.wrongAnswer(`Tulisanmu durung cedhak karo conto (${Math.round(similarity.score * 100)}%). Coba tiru maneh.`);
-    this.correctAnswer();
   }
 
   measureWritingSimilarity() {
@@ -396,117 +642,18 @@ export default class Level1Scene extends Phaser.Scene {
     return { score, valid };
   }
 
-  wrongAnswer(message) {
-    ScoreManager.addWrongAnswer();
-    sfxError();
-    if (this.els['l1-board-msg']) {
-      this.els['l1-board-msg'].textContent = message;
-      this.els['l1-board-msg'].className = 'font-poppins text-[11px] font-semibold text-state-error';
-    }
-    const shakeTarget = this.els['l1-target-card'] || this.els['l1-board-msg-box'];
-    if (shakeTarget) {
-      shakeTarget.classList.remove('animate-wa-shake');
-      void shakeTarget.offsetWidth;
-      shakeTarget.classList.add('animate-wa-shake');
-    }
+  // ─── Utilitas UI ────────────────────────────────────────────────────────────
+
+  setBoardMessage(text, colorClass = 'text-stone-soft/80') {
+    this.els['l1-board-msg'].textContent = text;
+    this.els['l1-board-msg'].className = `font-poppins text-[11px] font-semibold ${colorClass}`;
   }
 
-  correctAnswer() {
-    this.state.busy = true;
-    sfxSuccess();
-    ScoreManager.addCorrectAnswer();
-    if (this.els['l1-board-msg']) {
-      this.els['l1-board-msg'].textContent = 'Sagestremen! Jawabanmu bener.';
-      this.els['l1-board-msg'].className = 'font-poppins text-[11px] font-semibold text-state-success';
-    }
-    this.updateHud();
-
-    if (this.state.mode === 'sentence') {
-      ScoreManager.addBonus(400);
-      this.updateHud();
-      this.time.delayedCall(700, () => {
-        this.closeBoard();
-        this.time.delayedCall(550, () => this.showReward());
-      });
-      return;
-    }
-
-    const index = this.state.wordIndex;
-    this.state.solved += 1;
-    this.updateHud();
-    if (this.state.solved < level1Data.words.length) {
-      this.time.delayedCall(700, () => {
-        this.state.wordIndex = this.state.solved;
-        this.state.tokens = [];
-        this.els['l1-target-latin'].textContent = level1Data.words[this.state.wordIndex].latin;
-        this.els['l1-board-step'].textContent = `Tembung ${this.state.wordIndex + 1} / 4`;
-        if (this.els['l1-board-msg']) this.els['l1-board-msg'].textContent = '';
-        this.updateChipStates();
-        this.clearCanvas();
-        this.state.busy = false;
-      });
-    } else {
-      this.time.delayedCall(900, () => {
-        this.closeBoard();
-        this.completePath();
-      });
-    }
-  }
-
-  completePath() {
-    this.state.phase = 'path';
-    if (this.els['l1-ornament']) {
-      this.els['l1-ornament'].classList.add('hidden');
-      this.els['l1-ornament'].classList.remove('flex');
-    }
-    this.time.delayedCall(300, () => {
-      this.els['l1-gate-glow'].classList.remove('hidden');
-      sfxReward();
-      this.time.delayedCall(1500, () => this.showSentenceIntro());
-    });
-  }
-
-  showSentenceIntro() {
-    this.state.phase = 'intro';
-    this.showModal(this.els['l1-sentence-intro']);
-  }
-
-  useHint() {
-    if (this.state.phase !== 'board' || !HintManager.triggerHint()) return;
-    const target = this.state.mode === 'sentence' ? level1Data.sentence.aksara : level1Data.words[this.state.wordIndex].aksara;
-    this.els['l1-hint-preview-text'].textContent = target;
-    this.els['l1-hint-preview'].classList.remove('hidden');
-    this.time.delayedCall(4000, () => this.els['l1-hint-preview'].classList.add('hidden'));
-    clearInterval(this.hintInterval);
-    this.hintInterval = setInterval(() => {
-      const remaining = HintManager.getRemainingCooldown();
-      this.els['l1-hint-label'].textContent = remaining ? `${remaining}s` : '';
-      if (!remaining) clearInterval(this.hintInterval);
-    }, 500);
-  }
-
-  showReward() {
-    this.state.phase = 'reward';
-    sfxReward();
-    this.showModal(this.els['l1-reward']);
-  }
-
-  claimReward() {
-    const save = SaveManager.load();
-    save.artifacts ||= [];
-    if (!save.artifacts.includes(level1Data.reward.id)) save.artifacts.push(level1Data.reward.id);
-    SaveManager.save(save);
-    const targetScore = levelData.find((item) => item.level === 1)?.targetScore || 1000;
-    const score = ScoreManager.currentScore;
-    const stars = ScoreManager.calculateStars(score, targetScore);
-    this.state.phase = 'finished';
-    this.els['level1-overlay'].style.opacity = '0';
-    fadeTransitionOut(this, 500, () => this.scene.start('ResultScene', { level: 1, score, stars }));
-  }
-
-  leaveToMap() {
-    if (this.state.phase === 'finished') return;
-    fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
+  shake(element) {
+    if (!element) return;
+    element.classList.remove('animate-wa-shake');
+    void element.offsetWidth;
+    element.classList.add('animate-wa-shake');
   }
 
   showModal(element) {
@@ -520,14 +667,6 @@ export default class Level1Scene extends Phaser.Scene {
     if (!element) return;
     element.classList.replace('opacity-100', 'opacity-0');
     this.time.delayedCall(300, () => { element.classList.add('hidden'); element.classList.remove('flex'); });
-  }
-
-  openMateriModal() {
-    this.showModal(this.els['l1-materi-modal']);
-  }
-
-  closeMateriModal() {
-    this.hideModal(this.els['l1-materi-modal']);
   }
 
   switchMateriTab(tab) {
@@ -560,7 +699,7 @@ export default class Level1Scene extends Phaser.Scene {
 
   closeBoard() {
     this.els['l1-board'].classList.add('translate-y-full');
-    this.time.delayedCall(500, () => this.els['l1-board'].classList.add('hidden'));
+    this.time.delayedCall(500, () => this.els['l1-board']?.classList.add('hidden'));
   }
 
   fadeIn(element) { requestAnimationFrame(() => element.classList.replace('opacity-0', 'opacity-100')); }
@@ -570,15 +709,16 @@ export default class Level1Scene extends Phaser.Scene {
   }
 
   updateHud() {
-    this.els?.['l1-score-val'] && (this.els['l1-score-val'].textContent = ScoreManager.currentScore);
-    this.els?.['l1-progress-val'] && (this.els['l1-progress-val'].textContent = `${this.state?.solved || 0} / 4`);
+    this.els['l1-score-val'].textContent = ScoreManager.currentScore;
+    this.els['l1-progress-val'].textContent = `${this.answers.length} / ${WORDS.length}`;
   }
 
   updateTime() {
+    if (!this.state.timerRunning) return;
     this.elapsed += 1;
     const minutes = String(Math.floor(this.elapsed / 60)).padStart(2, '0');
     const seconds = String(this.elapsed % 60).padStart(2, '0');
-    if (this.els?.['l1-time-val']) this.els['l1-time-val'].textContent = `${minutes}:${seconds}`;
+    this.els['l1-time-val'].textContent = `${minutes}:${seconds}`;
   }
 
   cleanup() {

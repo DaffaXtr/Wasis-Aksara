@@ -1,0 +1,37 @@
+<div id="result-overlay" class="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500 pointer-events-none select-none">
+  <div class="pointer-events-auto bg-stone-dark/98 flex h-[600px] w-[900px] flex-col rounded-2xl border-2 border-majapahit-gold p-7 shadow-[0_15px_40px_rgba(0,0,0,0.85)]">
+    <!-- Header -->
+    <div class="flex items-end justify-between border-b border-majapahit-dark-gold/50 pb-3">
+      <div>
+        <p id="result-level" class="font-poppins text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold/80"></p>
+        <h2 class="font-cinzel text-[28px] font-bold uppercase tracking-widest text-majapahit-light-gold">Papan Skor</h2>
+      </div>
+      <div class="flex items-center gap-6">
+        <div class="flex flex-col items-center">
+          <span class="font-poppins text-[9px] uppercase tracking-widest text-stone-soft/70">Bintang</span>
+          <span id="result-stars" class="text-[26px] leading-none"></span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-poppins text-[9px] uppercase tracking-widest text-stone-soft/70">Bener</span>
+          <span id="result-correct" class="font-cinzel text-[22px] font-bold text-majapahit-cream">0 / 0</span>
+        </div>
+        <div class="flex flex-col items-center">
+          <span class="font-poppins text-[9px] uppercase tracking-widest text-stone-soft/70">Skor</span>
+          <span id="result-score" class="font-cinzel text-[22px] font-bold text-majapahit-light-gold">0</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rekap Jawaban -->
+    <div class="mt-3 grid grid-cols-[36px_1fr_1fr_1fr_36px] gap-3 px-3 font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/80">
+      <span>No</span><span>Pitakon</span><span>Wangsulanmu</span><span>Wangsulan Bener</span><span></span>
+    </div>
+    <div id="result-answers" class="mt-1 min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1"></div>
+    <p id="result-empty" class="hidden flex-1 items-center justify-center font-poppins text-[13px] text-stone-soft/60">Rekap wangsulan durung kasedhiya kanggo level iki.</p>
+
+    <!-- Footer -->
+    <div class="mt-4 flex justify-end">
+      <button id="result-btn-next" class="kenney-button h-11 w-[200px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Lanjut ›</button>
+    </div>
+  </div>
+</div>

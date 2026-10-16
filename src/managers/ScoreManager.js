@@ -66,6 +66,18 @@ class ScoreManager {
     }
     return 0;
   }
+
+  /**
+   * Bintang (0 - 3) berdasarkan jumlah jawaban bener untuk level berformat kuis.
+   * Semua bener = 3, minimal 80% = 2, minimal 40% = 1.
+   */
+  starsFromCorrect(correct, total) {
+    const ratio = total ? correct / total : 0;
+    if (ratio >= 1) return 3;
+    if (ratio >= 0.8) return 2;
+    if (ratio >= 0.4) return 1;
+    return 0;
+  }
 }
 
 // Export single instance (Core Singleton pattern)

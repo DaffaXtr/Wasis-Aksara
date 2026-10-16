@@ -63,14 +63,14 @@ export default class PreloadScene extends Phaser.Scene {
     this.load.image('Logo', 'assets/images/Logo.webp');
     this.load.image('baskara-idle', 'assets/sprites/baskara-idle.webp');
 
-    // Meload aset audio
-    this.load.audio('backsound', 'assets/audio/backsound.mp3');
+    // Musik latar dimuat belakangan oleh MainMenuScene agar menu tampil lebih cepat
   }
 
   create() {
     console.log('PreloadScene: assets loaded. Starting game...');
     const saveData = SaveManager.load();
-    const startScene = saveData.lastActiveScene || 'MainMenuScene';
+    // Fallback ke menu jika scene terakhir sudah tidak ada (mis. Level 5 versi lama).
+    const startScene = this.scene.get(saveData.lastActiveScene) ? saveData.lastActiveScene : 'MainMenuScene';
     console.log(`PreloadScene: Resuming from last active scene: ${startScene}`);
     this.scene.start(startScene);
   }

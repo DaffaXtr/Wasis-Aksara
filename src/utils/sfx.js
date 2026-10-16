@@ -1,6 +1,9 @@
+import AudioManager from '../managers/AudioManager.js';
+
 let context;
 
 function tone(frequency, duration = 0.1, type = 'sine', volume = 0.15, delay = 0, endFrequency) {
+  if (AudioManager.isMuted) return;
   try {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     if (!AudioContext) return;

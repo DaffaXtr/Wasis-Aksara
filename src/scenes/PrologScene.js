@@ -10,15 +10,15 @@ export default class PrologScene extends Phaser.Scene {
   constructor() {
     super('PrologScene');
     this.narrativeSteps = [
-      "Baskara menemukan sebuah batu bertuliskan aksara Jawa kuno.",
-      "Saat menyentuh permukaan batu yang kasar, tiba-tiba aksara Jawa kuno di batu tersebut mulai bersinar keemasan.",
-      "Tanah di sekitarnya berguncang, dan sebuah pusaran angin magis muncul di hadapannya.",
-      "Sebuah gerbang lintas waktu (portal) terbuka lebar, menarik Baskara masuk ke dalam pusaran cahaya.",
-      "Baskara terbangun di tengah hutan yang rimbun dengan pemandangan Candi Trowulan yang megah di kejauhan.",
-      "Seorang tetua desa mendekatinya dan berkata: 'Selamat datang, Sang Penyelamat. Kerajaan Majapahit sedang dalam bahaya.'",
-      "Tetua menjelaskan: 'Kekuatan magis pelindung kerajaan terpecah menjadi 5 pusaka aksara yang tersebar di 5 candi suci.'",
-      "Baskara dibekali sebuah kitab kamus aksara kuno untuk membantunya memecahkan teka-teki sandi.",
-      "Petualangan dimulai! Bantu Baskara mengumpulkan 5 pusaka aksara Jawa kuno untuk menyelamatkan Majapahit!"
+      "Baskara nemu watu sing isine aksara Jawa, nanging kahanan ing taun kuwi panganggone aksara Jawa wis ilang. Amarga kahanan iki njalari Baskara ora weruh yen kuwi aksara Jawa.",
+      "Watu sing dicekel Baskara banjur sumunar.",
+      "Lemah sakupenge Baskara obah, banjur angin lesus ujug-ujug metu ana ing ngarep mata.",
+      "Angin lesus kuwi banjur nyeret Baskara lumebu ing gerbang sing gedhe banget.",
+      "Sawise mlebu gerbang kasebut, Baskara banjur mlebu ana ing jaman sing ora diweruhi. Baskara nemoni kraton sing magrong-magrong ing ngarepe.",
+      "Baskara kaget amarga ana pawongan tuwa sing ujug-ujug ana ing burine.\nTetua: \"Sugeng rawuh ing Majapahit, le.\"",
+      "Pawongan tuwa kuwi njlentrehne yen dheweke mangerteni kekarepane Baskara. Dheweke ngandharake yen Baskara pengin metu saka jaman iki, dheweke kudu ngrampungake tantangan sing ana.",
+      "Pawongan tuwa kuwi menehi buku sing isine babagan aksara Jawa.",
+      "Petualangan diwiwiti! Ayo kancani Baskara nemokake 5 pusaka kanggo bisa metu saka jaman iki!"
     ];
     this.currentStep = 0;
     this.typewriterTimer = null;
@@ -116,7 +116,7 @@ export default class PrologScene extends Phaser.Scene {
       // Update background image with smooth cross-fade transition
       if (bgLayerA && bgLayerB) {
         const stepNum = this.currentStep + 1;
-        const newBgUrl = `url('/assets/images/prolog${stepNum}.png')`;
+        const newBgUrl = `url('/assets/images/prolog${stepNum}.webp')`;
         const isLayerAActive = bgLayerA.classList.contains('opacity-100');
 
         if (isLayerAActive) {
@@ -174,7 +174,7 @@ export default class PrologScene extends Phaser.Scene {
             updateStep();
           } else {
             console.log('PrologScene: Finished. Starting MapScene with fade...');
-            startMapSceneWithFade();
+            finishProlog();
           }
         }
       };
@@ -184,7 +184,7 @@ export default class PrologScene extends Phaser.Scene {
     if (prologBtnSkip) {
       prologBtnSkip.onclick = () => {
         console.log('PrologScene: Skipped. Starting MapScene with fade...');
-        startMapSceneWithFade();
+        finishProlog();
       };
     }
 

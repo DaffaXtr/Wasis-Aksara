@@ -1,8 +1,8 @@
 <div id="main-menu-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-all duration-300 select-none">
-  
-  <!-- TOP ROW: Profile & Main Nav -->
+
+  <!-- TOP ROW: Progres Pemain & Navigasi Informasi -->
   <div class="flex justify-between items-start w-full">
-    <!-- Player Profile Panel -->
+    <!-- Player Progress Panel -->
     <div class="bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl p-3 flex items-center gap-3 w-72 pointer-events-auto shadow-xl">
       <!-- Avatar Circle -->
       <div class="w-12 h-12 rounded-full border-2 border-majapahit-gold overflow-hidden bg-stone-light/40 flex items-center justify-center shadow-inner">
@@ -12,60 +12,48 @@
       <div class="flex-1 flex flex-col justify-center">
         <div class="flex justify-between items-baseline">
           <span class="font-cinzel text-majapahit-cream text-[13px] font-bold tracking-wider">BASKARA</span>
-          <span class="font-poppins text-stone-soft text-[9px]">Lvl 1</span>
+          <span id="menu-progress-items" class="text-[12px] leading-none tracking-wider"></span>
         </div>
-        <!-- XP Bar Container -->
+        <!-- Progress Bar Candi -->
         <div class="flex items-center mt-1">
           <div class="flex-1 bg-stone-light/30 h-2.5 rounded-full overflow-hidden border border-stone-light/50">
-            <div class="bg-majapahit-gold h-full w-[25%] rounded-full shadow-lg"></div>
+            <div id="menu-progress-bar" class="bg-majapahit-gold h-full w-0 rounded-full shadow-lg transition-all duration-700"></div>
           </div>
-          <span class="text-[9px] text-majapahit-cream/80 ml-2 font-poppins font-semibold">250/1000</span>
+          <span id="menu-progress-text" class="text-[9px] text-majapahit-cream/80 ml-2 font-poppins font-semibold">0/4 Candi</span>
         </div>
       </div>
     </div>
 
-    <!-- Main Navigation Buttons -->
+    <!-- Navigasi Informasi -->
     <div class="flex gap-3 pointer-events-auto">
-      <!-- Kamus -->
-      <button id="nav-btn-kamus" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+      <button id="nav-btn-cp" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="CP">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">CP</span>
+      </button>
+      <button id="nav-btn-tp" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="TP">
+        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 6h11"></path><path d="M10 12h11"></path><path d="M10 18h11"></path><path d="M3 6l1.5 1.5L7 5"></path><path d="M3 12l1.5 1.5L7 11"></path><path d="M3 18l1.5 1.5L7 17"></path>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">TP</span>
+      </button>
+      <button id="nav-btn-kamus" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="Kamus">
         <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
         </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">KAMUS</span>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Kamus</span>
       </button>
-      <!-- Achievement -->
-      <button id="nav-btn-achievement" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+      <button id="nav-btn-profil" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="Profil">
         <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-          <path d="M4 22h16"></path>
-          <path d="M10 14.66V17c0 .55-.45 1-1 1H4v2h16v-2h-5c-.55 0-1-.45-1-1v-2.34"></path>
-          <path d="M12 2a7 7 0 0 0-7 7v4.66a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V9a7 7 0 0 0-7-7z"></path>
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle>
         </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">ACHIEVE</span>
-      </button>
-      <!-- Koleksi -->
-      <button id="nav-btn-koleksi" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
-        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-          <polyline points="14 2 14 8 20 8"></polyline>
-          <line x1="16" y1="13" x2="8" y2="13"></line>
-          <line x1="16" y1="17" x2="8" y2="17"></line>
-        </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">KOLEKSI</span>
-      </button>
-      <!-- Pengaturan -->
-      <button id="nav-btn-pengaturan" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
-        <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="3"></circle>
-          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-        </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider">SETTING</span>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Profil</span>
       </button>
     </div>
   </div>
 
-  <!-- CENTER ROW: Logo & Main Selection -->
+  <!-- CENTER ROW: Logo & Menu Utama -->
   <div class="flex flex-col items-center justify-center grow py-4">
     <!-- Game Logo image -->
     <img src="/assets/images/Logo.webp" class="h-[200px] object-contain mb-4 select-none pointer-events-none drop-shadow-[0_8px_16px_rgba(139,106,43,0.3)]" alt="Wasis Aksara Logo" />
@@ -75,53 +63,47 @@
       <button id="menu-btn-mulai" class="w-80 h-14 text-stone-dark text-[15px] font-bold tracking-widest font-poppins hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer flex items-center justify-center uppercase hover:text-stone-950 shadow-lg shadow-majapahit-dark-gold/10" style="background-image: url('/assets/images/Button.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
         Mulai Petualangan
       </button>
-      <button id="menu-btn-lanjutkan" disabled class="w-80 h-12 text-stone-soft/30 text-[13px] font-semibold tracking-widest font-poppins cursor-not-allowed flex items-center justify-center gap-2 uppercase brightness-[0.7]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
-        Lanjutkan
-        <svg class="w-4 h-4 text-stone-soft/25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
+      <button id="menu-btn-peta" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Peta Jelajah Candi
       </button>
-      <button id="menu-btn-pengaturan" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
-        Pengaturan
+      <button id="menu-btn-materi" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Materi
       </button>
-      <button id="menu-btn-kamus" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
-        Kamus Aksara
+      <button id="menu-btn-evaluasi" class="w-80 h-12 text-stone-soft hover:text-majapahit-cream hover:scale-103 active:scale-97 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 uppercase font-semibold text-[13px] tracking-wider brightness-[0.85] hover:brightness-[1]" style="background-image: url('/assets/images/Button Dark.svg'); background-size: 100% 100%; background-repeat: no-repeat; background-position: center; background-color: transparent;">
+        Evaluasi
       </button>
     </div>
   </div>
 
-  <!-- BOTTOM ROW: Prolog, Quote, & Quick Info -->
+  <!-- BOTTOM ROW: Prolog & Quick Buttons -->
   <div class="flex justify-between items-end w-full">
     <!-- Left Panel: Prolog & Version -->
     <div class="flex flex-col gap-2">
       <div class="bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl p-4 w-76 pointer-events-auto shadow-xl">
         <h3 class="font-cinzel text-majapahit-gold text-[12px] font-bold mb-1 tracking-wider uppercase">Prolog</h3>
         <p class="font-poppins text-stone-soft text-[11px] leading-relaxed">
-          Baskara menemukan sebuah tulisan beraksara Jawa kuno. Rasa penasarannya membawa dia pada sebuah petualangan lintas waktu...
+          Baskara nemu watu sing isine aksara Jawa. Watu kuwi sumunar lan nyeret dheweke menyang jaman Majapahit...
         </p>
       </div>
       <span class="font-poppins text-[10px] text-stone-soft/50 ml-1">v 1.0.0</span>
     </div>
 
-    <!-- Right Buttons: Tutorial & Info -->
+    <!-- Right Buttons: Pandhuan & Swara -->
     <div class="flex gap-3 pointer-events-auto mb-1">
-      <!-- Tutorial -->
-      <button id="quick-btn-tutorial" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
+      <button id="quick-btn-pandhuan" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="Pandhuan">
         <svg class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-          <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path>
         </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Tutorial</span>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Pandhuan</span>
       </button>
-      <!-- Tentang -->
-      <button id="quick-btn-about" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group">
-        <svg class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="12" cy="12" r="10"></circle>
-          <line x1="12" y1="16" x2="12" y2="12"></line>
-          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      <button id="quick-btn-audio" class="flex flex-col items-center justify-center bg-stone-dark/85 border border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group" title="Swara">
+        <svg id="quick-audio-on" class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
         </svg>
-        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Tentang</span>
+        <svg id="quick-audio-off" class="hidden w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">Swara</span>
       </button>
     </div>
   </div>
@@ -257,5 +239,28 @@
         <span class="font-poppins text-xs text-majapahit-gold tracking-wider uppercase font-bold">nga</span>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal Informasi Generik: CP, TP, Profil, Materi, Pandhuan, Evaluasi (diisi MainMenuScene) -->
+<div id="menu-info-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+  <div class="pointer-events-auto bg-stone-dark/98 flex h-[560px] w-[900px] flex-col rounded-2xl border-2 border-majapahit-gold p-6 shadow-[0_15px_40px_rgba(0,0,0,0.85)]">
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-3">
+      <div>
+        <p id="menu-info-subtitle" class="font-poppins text-[10px] font-bold uppercase tracking-widest text-majapahit-light-gold/80"></p>
+        <h2 id="menu-info-title" class="font-cinzel text-xl font-bold tracking-wider text-majapahit-light-gold"></h2>
+      </div>
+      <button id="menu-info-close" class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-majapahit-dark-gold/80 bg-stone-light/40 text-stone-soft transition hover:border-majapahit-gold hover:text-state-error hover:scale-105" title="Tutup">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <!-- Body -->
+    <div id="menu-info-body" class="mt-4 min-h-0 flex-1 overflow-y-auto pr-2"></div>
+    <!-- Footer (navigasi Pandhuan) -->
+    <div id="menu-info-footer" class="mt-4 hidden items-center justify-between"></div>
   </div>
 </div>

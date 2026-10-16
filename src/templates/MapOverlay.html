@@ -1,242 +1,71 @@
-<div id="map-overlay" class="absolute inset-0 hidden pointer-events-none p-6 transition-opacity duration-300 select-none w-full h-full">
-  <!-- TOP ROW: Home Button & Beautiful Title -->
-  <div class="flex justify-between items-start w-full relative z-30">
-    <!-- Home Button -->
-    <button id="map-btn-home" class="flex flex-col items-center justify-center bg-stone-dark/90 border-2 border-majapahit-dark-gold/80 rounded-xl w-16 h-16 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group pointer-events-auto">
-      <svg class="w-6 h-6 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-      </svg>
-      <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-1 tracking-wider uppercase">UTAMA</span>
-    </button>
+<div id="map-overlay" class="absolute inset-0 hidden pointer-events-none select-none w-full h-full">
+  <!-- Peta 4 candi (di dalam overlay 1280×720 agar posisi node selalu pas di semua rasio layar) -->
+  <img src="/assets/images/map-4candi.webp" alt="" draggable="false" class="absolute inset-0 h-full w-full select-none" />
 
-    <!-- Historical Title Banner -->
-    <div class="absolute left-1/2 -translate-x-1/2 top-0 flex flex-col items-center pointer-events-auto">
-      <div class="bg-stone-dark/95 border-2 border-majapahit-gold rounded-2xl px-8 py-3 shadow-[0_4px_15px_rgba(0,0,0,0.6)] flex flex-col items-center">
-        <!-- Title Text -->
-        <h1 class="font-cinzel text-2xl text-majapahit-light-gold font-bold tracking-widest leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-          PETA TROWULAN
-        </h1>
-        <span class="font-marcellus text-[10px] text-majapahit-cream/80 mt-1 uppercase tracking-wider font-semibold">
-          Pilih Candi untuk Memulai Tantangan
-        </span>
-      </div>
-      <!-- Subtle under-banner decorative line -->
-      <div class="w-32 h-0.5 bg-linear-to-r from-transparent via-majapahit-gold to-transparent mt-1"></div>
-    </div>
-
-    <!-- Empty right side to balance layout -->
-    <div class="w-16 h-16"></div>
+  <!-- Judul pada gulungan kayu bawaan gambar -->
+  <div class="absolute flex flex-col items-center justify-center text-center" style="left: 4.49%; top: 5.84%; width: 31.28%; height: 17.33%;">
+    <h1 class="font-cinzel text-[25px] font-bold leading-none tracking-wider text-[#3f2a14]">PETA JELAJAH CANDI</h1>
+    <p class="mt-2 font-poppins text-[11px] font-bold uppercase tracking-widest text-[#5c3d1b]">✦ Kumpulna 4 Pusaka Aksara ✦</p>
   </div>
 
-  <!-- LEVEL NODES CONTAINER -->
-  <!-- LEVEL 1: PANTAI LEGENA -->
-  <div id="map-node-1" class="absolute flex flex-col items-center pointer-events-auto group z-20" style="left: 20%; top: 70%; transform: translate(-50%, -50%);">
-    <!-- Tooltip Card -->
-    <div class="absolute bottom-20 flex flex-col items-center opacity-0 pointer-events-none translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 w-64 bg-stone-dark/95 border-2 border-majapahit-gold rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.8)] text-stone-soft">
-      <div class="text-center font-cinzel text-majapahit-light-gold font-bold text-xs border-b border-majapahit-dark-gold/30 pb-1 mb-2">TANTANGAN I</div>
-      <div class="text-center font-marcellus text-majapahit-cream text-lg font-semibold leading-tight">Pantai Legena</div>
-      <div class="text-center font-poppins text-stone-soft/80 text-[11px] mt-2 mb-3">Menerjemahkan Aksara Jawa dasar (Legena/Nglegena) di pantai pelabuhan.</div>
-      
-      <!-- Stars Indicator -->
-      <div class="flex justify-center items-center gap-1 text-lg mb-1" id="node-1-stars">
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-      </div>
-      <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80 mt-1" id="node-1-score">Skor Terbaik: 0</div>
-      
-      <!-- Action status hint -->
-      <div class="text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-dark-gold/30 rounded-md py-1 border border-majapahit-gold/20 uppercase tracking-wider" id="node-1-action-text">Mulai Tantangan</div>
-    </div>
-
-    <!-- Pulsing glow ring -->
-    <div class="absolute w-14 h-14 rounded-full bg-majapahit-gold/30 border border-majapahit-gold/50 animate-ping -z-10 hidden" id="node-1-pulse"></div>
-
-    <!-- Circle Pin Button -->
-    <button id="btn-node-1" class="relative w-14 h-14 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 hover:scale-110 hover:border-majapahit-light-gold transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(212,166,74,0.6)]">
-      <div class="absolute inset-0.5 rounded-full border border-majapahit-dark-gold/30"></div>
-      <span class="font-cinzel text-majapahit-cream font-bold text-xl leading-none" id="node-1-num">I</span>
-      <!-- Lock Overlay -->
-      <div class="absolute inset-0 bg-stone-dark/85 rounded-full items-center justify-center hidden" id="node-1-lock">
-        <svg class="w-5 h-5 text-stone-soft/40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-    </button>
-
-    <!-- Node Label -->
-    <div class="mt-2 bg-stone-dark/95 border border-majapahit-dark-gold/40 rounded px-2.5 py-0.5 shadow-md group-hover:bg-stone-light/95 transition-all duration-200" id="node-1-label-container">
-      <span class="font-marcellus text-majapahit-cream font-semibold text-[11px] tracking-wide">Pantai Legena</span>
+  <!-- Penghitung pusaka pada kotak bawaan gambar (ikon rune tetap dari gambar) -->
+  <div class="absolute flex flex-col justify-center" style="left: 80.7%; top: 10.2%; width: 12%; height: 9.46%;">
+    <span class="font-poppins text-[10px] font-bold uppercase tracking-wider text-[#3f2a14]">Pusaka Terkumpul</span>
+    <div class="flex items-baseline gap-2">
+      <span id="map-item-count" class="font-cinzel text-[20px] font-bold leading-tight text-[#3f2a14]">0/4</span>
+      <span id="map-item-icons" class="text-[13px] leading-none"></span>
     </div>
   </div>
 
-  <!-- LEVEL 2: DESA SANDHANGAN -->
-  <div id="map-node-2" class="absolute flex flex-col items-center pointer-events-auto group z-20" style="left: 42%; top: 57%; transform: translate(-50%, -50%);">
-    <!-- Tooltip Card -->
-    <div class="absolute bottom-20 flex flex-col items-center opacity-0 pointer-events-none translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 w-64 bg-stone-dark/95 border-2 border-majapahit-gold rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.8)] text-stone-soft">
-      <div class="text-center font-cinzel text-majapahit-light-gold font-bold text-xs border-b border-majapahit-dark-gold/30 pb-1 mb-2">TANTANGAN II</div>
-      <div class="text-center font-marcellus text-majapahit-cream text-lg font-semibold leading-tight">Desa Sandhangan</div>
-      <div class="text-center font-poppins text-stone-soft/80 text-[11px] mt-2 mb-3">Memasangkan aksara Jawa dengan sandhangan suara pembentuk vokal (i, u, e, o, dll).</div>
-      
-      <!-- Stars Indicator -->
-      <div class="flex justify-center items-center gap-1 text-lg mb-1" id="node-2-stars">
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
+  <!-- LEVEL NODES: dibangun MapScene dari levelData memakai template di bawah -->
+  <div id="map-nodes"></div>
+
+  <!-- Tombol kembali ke menu utama -->
+  <button id="map-btn-home" class="absolute bottom-4 left-4 z-30 flex flex-col items-center justify-center bg-stone-dark/90 border-2 border-majapahit-dark-gold/80 rounded-xl w-14 h-14 hover:border-majapahit-gold hover:bg-stone-light hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer shadow-xl group pointer-events-auto" title="Menu utama">
+    <svg class="w-5 h-5 text-majapahit-light-gold group-hover:text-majapahit-cream transition-colors duration-200" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+    </svg>
+    <span class="font-poppins text-[8px] text-stone-soft/90 group-hover:text-stone-soft font-bold mt-0.5 tracking-wider uppercase">Utama</span>
+  </button>
+
+  <template id="map-node-template">
+    <div class="absolute group">
+      <!-- Area candi (klik untuk masuk level) -->
+      <div class="absolute h-[124px] w-[132px] -translate-x-1/2 -translate-y-1/2" data-slot="temple">
+        <!-- Kabut kertas untuk candi terkunci -->
+        <div class="pointer-events-none absolute -inset-3 hidden rounded-full bg-[radial-gradient(ellipse_at_center,rgba(232,190,120,.88)_0%,rgba(232,190,120,.78)_45%,rgba(232,190,120,0)_72%)]" data-slot="fog"></div>
+        <!-- Cincin denyut untuk candi aktif -->
+        <div class="pointer-events-none absolute left-1/2 top-1/2 hidden h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-majapahit-gold/80 animate-ping" data-slot="pulse"></div>
+        <button class="pointer-events-auto absolute inset-0 cursor-pointer rounded-full transition-all duration-200 hover:bg-[radial-gradient(ellipse_at_center,rgba(255,229,166,.55)_0%,rgba(255,229,166,0)_70%)] focus-visible:outline-2 focus-visible:outline-majapahit-gold disabled:cursor-not-allowed" data-slot="button"></button>
+        <!-- Gembok (terkunci) -->
+        <div class="pointer-events-none absolute left-1/2 top-1/2 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-[#7e4e16] bg-stone-dark/85 shadow-lg" data-slot="lock">
+          <svg class="h-5 w-5 text-majapahit-light-gold/80" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <!-- Item yang sudah didapat (rampung) -->
+        <span class="pointer-events-none absolute -right-1 top-1 hidden h-9 w-9 items-center justify-center rounded-full border-2 border-majapahit-gold bg-stone-dark text-[18px] leading-none shadow-lg animate-wa-pop" data-slot="item"></span>
       </div>
-      <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80 mt-1" id="node-2-score">Skor Terbaik: 0</div>
-      
-      <!-- Action status hint -->
-      <div class="text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-dark-gold/30 rounded-md py-1 border border-majapahit-gold/20 uppercase tracking-wider" id="node-2-action-text">Mulai Tantangan</div>
-    </div>
 
-    <!-- Pulsing glow ring -->
-    <div class="absolute w-14 h-14 rounded-full bg-majapahit-gold/30 border border-majapahit-gold/50 animate-ping -z-10 hidden" id="node-2-pulse"></div>
-
-    <!-- Circle Pin Button -->
-    <button id="btn-node-2" class="relative w-14 h-14 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 hover:scale-110 hover:border-majapahit-light-gold transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(212,166,74,0.6)]">
-      <div class="absolute inset-0.5 rounded-full border border-majapahit-dark-gold/30"></div>
-      <span class="font-cinzel text-majapahit-cream font-bold text-xl leading-none" id="node-2-num">II</span>
-      <!-- Lock Overlay -->
-      <div class="absolute inset-0 bg-stone-dark/85 rounded-full items-center justify-center hidden" id="node-2-lock">
-        <svg class="w-5 h-5 text-stone-soft/40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
+      <!-- Papan nama (menutup papan bawaan gambar) + status di bawahnya -->
+      <div class="pointer-events-none absolute flex -translate-x-1/2 flex-col items-center" data-slot="plate-wrap">
+        <div class="flex items-center justify-center whitespace-nowrap rounded-[3px] border-2 border-[#7e4e16] bg-[#e6b871] px-3 font-cinzel text-[11.5px] font-bold uppercase tracking-wide text-[#3f2a14] shadow-[0_2px_4px_rgba(60,35,10,.35)]" data-slot="plate"></div>
+        <span class="mt-1.5 hidden rounded-[3px] bg-[#8c2d17] px-3 py-0.5 font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-cream shadow-md" data-slot="ribbon">Saat Ini</span>
+        <span class="mt-1 hidden rounded-full bg-stone-dark/80 px-2 py-0.5 text-[12px] leading-none tracking-wider" data-slot="stars"></span>
       </div>
-    </button>
 
-    <!-- Node Label -->
-    <div class="mt-2 bg-stone-dark/95 border border-majapahit-dark-gold/40 rounded px-2.5 py-0.5 shadow-md group-hover:bg-stone-light/95 transition-all duration-200" id="node-2-label-container">
-      <span class="font-marcellus text-majapahit-cream font-semibold text-[11px] tracking-wide">Desa Sandhangan</span>
-    </div>
-  </div>
-
-  <!-- LEVEL 3: CANDI PASANGAN -->
-  <div id="map-node-3" class="absolute flex flex-col items-center pointer-events-auto group z-20" style="left: 30%; top: 40%; transform: translate(-50%, -50%);">
-    <!-- Tooltip Card -->
-    <div class="absolute bottom-20 flex flex-col items-center opacity-0 pointer-events-none translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 w-64 bg-stone-dark/95 border-2 border-majapahit-gold rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.8)] text-stone-soft">
-      <div class="text-center font-cinzel text-majapahit-light-gold font-bold text-xs border-b border-majapahit-dark-gold/30 pb-1 mb-2">TANTANGAN III</div>
-      <div class="text-center font-marcellus text-majapahit-cream text-lg font-semibold leading-tight">Candi Pasangan</div>
-      <div class="text-center font-poppins text-stone-soft/80 text-[11px] mt-2 mb-3">Memecahkan sandi huruf mati menggunakan sistem Pasangan aksara Jawa kuno.</div>
-      
-      <!-- Stars Indicator -->
-      <div class="flex justify-center items-center gap-1 text-lg mb-1" id="node-3-stars">
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
+      <!-- Tooltip detail (hover) -->
+      <div class="pointer-events-none absolute z-50 w-64 -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 p-4 text-stone-soft opacity-0 shadow-[0_4px_20px_rgba(0,0,0,0.8)] transition-all duration-300 group-hover:opacity-100" data-slot="tooltip">
+        <div class="mb-2 border-b border-majapahit-dark-gold/30 pb-1 text-center font-cinzel text-xs font-bold text-majapahit-light-gold" data-slot="heading"></div>
+        <div class="text-center font-marcellus text-lg font-semibold leading-tight text-majapahit-cream" data-slot="title"></div>
+        <div class="mt-0.5 text-center font-poppins text-[10px] uppercase tracking-wider text-majapahit-light-gold/80" data-slot="candi"></div>
+        <div class="mt-2 mb-2 text-center font-poppins text-[11px] text-stone-soft/80" data-slot="description"></div>
+        <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80" data-slot="score"></div>
+        <div class="mt-0.5 text-center font-poppins text-[10px] text-stone-soft/80" data-slot="reward"></div>
+        <div class="mt-2.5 rounded-md border py-1 text-center font-poppins text-[10px] font-bold uppercase tracking-wider" data-slot="action"></div>
       </div>
-      <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80 mt-1" id="node-3-score">Skor Terbaik: 0</div>
-      
-      <!-- Action status hint -->
-      <div class="text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-dark-gold/30 rounded-md py-1 border border-majapahit-gold/20 uppercase tracking-wider" id="node-3-action-text">Mulai Tantangan</div>
     </div>
-
-    <!-- Pulsing glow ring -->
-    <div class="absolute w-14 h-14 rounded-full bg-majapahit-gold/30 border border-majapahit-gold/50 animate-ping -z-10 hidden" id="node-3-pulse"></div>
-
-    <!-- Circle Pin Button -->
-    <button id="btn-node-3" class="relative w-14 h-14 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 hover:scale-110 hover:border-majapahit-light-gold transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(212,166,74,0.6)]">
-      <div class="absolute inset-0.5 rounded-full border border-majapahit-dark-gold/30"></div>
-      <span class="font-cinzel text-majapahit-cream font-bold text-xl leading-none" id="node-3-num">III</span>
-      <!-- Lock Overlay -->
-      <div class="absolute inset-0 bg-stone-dark/85 rounded-full items-center justify-center hidden" id="node-3-lock">
-        <svg class="w-5 h-5 text-stone-soft/40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-    </button>
-
-    <!-- Node Label -->
-    <div class="mt-2 bg-stone-dark/95 border border-majapahit-dark-gold/40 rounded px-2.5 py-0.5 shadow-md group-hover:bg-stone-light/95 transition-all duration-200" id="node-3-label-container">
-      <span class="font-marcellus text-majapahit-cream font-semibold text-[11px] tracking-wide">Candi Pasangan</span>
-    </div>
-  </div>
-
-  <!-- LEVEL 4: WANA REKAN -->
-  <div id="map-node-4" class="absolute flex flex-col items-center pointer-events-auto group z-20" style="left: 62%; top: 46%; transform: translate(-50%, -50%);">
-    <!-- Tooltip Card -->
-    <div class="absolute bottom-20 flex flex-col items-center opacity-0 pointer-events-none translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 w-64 bg-stone-dark/95 border-2 border-majapahit-gold rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.8)] text-stone-soft">
-      <div class="text-center font-cinzel text-majapahit-light-gold font-bold text-xs border-b border-majapahit-dark-gold/30 pb-1 mb-2">TANTANGAN IV</div>
-      <div class="text-center font-marcellus text-majapahit-cream text-lg font-semibold leading-tight">Wana Rekan</div>
-      <div class="text-center font-poppins text-stone-soft/80 text-[11px] mt-2 mb-3">Mempelajari & menulis aksara khusus Murda (huruf kapital) dan Rekan (serapan asing) di hutan.</div>
-      
-      <!-- Stars Indicator -->
-      <div class="flex justify-center items-center gap-1 text-lg mb-1" id="node-4-stars">
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-      </div>
-      <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80 mt-1" id="node-4-score">Skor Terbaik: 0</div>
-      
-      <!-- Action status hint -->
-      <div class="text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-dark-gold/30 rounded-md py-1 border border-majapahit-gold/20 uppercase tracking-wider" id="node-4-action-text">Mulai Tantangan</div>
-    </div>
-
-    <!-- Pulsing glow ring -->
-    <div class="absolute w-14 h-14 rounded-full bg-majapahit-gold/30 border border-majapahit-gold/50 animate-ping -z-10 hidden" id="node-4-pulse"></div>
-
-    <!-- Circle Pin Button -->
-    <button id="btn-node-4" class="relative w-14 h-14 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 hover:scale-110 hover:border-majapahit-light-gold transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(212,166,74,0.6)]">
-      <div class="absolute inset-0.5 rounded-full border border-majapahit-dark-gold/30"></div>
-      <span class="font-cinzel text-majapahit-cream font-bold text-xl leading-none" id="node-4-num">IV</span>
-      <!-- Lock Overlay -->
-      <div class="absolute inset-0 bg-stone-dark/85 rounded-full items-center justify-center hidden" id="node-4-lock">
-        <svg class="w-5 h-5 text-stone-soft/40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-    </button>
-
-    <!-- Node Label -->
-    <div class="mt-2 bg-stone-dark/95 border border-majapahit-dark-gold/40 rounded px-2.5 py-0.5 shadow-md group-hover:bg-stone-light/95 transition-all duration-200" id="node-4-label-container">
-      <span class="font-marcellus text-majapahit-cream font-semibold text-[11px] tracking-wide">Wana Rekan</span>
-    </div>
-  </div>
-
-  <!-- LEVEL 5: KAWAH SWARA -->
-  <div id="map-node-5" class="absolute flex flex-col items-center pointer-events-auto group z-20" style="left: 79%; top: 33%; transform: translate(-50%, -50%);">
-    <!-- Tooltip Card -->
-    <div class="absolute bottom-20 flex flex-col items-center opacity-0 pointer-events-none translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 z-50 w-64 bg-stone-dark/95 border-2 border-majapahit-gold rounded-xl p-4 shadow-[0_4px_20px_rgba(0,0,0,0.8)] text-stone-soft">
-      <div class="text-center font-cinzel text-majapahit-light-gold font-bold text-xs border-b border-majapahit-dark-gold/30 pb-1 mb-2">TANTANGAN V</div>
-      <div class="text-center font-marcellus text-majapahit-cream text-lg font-semibold leading-tight">Kawah Swara</div>
-      <div class="text-center font-poppins text-stone-soft/80 text-[11px] mt-2 mb-3">Tantangan puncak mengenali Aksara Swara (huruf vokal murni/mandiri) di kawah suci.</div>
-      
-      <!-- Stars Indicator -->
-      <div class="flex justify-center items-center gap-1 text-lg mb-1" id="node-5-stars">
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-        <span class="text-stone-light">★</span>
-      </div>
-      <div class="text-center font-poppins text-[10px] text-majapahit-light-gold/80 mt-1" id="node-5-score">Skor Terbaik: 0</div>
-      
-      <!-- Action status hint -->
-      <div class="text-center font-poppins text-[10px] text-majapahit-cream font-bold mt-2.5 bg-majapahit-dark-gold/30 rounded-md py-1 border border-majapahit-gold/20 uppercase tracking-wider" id="node-5-action-text">Mulai Tantangan</div>
-    </div>
-
-    <!-- Pulsing glow ring -->
-    <div class="absolute w-14 h-14 rounded-full bg-majapahit-gold/30 border border-majapahit-gold/50 animate-ping -z-10 hidden" id="node-5-pulse"></div>
-
-    <!-- Circle Pin Button -->
-    <button id="btn-node-5" class="relative w-14 h-14 rounded-full border-2 border-majapahit-gold bg-stone-dark/95 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(0,0,0,0.6)] active:scale-95 hover:scale-110 hover:border-majapahit-light-gold transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(212,166,74,0.6)]">
-      <div class="absolute inset-0.5 rounded-full border border-majapahit-dark-gold/30"></div>
-      <span class="font-cinzel text-majapahit-cream font-bold text-xl leading-none" id="node-5-num">V</span>
-      <!-- Lock Overlay -->
-      <div class="absolute inset-0 bg-stone-dark/85 rounded-full items-center justify-center hidden" id="node-5-lock">
-        <svg class="w-5 h-5 text-stone-soft/40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-        </svg>
-      </div>
-    </button>
-
-    <!-- Node Label -->
-    <div class="mt-2 bg-stone-dark/95 border border-majapahit-dark-gold/40 rounded px-2.5 py-0.5 shadow-md group-hover:bg-stone-light/95 transition-all duration-200" id="node-5-label-container">
-      <span class="font-marcellus text-majapahit-cream font-semibold text-[11px] tracking-wide">Kawah Swara</span>
-    </div>
-  </div>
+  </template>
 </div>

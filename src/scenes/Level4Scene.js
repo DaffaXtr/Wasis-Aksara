@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
+import { showHistoryPopup } from '../ui/overlayKit.js';
 
 /**
- * Level4Scene: Modul gameplay Level 4 (Murda & Rekan - Formula Puzzle)
+ * Level4Scene: PLACEHOLDER — gameplay dibangun di Tahap 7 (lihat PLAN.md).
  */
 export default class Level4Scene extends Phaser.Scene {
   constructor() {
@@ -14,15 +15,18 @@ export default class Level4Scene extends Phaser.Scene {
     
     // Fade in camera & fullscreen curtain
     fadeTransitionIn(this, 500);
+    showHistoryPopup(4).then(() => this.showPlaceholder());
+  }
 
-    this.add.text(640, 100, 'LEVEL 4: MURDA & REKAN', {
+  showPlaceholder() {
+    this.add.text(640, 100, 'LEVEL 4: TTS AKSARA JAWA', {
       fontFamily: 'Cinzel',
       fontSize: '32px',
       color: '#d4a64a',
       fontWeight: 'semibold'
     }).setOrigin(0.5);
 
-    this.add.text(640, 360, '[Gameplay: Formula Puzzle - Susun Aksara Murda & Rekan]', {
+    this.add.text(640, 360, '[Gameplay segera hadir]', {
       fontFamily: 'Poppins',
       fontSize: '20px',
       color: '#e8e1d4'
@@ -36,7 +40,7 @@ export default class Level4Scene extends Phaser.Scene {
 
     this.input.once('pointerdown', () => {
       fadeTransitionOut(this, 500, () => {
-        this.scene.start('ResultScene', { level: 4, score: 700, stars: 2 });
+        this.scene.start('ResultScene', { level: 4, score: 0, stars: 0 });
       });
     });
   }

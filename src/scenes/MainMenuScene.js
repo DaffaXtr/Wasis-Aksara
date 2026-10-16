@@ -2,6 +2,8 @@ import Phaser from 'phaser';
 import AudioManager from '../managers/AudioManager.js';
 import mainMenuTemplate from '../templates/MainMenuOverlay.html?raw';
 import SaveManager from '../managers/SaveManager.js';
+import { levelData } from '../data/levelData.js';
+import { renderCP, renderEvaluasi, renderMateri, renderPandhuan, renderProfil, renderTP } from '../ui/menuPanels.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
@@ -32,7 +34,15 @@ export default class MainMenuScene extends Phaser.Scene {
     // Initialize AudioManager and play backsound at a low volume
     AudioManager.init(this.sound);
     AudioManager.bgmVolume = 0.15; // Set volume to 15% (not too loud)
-    AudioManager.playBGM('backsound', true);
+    const playBacksound = () => AudioManager.playBGM('backsound', true);
+    if (this.cache.audio.exists('backsound')) {
+      playBacksound();
+    } else {
+      // Musik (±3 MB) dimuat setelah menu tampil agar layar pertama tidak ikut menunggu
+      this.load.audio('backsound', 'assets/audio/backsound.mp3');
+      this.load.once('complete', playBacksound);
+      this.load.start();
+    }
 
     // Resume audio context on first user click/tap to bypass browser autoplay policy
     const resumeAudio = () => {
@@ -51,7 +61,7 @@ export default class MainMenuScene extends Phaser.Scene {
     // Set background on HTML container for full viewport coverage (covers side bars)
     const gameContainer = document.getElementById('wasis-aksara-game')?.parentElement;
     if (gameContainer) {
-      gameContainer.style.backgroundImage = "url('/assets/images/bg_home.png')";
+      gameContainer.style.backgroundImage = "url('/assets/images/bg_home.webp')";
       gameContainer.style.backgroundSize = "cover";
       gameContainer.style.backgroundPosition = "center";
     }
@@ -146,90 +156,76 @@ export default class MainMenuScene extends Phaser.Scene {
       });
     };
 
-    // Callback untuk membuka dan menutup Kamus Overlay
-    const openKamusOverlay = () => {
-      const kamusModal = document.getElementById('kamus-modal');
-      if (kamusModal) {
-        kamusModal.classList.remove('hidden');
-        kamusModal.classList.add('flex');
-        requestAnimationFrame(() => {
-          kamusModal.classList.remove('opacity-0');
-          kamusModal.classList.add('opacity-100');
-        });
-      }
+    // Modal helper: Kamus & modal informasi memakai pola buka/tutup yang sama
+    const openModal = (modal) => {
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      requestAnimationFrame(() => modal.classList.replace('opacity-0', 'opacity-100'));
+    };
+    const closeModal = (modal) => {
+      if (!modal) return;
+      modal.classList.replace('opacity-100', 'opacity-0');
+      this.time.delayedCall(300, () => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      });
     };
 
-    const closeKamusOverlay = () => {
-      const kamusModal = document.getElementById('kamus-modal');
-      if (kamusModal) {
-        kamusModal.classList.replace('opacity-100', 'opacity-0');
-        this.time.delayedCall(300, () => {
-          kamusModal.classList.add('hidden');
-          kamusModal.classList.remove('flex');
-        });
-      }
+    const kamusModal = document.getElementById('kamus-modal');
+    const infoModal = document.getElementById('menu-info-modal');
+    const infoBody = document.getElementById('menu-info-body');
+    const infoFooter = document.getElementById('menu-info-footer');
+    const closeInfo = () => closeModal(infoModal);
+
+    // Membuka modal informasi dengan isi dari menuPanels (CP, TP, Profil, Materi, Pandhuan, Evaluasi)
+    const openInfo = (renderPanel) => {
+      infoBody.innerHTML = '';
+      infoBody.scrollTop = 0;
+      infoFooter.innerHTML = '';
+      infoFooter.classList.replace('flex', 'hidden');
+      const { title, subtitle } = renderPanel({ body: infoBody, footer: infoFooter, close: closeInfo });
+      document.getElementById('menu-info-title').textContent = title;
+      document.getElementById('menu-info-subtitle').textContent = subtitle;
+      openModal(infoModal);
     };
 
-    const kamusBtnClose = document.getElementById('kamus-btn-close');
-    if (kamusBtnClose) kamusBtnClose.onclick = closeKamusOverlay;
+    // 3. PROGRES PEMAIN (candi rampung = item yang sudah didapat)
+    const completed = levelData.filter((level) => currentSave.items.includes(level.reward.id));
+    document.getElementById('menu-progress-text').textContent = `${completed.length}/${levelData.length} Candi`;
+    document.getElementById('menu-progress-items').textContent = completed.map((level) => level.reward.icon).join(' ');
+    this.time.delayedCall(300, () => {
+      document.getElementById('menu-progress-bar').style.width = `${(completed.length / levelData.length) * 100}%`;
+    });
 
-    // Mapping Tombol DOM ke Aksi Phaser
-    const btnMulai = document.getElementById('menu-btn-mulai');
-    if (btnMulai) {
-      btnMulai.onclick = () => {
-        console.log('MainMenuScene: Starting PrologScene with fade...');
-        startSceneWithFade('PrologScene');
-      };
-    }
-
-    const btnKamus = document.getElementById('menu-btn-kamus');
-    if (btnKamus) btnKamus.onclick = openKamusOverlay;
-
-    const navBtnKamus = document.getElementById('nav-btn-kamus');
-    if (navBtnKamus) navBtnKamus.onclick = openKamusOverlay;
-
-    const navBtnAchievement = document.getElementById('nav-btn-achievement');
-    if (navBtnAchievement) {
-      navBtnAchievement.onclick = () => {
-        console.log('MainMenuScene: Navigating to AchievementScene with fade...');
-        startSceneWithFade('AchievementScene');
-      };
-    }
-
-    const navBtnKoleksi = document.getElementById('nav-btn-koleksi');
-    if (navBtnKoleksi) {
-      navBtnKoleksi.onclick = () => {
-        console.log('MainMenuScene: Navigating to InventoryScene with fade...');
-        startSceneWithFade('InventoryScene');
-      };
-    }
-
-    // Tombol Pengaturan (Menampilkan Pesan Sederhana untuk Sementara)
-    const openSettings = () => {
-      alert('Pengaturan Game Wasis Aksara: Volume BGM & SFX dapat diatur di sini.');
+    // Ikon tombol Swara mengikuti status bisu AudioManager
+    const updateAudioIcon = (muted) => {
+      document.getElementById('quick-audio-on')?.classList.toggle('hidden', muted);
+      document.getElementById('quick-audio-off')?.classList.toggle('hidden', !muted);
     };
-    const btnPengaturan = document.getElementById('menu-btn-pengaturan');
-    if (btnPengaturan) btnPengaturan.onclick = openSettings;
+    updateAudioIcon(AudioManager.isMuted);
 
-    const navBtnPengaturan = document.getElementById('nav-btn-pengaturan');
-    if (navBtnPengaturan) navBtnPengaturan.onclick = openSettings;
+    // 4. MAPPING TOMBOL DOM KE AKSI
+    const actions = {
+      'menu-btn-mulai': () => startSceneWithFade('PrologScene'),
+      'menu-btn-peta': () => startSceneWithFade('MapScene'),
+      'menu-btn-materi': () => openInfo(renderMateri),
+      'menu-btn-evaluasi': () => openInfo(renderEvaluasi),
+      'nav-btn-cp': () => openInfo(renderCP),
+      'nav-btn-tp': () => openInfo(renderTP),
+      'nav-btn-kamus': () => openModal(kamusModal),
+      'nav-btn-profil': () => openInfo(renderProfil),
+      'quick-btn-pandhuan': () => openInfo(renderPandhuan),
+      'quick-btn-audio': () => updateAudioIcon(AudioManager.toggleMute()),
+      'kamus-btn-close': () => closeModal(kamusModal),
+      'menu-info-close': closeInfo
+    };
+    Object.entries(actions).forEach(([id, action]) => {
+      const element = document.getElementById(id);
+      if (element) element.onclick = action;
+    });
 
-    // Quick info: Tutorial & Tentang Game
-    const btnTutorial = document.getElementById('quick-btn-tutorial');
-    if (btnTutorial) {
-      btnTutorial.onclick = () => {
-        alert('Panduan Singkat: Pasangkan Aksara Jawa dengan Latin, selesaikan 5 Candi, dan kumpulkan pusaka Majapahit!');
-      };
-    }
-
-    const btnAbout = document.getElementById('quick-btn-about');
-    if (btnAbout) {
-      btnAbout.onclick = () => {
-        alert('Tentang Game: Wasis Aksara v1.0.0. Game Edukasi Sejarah & Aksara Jawa Kerajaan Majapahit.');
-      };
-    }
-
-    // 3. EVENT SHUTDOWN: Reset state overlay saat berpindah scene
+    // 5. EVENT SHUTDOWN: Reset state overlay saat berpindah scene
     this.events.once('shutdown', () => {
       if (overlay) {
         overlay.classList.add('hidden');
@@ -242,21 +238,16 @@ export default class MainMenuScene extends Phaser.Scene {
         gameContainer.style.backgroundImage = 'none';
       }
 
+      // Bersihkan event handlers untuk mencegah memory leak
+      Object.keys(actions).forEach((id) => {
+        const element = document.getElementById(id);
+        if (element) element.onclick = null;
+      });
+
       // Empty the UI overlay container
       if (uiContainer) {
         uiContainer.innerHTML = '';
       }
-      
-      // Bersihkan event handlers untuk mencegah memory leak
-      const ids = [
-        'menu-btn-mulai', 'menu-btn-kamus', 'nav-btn-kamus', 
-        'nav-btn-achievement', 'nav-btn-koleksi', 'nav-btn-pengaturan', 
-        'menu-btn-pengaturan', 'quick-btn-tutorial', 'quick-btn-about'
-      ];
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.onclick = null;
-      });
     });
   }
 }

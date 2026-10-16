@@ -1,0 +1,117 @@
+<div id="level2-overlay" class="absolute inset-0 hidden pointer-events-none select-none transition-opacity duration-500">
+  <!-- HUD Top Bar -->
+  <div id="l2-hud" class="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-5 opacity-0 transition-opacity duration-500">
+    <div class="flex h-[52px] w-[210px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
+      <span class="font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold">Level 2</span>
+      <span class="font-poppins text-[10px] font-semibold text-stone-soft">Ndandani Prasasti Kuno</span>
+    </div>
+    <div class="flex items-center gap-3.5 pointer-events-auto">
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Waktu</span>
+        <span id="l2-time-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">00:00</span>
+      </div>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Ukara</span>
+        <span id="l2-progress-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">0 / 5</span>
+      </div>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Skor</span>
+        <span id="l2-score-val" class="font-cinzel text-[15px] font-bold text-majapahit-light-gold leading-tight">0</span>
+      </div>
+      <button id="l2-btn-exit" class="ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-majapahit-dark-gold/80 bg-stone-dark/85 text-stone-soft transition hover:scale-105 hover:border-majapahit-gold hover:text-majapahit-cream active:scale-95" title="Kembali ke peta" aria-label="Kembali ke peta">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- 1. Kothak prasasti -->
+  <div id="l2-chest-stage" class="absolute inset-0 z-10 flex flex-col items-center justify-center opacity-0 transition-opacity duration-500">
+    <div class="pointer-events-none absolute left-1/2 top-[395px] h-[260px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(255,229,166,.75)_0%,rgba(212,166,74,.25)_45%,transparent_70%)] opacity-0 transition-opacity duration-700" id="l2-chest-glow"></div>
+    <button id="l2-chest" class="l2-chest pointer-events-auto relative mt-24 cursor-pointer border-0 bg-transparent p-0 transition-transform duration-200 hover:scale-105 focus-visible:outline-2 focus-visible:outline-majapahit-gold" aria-label="Bukak kothak prasasti">
+      <svg width="300" height="250" viewBox="0 0 300 250" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="l2-wood" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#7a5230"/><stop offset="1" stop-color="#4a3019"/>
+          </linearGradient>
+          <linearGradient id="l2-gold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f2d28a"/><stop offset="1" stop-color="#8b6a2b"/>
+          </linearGradient>
+        </defs>
+        <!-- Badan kothak -->
+        <rect x="30" y="112" width="240" height="122" rx="10" fill="url(#l2-wood)" stroke="#2b1a0c" stroke-width="3"/>
+        <rect x="30" y="112" width="240" height="14" fill="url(#l2-gold)" opacity=".9"/>
+        <rect x="30" y="218" width="240" height="14" rx="4" fill="url(#l2-gold)" opacity=".9"/>
+        <rect x="58" y="112" width="12" height="122" fill="url(#l2-gold)" opacity=".85"/>
+        <rect x="230" y="112" width="12" height="122" fill="url(#l2-gold)" opacity=".85"/>
+        <text x="150" y="190" text-anchor="middle" font-family="javanese" font-size="34" fill="#d4a64a" opacity=".85">ꦥꦿꦱꦱ꧀ꦠꦶ</text>
+        <!-- Gembok -->
+        <rect x="136" y="120" width="28" height="30" rx="5" fill="url(#l2-gold)" stroke="#2b1a0c" stroke-width="2"/>
+        <circle cx="150" cy="133" r="4" fill="#2b1a0c"/>
+        <!-- Tutup (terbuka saat diklik) -->
+        <g class="l2-lid">
+          <path d="M26 112 Q26 52 150 48 Q274 52 274 112 Z" fill="url(#l2-wood)" stroke="#2b1a0c" stroke-width="3"/>
+          <path d="M26 112 Q26 52 150 48 Q274 52 274 112" fill="none" stroke="url(#l2-gold)" stroke-width="10" opacity=".9"/>
+          <rect x="58" y="56" width="12" height="56" fill="url(#l2-gold)" opacity=".85"/>
+          <rect x="230" y="56" width="12" height="56" fill="url(#l2-gold)" opacity=".85"/>
+        </g>
+      </svg>
+    </button>
+    <div id="l2-chest-hint" class="pointer-events-none mt-6 flex items-center gap-2 rounded-full border-2 border-majapahit-gold bg-stone-dark/90 px-4 py-1.5 shadow-lg">
+      <span class="animate-wa-pointer-bounce text-[18px] leading-none">👆</span>
+      <span class="font-poppins text-[12px] font-bold uppercase tracking-wider text-majapahit-cream">Klik kothak prasasti</span>
+    </div>
+  </div>
+
+  <!-- 2. Popup perintah tantangan -->
+  <div id="l2-command" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+    <div class="w-[560px] rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-7 text-center shadow-[0_15px_40px_rgba(0,0,0,0.85)]">
+      <p class="font-poppins text-[10px] font-bold uppercase tracking-widest text-majapahit-light-gold/80">Perintah Tantangan</p>
+      <h2 id="l2-command-title" class="mt-1 font-cinzel text-[22px] font-bold uppercase tracking-widest text-majapahit-light-gold"></h2>
+      <div class="mx-auto mt-3 h-px w-2/3 bg-majapahit-dark-gold"></div>
+      <p id="l2-command-text" class="mt-4 font-poppins text-[14px] leading-relaxed text-stone-soft"></p>
+      <button id="l2-btn-command-next" class="kenney-button mt-6 h-11 w-[220px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Lanjut ›</button>
+    </div>
+  </div>
+
+  <!-- 3. Gulungan: 5 ukara rumpang -->
+  <div id="l2-scroll" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
+    <div class="relative w-[860px]">
+      <div class="l2-scroll-rod"></div>
+      <div class="l2-scroll-paper px-12 py-6">
+        <h2 class="text-center font-cinzel text-[22px] font-bold uppercase tracking-widest text-[#4a2f14]">Gulungan Prasasti</h2>
+        <p class="mt-1 text-center font-poppins text-[12px] text-[#6b4a22]">Ukara-ukara iki kudu dijangkepi siji mbaka siji.</p>
+        <ol id="l2-scroll-list" class="mt-4 space-y-2"></ol>
+      </div>
+      <div class="l2-scroll-rod"></div>
+      <div class="mt-5 flex justify-center">
+        <button id="l2-btn-scroll-next" class="kenney-button h-11 w-[240px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Miwiti Ndandani ›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Papan prasasti: siji ukara, seret aksara menyang papan kosong -->
+  <div id="l2-puzzle" class="absolute inset-0 z-10 hidden flex-col items-center pt-[108px] opacity-0 transition-opacity duration-500">
+    <div class="flex w-[1060px] items-center justify-between px-2">
+      <span id="l2-step" class="rounded-md border border-majapahit-dark-gold/70 bg-stone-dark/85 px-3 py-1 font-poppins text-[12px] font-bold text-majapahit-light-gold">Ukara 1 / 5</span>
+      <span class="rounded-md bg-stone-dark/80 px-3 py-1 font-poppins text-[11px] text-stone-soft/80">Seretan aksara menyang papan kosong, utawa klik aksarane.</span>
+    </div>
+
+    <div class="l2-tablet mt-3 flex w-[1060px] flex-col items-center px-10 pb-7 pt-8">
+      <div class="l2-tablet-inner flex min-h-[150px] w-full items-center justify-center px-4">
+        <p id="l2-sentence" class="l1-stone-text font-local-javanese text-[42px] leading-none whitespace-nowrap"></p>
+      </div>
+      <p id="l2-latin" class="mt-4 font-poppins text-[15px] font-semibold text-[#2c2924]"></p>
+    </div>
+
+    <div id="l2-options" class="pointer-events-auto mt-8 flex items-start justify-center gap-5"></div>
+
+    <div class="pointer-events-auto mt-7 flex items-center gap-4">
+      <button id="l2-btn-reset" class="wa-util h-11 w-[140px] cursor-pointer disabled:cursor-not-allowed disabled:opacity-40">↺ Baleni</button>
+      <button id="l2-btn-check" class="kenney-button h-12 w-[200px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100">Priksa ✓</button>
+    </div>
+  </div>
+</div>
