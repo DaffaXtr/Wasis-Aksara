@@ -146,6 +146,9 @@
   background: var(--color-majapahit-gold);
 }
 
+/* Halaman tidak bisa digulir / ditarik (pull-to-refresh) di HP, supaya game tidak bergeser ke balik bilah alamat */
+html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+
 /* Portrait Orientation Warning Overlay Display Rules */
 @media (orientation: portrait) {
   #orientation-warning {
