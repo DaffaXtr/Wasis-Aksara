@@ -1,0 +1,13 @@
+# Dependencies (dipasang ulang oleh npm install / Vercel)
+node_modules/
+
+# Hasil build (dibuat ulang oleh npm run build / Vercel)
+dist/
+
+# Log & file sistem
+*.log
+.DS_Store
+Thumbs.db
+
+# Vercel CLI
+.vercel
