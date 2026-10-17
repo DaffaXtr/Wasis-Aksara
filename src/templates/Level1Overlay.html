@@ -1,20 +1,20 @@
 <div id="level1-overlay" class="absolute inset-0 hidden pointer-events-none select-none">
   <!-- HUD Top Bar -->
   <div id="l1-hud" class="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-5 opacity-0 transition-opacity duration-500">
-    <div class="flex h-[52px] w-[210px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
+    <div class="flex h-13 w-52.5 flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
       <span class="font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold">Level 1</span>
       <span class="font-poppins text-[10px] font-semibold text-stone-soft">Misteri Cathetan Patirtan</span>
     </div>
     <div class="flex items-center gap-3.5 pointer-events-auto">
-      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+      <div class="flex h-12.5 w-32.5 flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
         <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Waktu</span>
         <span id="l1-time-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">00:00</span>
       </div>
-      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+      <div class="flex h-12.5 w-32.5 flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
         <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Tembung</span>
         <span id="l1-progress-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">0 / 5</span>
       </div>
-      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+      <div class="flex h-12.5 w-32.5 flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
         <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Skor</span>
         <span id="l1-score-val" class="font-cinzel text-[15px] font-bold text-majapahit-light-gold leading-tight">0</span>
       </div>
@@ -40,7 +40,7 @@
     <div id="l1-bubbles" class="pointer-events-none absolute inset-0"></div>
 
     <!-- Watu kuna: cathetan perintah ketutup lumut -->
-    <div id="l1-stone-wrap" class="absolute left-1/2 top-[300px] h-[300px] w-[600px] -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-out">
+    <div id="l1-stone-wrap" class="absolute left-1/2 top-75 h-75 w-150 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-out">
       <div class="l1-stone absolute inset-0 flex flex-col items-center justify-center px-20 text-center">
         <p id="l1-stone-title" class="l1-stone-text font-cinzel text-[24px] font-bold uppercase tracking-[.18em]"></p>
         <div class="my-2 h-px w-40 bg-[#2c2924]/50"></div>
@@ -51,33 +51,33 @@
     </div>
 
     <!-- Petunjuk usap lumut + tombol mulai -->
-    <div id="l1-moss-hint" class="pointer-events-none absolute left-1/2 top-[478px] flex -translate-x-1/2 items-center gap-2 rounded-full border-2 border-majapahit-gold bg-stone-dark/90 px-4 py-1.5 opacity-0 shadow-lg transition-opacity duration-500">
+    <div id="l1-moss-hint" class="pointer-events-none absolute left-1/2 top-119.5 flex -translate-x-1/2 items-center gap-2 rounded-full border-2 border-majapahit-gold bg-stone-dark/90 px-4 py-1.5 opacity-0 shadow-lg transition-opacity duration-500">
       <span class="animate-wa-pointer-bounce text-[18px] leading-none">👆</span>
       <span class="font-poppins text-[12px] font-bold uppercase tracking-wider text-majapahit-cream">Usapen lumut ing watu</span>
-      <span id="l1-moss-progress" class="min-w-[36px] text-right font-cinzel text-[12px] font-bold text-majapahit-light-gold">0%</span>
+      <span id="l1-moss-progress" class="min-w-9 text-right font-cinzel text-[12px] font-bold text-majapahit-light-gold">0%</span>
     </div>
     <!-- Pembungkus: `.kenney-button` memaksa display, jadi `hidden` dipasang di sini -->
-    <div id="l1-start-wrap" class="absolute left-1/2 top-[478px] hidden -translate-x-1/2">
-      <button id="l1-btn-start-board" class="kenney-button pointer-events-auto h-12 w-[260px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95 animate-wa-pop">Miwiti Nulis ›</button>
+    <div id="l1-start-wrap" class="absolute left-1/2 top-119.5 hidden -translate-x-1/2">
+      <button id="l1-btn-start-board" class="kenney-button pointer-events-auto h-12 w-65 cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95 animate-wa-pop">Miwiti Nulis ›</button>
     </div>
   </div>
 
   <!-- Prologue & Story Dialog -->
   <div id="l1-dialog" class="absolute inset-x-0 bottom-0 z-20 hidden justify-center pb-3 opacity-0 transition-opacity duration-500 pointer-events-auto">
-    <div class="relative aspect-[6122/1690] w-[800px]" style="background-image:url('/assets/images/bingkai-prolog.webp');background-size:100% 100%">
+    <div class="relative aspect-6122/1690 w-200" style="background-image:url('/assets/images/bingkai-prolog.webp');background-size:100% 100%">
       <div class="flex h-full w-full justify-start px-10 pb-14 pt-25"><p id="l1-dialog-text" class="font-poppins text-[15px] font-semibold leading-relaxed text-stone-dark"></p></div>
-      <button id="l1-dialog-next" class="absolute bottom-11 right-10 flex h-11 w-[140px] items-center justify-center gap-1 text-xs font-bold tracking-widest text-majapahit-light-gold transition hover:scale-105 hover:text-majapahit-cream" style="background-image:url('/assets/images/button kecil.svg');background-size:100% 100%">
+      <button id="l1-dialog-next" class="absolute bottom-11 right-10 flex h-11 w-35 items-center justify-center gap-1 text-xs font-bold tracking-widest text-majapahit-light-gold transition hover:scale-105 hover:text-majapahit-cream" style="background-image:url('/assets/images/button kecil.svg');background-size:100% 100%">
         <span id="l1-dialog-next-label">LANJUT</span><span class="text-base">›</span>
       </button>
     </div>
   </div>
 
   <!-- Interactive Writing Board (Revamped & Optimized Layout) -->
-  <div id="l1-board" class="absolute inset-x-0 bottom-0 z-30 hidden h-[368px] translate-y-full transition-transform duration-500 ease-out pointer-events-auto">
+  <div id="l1-board" class="absolute inset-x-0 bottom-0 z-30 hidden h-92 translate-y-full transition-transform duration-500 ease-out pointer-events-auto">
     <div class="l1-board-solid relative flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-4 pt-3.5 shadow-[0_-14px_44px_rgba(0,0,0,.65)]">
       
       <!-- LEFT PANEL: Challenge Target & Mission Info -->
-      <div class="flex h-full w-[360px] flex-col justify-between">
+      <div class="flex h-full w-90 flex-col justify-between">
         <!-- Header: Title & Step -->
         <div class="flex items-center justify-between border-b border-stone-light/40 pb-2">
           <div class="flex items-center gap-2">
@@ -93,7 +93,7 @@
               <span id="l1-target-label" class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/90">Tulisen ing Aksara Jawa:</span>
               <span class="text-[9px] font-semibold uppercase tracking-wider text-stone-soft/50">Sasaran</span>
             </div>
-            <div class="mt-2 flex min-h-[64px] items-center justify-center rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2 text-center">
+            <div class="mt-2 flex min-h-16 items-center justify-center rounded-lg border border-stone-light/40 bg-stone-light/25 px-3 py-2 text-center">
               <p id="l1-target-latin" class="font-poppins text-[22px] font-bold leading-snug text-majapahit-cream">Candi Tikus</p>
             </div>
           </div>
@@ -112,7 +112,7 @@
             </svg>
             <span>Saben tembung mung oleh dikirim sepisan. Hint ngurangi biji dadi separo.</span>
           </div>
-          <div id="l1-board-msg-box" class="flex min-h-[28px] items-center justify-center rounded-lg border border-stone-light/30 bg-stone-dark/90 px-2.5 py-1">
+          <div id="l1-board-msg-box" class="flex min-h-7 items-center justify-center rounded-lg border border-stone-light/30 bg-stone-dark/90 px-2.5 py-1">
             <p id="l1-board-msg" class="font-poppins text-[11px] font-semibold text-stone-soft/80"></p>
           </div>
         </div>
@@ -162,7 +162,7 @@
         <!-- Action Footer -->
         <div class="flex items-center justify-between gap-3">
           <div class="flex items-center gap-2">
-            <button id="l1-btn-hint" class="wa-util flex h-10 w-[120px] items-center justify-center gap-1.5 text-majapahit-light-gold" title="Lihat conto aksara">
+            <button id="l1-btn-hint" class="wa-util flex h-10 w-30 items-center justify-center gap-1.5 text-majapahit-light-gold" title="Lihat conto aksara">
               <svg class="h-3.5 w-3.5 shrink-0 text-majapahit-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/>
                 <path d="M9 18h6"/>
@@ -183,7 +183,7 @@
           
           <div class="flex items-center gap-3">
             <span class="font-poppins text-[10.5px] italic text-stone-soft/50">Priksa goresanmu sadurunge ngirim</span>
-            <button id="l1-btn-submit" class="kenney-button h-11 w-[160px] cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">
+            <button id="l1-btn-submit" class="kenney-button h-11 w-40 cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">
               Kirim <img src="/assets/kenney/game-icons/PNG/White/1x/checkmark.png" alt="" class="inline-block h-4 w-4" />
             </button>
           </div>
@@ -191,12 +191,12 @@
       </div>
 
       <!-- Hint Preview Floating Card -->
-      <div id="l1-hint-preview" class="absolute -top-[125px] left-1/2 z-40 hidden w-[560px] -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 p-4 shadow-[0_10px_30px_rgba(0,0,0,.7)] backdrop-blur-sm">
+      <div id="l1-hint-preview" class="absolute -top-31.25 left-1/2 z-40 hidden w-140 -translate-x-1/2 rounded-xl border-2 border-majapahit-gold bg-stone-dark/95 p-4 shadow-[0_10px_30px_rgba(0,0,0,.7)] backdrop-blur-sm">
         <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-1.5">
           <span class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold">Conto Sing Bener:</span>
           <span class="font-poppins text-[9px] text-stone-soft/60">Tiru wujud aksara iki ing papan kanvas</span>
         </div>
-        <p id="l1-hint-preview-text" class="mt-2 text-center break-words font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></p>
+        <p id="l1-hint-preview-text" class="mt-2 text-center wrap-break-word font-local-javanese text-[26px] leading-snug text-majapahit-light-gold"></p>
       </div>
 
     </div>
@@ -204,7 +204,7 @@
 
   <!-- Materi Aksara Jawa Modal Overlay (Fullscreen 100% Backdrop) -->
   <div id="l1-materi-modal" class="wa-modal-container z-50 hidden opacity-0 transition-opacity duration-300">
-    <div class="relative flex h-[580px] w-[940px] flex-col justify-between overflow-hidden rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
+    <div class="relative flex h-145 w-235 flex-col justify-between overflow-hidden rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-5 shadow-[0_15px_40px_rgba(0,0,0,0.8)]">
       
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-majapahit-dark-gold/60 pb-3">
@@ -505,7 +505,7 @@
           </svg>
           <span class="font-poppins text-[10px]">Sinau materi iki kanggo mbantu ngrampungake saben tantangan nulis.</span>
         </div>
-        <button id="l1-btn-close-materi-bottom" class="kenney-button h-10 w-[180px] cursor-pointer font-poppins text-xs font-bold uppercase tracking-wider text-stone-dark transition hover:scale-105 active:scale-95">
+        <button id="l1-btn-close-materi-bottom" class="kenney-button h-10 w-45 cursor-pointer font-poppins text-xs font-bold uppercase tracking-wider text-stone-dark transition hover:scale-105 active:scale-95">
           Tutup Kitab
         </button>
       </div>
