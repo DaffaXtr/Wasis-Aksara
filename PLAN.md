@@ -67,7 +67,11 @@ Acuan: *Brief Prototipe* (menu, 4 level permainan, evaluasi).
 - Konten di `src/data/level3Data.js` (5 ukara masih draf).
 
 ### Tahap 7 — Level 4: TTS Aksara Jawa
-Sejarah → TTS 10 soal (mendatar/menurun, input keyboard aksara Tahap 6) → rekap seluruh level → avatar memakai **mahkota** sambil memegang **gulungan kertas** → ending.
+- [x] Popup sejarah → langsung TTS 10×7, 10 pitakon (4 mendatar, 6 menurun), 1 kotak = 1 suku kata aksara, 9 persilangan.
+- [x] Pilih pitakon/kotak (klik ulang kotak persilangan = ganti arah) → ketik dengan keyboard aksara (kotak terisi live per suku kata) → "Priksa" sekali; jumlah kotak harus pas.
+- [x] Setelah diperiksa, wangsulan bener tampil di grid (hijau/merah; kotak hijau tidak diturunkan jadi merah).
+- [x] Papan skor → item **Mahkota** → **Rekap Petualangan** (EndingScene): 4 level, bintang, bener, skor, item, total; avatar memakai mahkota + memegang gulungan kertas (SVG sementara). Save mencatat `gameCompleted`.
+- Konten di `src/data/level4Data.js` (pitakon draf). Susunan grid dibuat dengan generator; jika tembung diganti, grid harus disusun ulang.
 
 ### Tahap 8 — Evaluasi
 Kuis aksara Jawa & isi game; nilai disimpan, bisa diulang.
@@ -81,7 +85,7 @@ Kuis aksara Jawa & isi game; nilai disimpan, bisa diulang.
 - [ ] Uji papan tulis dengan siswa: ambang kemiripan goresan mungkin perlu dilonggarkan karena tiap tembung hanya sekali kirim
 - [ ] Soal L2: 5 kalimat rumpang final + pilihan + kunci — saat ini draf (Mojokerto, sumber, candi, adus ing, Kanjeng)
 - [ ] Soal L3: 5 ukara final + letak salah + jawaban bener — saat ini draf
-- [ ] Soal L4: 10 soal TTS + kunci + susunan grid
+- [ ] Soal L4: 10 pitakon TTS final — saat ini draf (Tikus, agama, patirtan, wulan, kutha, adus, Majapahit, Trowulan, taman, kraton)
 - [ ] Soal Evaluasi
 - [ ] Teks sejarah tiap candi (saat ini memakai draf sementara Candi Tikus)
 - [ ] Foto pengembang
@@ -89,5 +93,5 @@ Kuis aksara Jawa & isi game; nilai disimpan, bisa diulang.
 - [ ] Gambar latar: bawah kolam, kotak prasasti, gulungan
 - [ ] (Opsional) Gambar peta 4 candi versi final — `map-4candi.webp` adalah hasil edit `map.webp`; ilustrasi candi 1–4 masih bangunan berbeda (Wringin Lawang, Jago, Penataran, Prambanan) dan candi 1 masih bercahaya + bendera
 - [ ] Cek conto aksara di Materi (`src/data/menuData.js`) dan teks Pandhuan Dolanan
-- [ ] Sprite avatar Baskara memakai mahkota + gulungan, ikon 4 item (sementara memakai emoji)
+- [ ] Sprite avatar Baskara memakai mahkota + gulungan (sementara SVG di atas sprite), ikon 4 item (sementara emoji)
 - [ ] Konfirmasi materi: "nya" muncul di kaidah pasangan no. 2 dan no. 3

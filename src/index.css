@@ -221,6 +221,21 @@
 .l3-caret::after { content: ''; display: inline-block; width: 2px; height: 30px; margin-left: 3px; vertical-align: middle; background: var(--color-majapahit-light-gold); animation: wa-pulse-caret 1s steps(1) infinite; }
 @keyframes wa-pulse-caret { 50% { opacity: 0; } }
 
+/* Level 4: kothak TTS lan daftar pitakon */
+.l4-cell { position: relative; display: flex; width: 46px; height: 46px; align-items: center; justify-content: center; padding-bottom: 7px; border: 2px solid #6b4a22; border-radius: 6px; background: #f1e1b5; color: #3a2410; font-family: var(--font-local-javanese); font-size: 18px; line-height: 1; white-space: nowrap; cursor: pointer; transition: background .15s ease, transform .15s ease; }
+.l4-cell:hover { transform: translateY(-1px); }
+.l4-cell.is-empty { visibility: hidden; }
+.l4-cell.is-active { background: #f2d28a; border-color: #8b6a2b; box-shadow: 0 0 0 2px rgba(242,210,138,.6); }
+.l4-cell.is-correct { background: #bfe3bf; border-color: #3f7a3f; color: #1d3f1d; }
+.l4-cell.is-wrong { background: #f0c4bd; border-color: #a2463b; color: #5a1d15; }
+.l4-num { position: absolute; top: 1px; left: 3px; font-family: var(--font-poppins); font-size: 9px; font-weight: 700; color: #6b4a22; }
+.l4-clue { display: flex; gap: 6px; padding: 3px 6px; border-radius: 6px; font-family: var(--font-poppins); font-size: 11.5px; line-height: 1.35; color: var(--color-stone-soft); cursor: pointer; transition: background .15s ease; }
+.l4-clue:hover { background: rgba(212,166,74,.15); }
+.l4-clue.is-active { background: rgba(212,166,74,.3); color: var(--color-majapahit-cream); }
+.l4-clue.is-correct { color: #a9d8a9; cursor: default; }
+.l4-clue.is-wrong { color: #f0b5ad; cursor: default; }
+.l4-clue b { min-width: 16px; color: var(--color-majapahit-light-gold); }
+
 .l2-ghost { position: absolute; z-index: 80; pointer-events: none; translate: -50% -50%; rotate: -3deg; scale: 1.06; box-shadow: 0 16px 30px rgba(0,0,0,.6); border-color: var(--color-majapahit-light-gold); }
 .kenney-icon-button { background-image: url('/assets/kenney/game-icons/PNG/White/1x/cross.png'); background-position: center; background-repeat: no-repeat; background-size: 20px 20px; }
 .kenney-panel { background-color: rgba(62,50,40,.96); background-image: url('/assets/kenney/ui-rpg-expansion/PNG/panel_brown.png'); background-position: center; background-size: 100% 100%; }

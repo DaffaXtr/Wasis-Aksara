@@ -1,0 +1,76 @@
+<div id="level4-overlay" class="absolute inset-0 hidden pointer-events-none select-none transition-opacity duration-500">
+  <!-- HUD Top Bar -->
+  <div id="l4-hud" class="absolute inset-x-0 top-0 z-20 flex items-start justify-between px-5 pt-4 opacity-0 transition-opacity duration-500">
+    <div class="flex h-[52px] w-[210px] flex-col items-center justify-center" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%;background-repeat:no-repeat">
+      <span class="font-cinzel text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold">Level 4</span>
+      <span class="font-poppins text-[10px] font-semibold text-stone-soft">TTS Aksara Jawa</span>
+    </div>
+    <div class="flex items-center gap-3.5 pointer-events-auto">
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Waktu</span>
+        <span id="l4-time-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">00:00</span>
+      </div>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Pitakon</span>
+        <span id="l4-progress-val" class="font-cinzel text-[15px] font-bold text-majapahit-cream leading-tight">0 / 10</span>
+      </div>
+      <div class="flex h-[50px] w-[130px] flex-col items-center justify-center pt-0.5" style="background-image:url('/assets/images/bingkai kecil.svg');background-size:100% 100%">
+        <span class="font-poppins text-[8.5px] uppercase tracking-widest text-stone-soft/75">Skor</span>
+        <span id="l4-score-val" class="font-cinzel text-[15px] font-bold text-majapahit-light-gold leading-tight">0</span>
+      </div>
+      <button id="l4-btn-exit" class="ml-1 flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-majapahit-dark-gold/80 bg-stone-dark/85 text-stone-soft transition hover:scale-105 hover:border-majapahit-gold hover:text-majapahit-cream active:scale-95" title="Kembali ke peta" aria-label="Kembali ke peta">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- TTS: grid + daftar pitakon -->
+  <div id="l4-board" class="absolute inset-x-0 top-[86px] z-10 flex justify-center gap-5 px-5 opacity-0 transition-opacity duration-500">
+    <div class="rounded-2xl border-2 border-majapahit-gold/80 bg-stone-dark/90 p-3 shadow-[0_10px_30px_rgba(0,0,0,.6)]">
+      <div id="l4-grid" class="pointer-events-auto grid gap-[3px]"></div>
+    </div>
+    <div class="flex w-[660px] flex-col rounded-2xl border-2 border-majapahit-gold/80 bg-stone-dark/90 px-4 py-3 shadow-[0_10px_30px_rgba(0,0,0,.6)]">
+      <p class="font-poppins text-[11px] text-stone-soft/80">Klik pitakon utawa kothak, banjur ketik wangsulane nganggo keyboard aksara. <b class="text-majapahit-light-gold">1 kothak = 1 suku kata aksara.</b></p>
+      <div class="mt-2 grid flex-1 grid-cols-2 gap-4">
+        <div>
+          <h3 class="border-b border-majapahit-dark-gold/50 pb-1 font-cinzel text-[13px] font-bold uppercase tracking-wider text-majapahit-light-gold">Mendatar</h3>
+          <ol id="l4-clues-across" class="pointer-events-auto mt-1 space-y-0.5"></ol>
+        </div>
+        <div>
+          <h3 class="border-b border-majapahit-dark-gold/50 pb-1 font-cinzel text-[13px] font-bold uppercase tracking-wider text-majapahit-light-gold">Menurun</h3>
+          <ol id="l4-clues-down" class="pointer-events-auto mt-1 space-y-0.5"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel keyboard -->
+  <div id="l4-kb-panel" class="absolute inset-x-0 bottom-0 z-30 h-[262px] translate-y-full transition-transform duration-500 ease-out pointer-events-auto">
+    <div class="l1-board-solid flex h-full w-full gap-5 border-t-4 border-majapahit-gold/90 px-6 pb-3 pt-3 shadow-[0_-14px_44px_rgba(0,0,0,.65)]">
+      <div class="flex w-[310px] shrink-0 flex-col gap-2">
+        <div class="rounded-xl border border-majapahit-gold/40 bg-stone-dark/90 px-3 py-1.5">
+          <p id="l4-selected-label" class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/90"></p>
+          <p id="l4-selected-clue" class="font-poppins text-[12px] font-semibold leading-snug text-majapahit-cream"></p>
+        </div>
+        <div class="flex flex-1 flex-col rounded-xl border-2 border-majapahit-gold/70 bg-[#241c16] px-3 py-1.5">
+          <div class="flex items-center justify-between">
+            <p class="font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/90">Wangsulanmu</p>
+            <p id="l4-count" class="font-poppins text-[10px] font-bold text-stone-soft/70"></p>
+          </div>
+          <div class="flex flex-1 items-center justify-center">
+            <span id="l4-preview" class="l3-caret font-local-javanese whitespace-nowrap pb-4 pt-1 text-[30px] leading-none text-majapahit-cream"></span>
+          </div>
+        </div>
+        <div class="flex gap-2">
+          <button id="l4-btn-help" class="wa-util h-11 w-11 shrink-0 cursor-pointer text-[16px] font-bold text-majapahit-light-gold" title="Tutorial keyboard">?</button>
+          <button id="l4-btn-check" class="kenney-button h-11 flex-1 cursor-pointer font-poppins text-[13px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100">Priksa ✓</button>
+        </div>
+      </div>
+      <div id="l4-kb-mount" class="flex flex-1 items-center justify-center"></div>
+    </div>
+  </div>
+</div>

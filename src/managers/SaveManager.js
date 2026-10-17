@@ -100,6 +100,7 @@ class SaveManager {
     if (level === state.currentLevel && level < TOTAL_LEVELS) {
       state.currentLevel = level + 1;
     }
+    if (level === TOTAL_LEVELS) state.gameCompleted = true;
 
     this.save(state);
     return { save: state, newItem };

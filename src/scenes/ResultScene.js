@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
 import SaveManager from '../managers/SaveManager.js';
 import resultTemplate from '../templates/ResultOverlay.html?raw';
-import { getLevel } from '../data/levelData.js';
+import { TOTAL_LEVELS, getLevel } from '../data/levelData.js';
 import { showItemReward } from '../ui/overlayKit.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
  * ResultScene: Papan skor per level — skor, bintang, rekap jawaban bener, lalu item hadiah.
+ * Setelah level terakhir, lanjut ke rekap petualangan (EndingScene), bukan ke peta.
  *
  * Data dari level: { level, score, stars, answers }
  * answers: [{ question, playerAnswer, playerImage?, correctAnswer, correct, note? }]
@@ -56,7 +57,7 @@ export default class ResultScene extends Phaser.Scene {
       nextButton.onclick = null;
       if (levelInfo?.reward) await showItemReward(levelInfo.reward, { isNew: newItem });
       overlay.classList.replace('opacity-100', 'opacity-0');
-      fadeTransitionOut(this, 500, () => this.scene.start('MapScene'));
+      fadeTransitionOut(this, 500, () => this.scene.start(level === TOTAL_LEVELS ? 'EndingScene' : 'MapScene'));
     };
 
     this.events.once('shutdown', () => {

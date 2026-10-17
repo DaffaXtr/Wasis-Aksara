@@ -1,0 +1,60 @@
+<div id="ending-overlay" class="absolute inset-0 flex items-center justify-center gap-10 px-12 opacity-0 transition-opacity duration-700 pointer-events-none select-none">
+  <!-- Avatar Baskara: mahkota + nyekel gulungan kertas -->
+  <div class="relative flex flex-col items-center">
+    <div class="pointer-events-none absolute left-1/2 top-[45%] h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,229,166,.55)_0%,rgba(212,166,74,.18)_45%,transparent_70%)] animate-wa-pulse-glow"></div>
+    <div class="relative h-[480px] w-[320px] animate-wa-float">
+      <img src="/assets/sprites/baskara-idle.webp" alt="Baskara" class="absolute inset-0 h-full w-full object-contain" />
+      <!-- Mahkota (sementara SVG, ganti dengan sprite final) -->
+      <svg class="absolute left-[36%] top-[17%] w-[30%] -translate-x-1/2 drop-shadow-[0_4px_8px_rgba(0,0,0,.5)]" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" aria-label="Mahkota">
+        <defs>
+          <linearGradient id="end-crown" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff2cc"/><stop offset=".45" stop-color="#f2d28a"/><stop offset="1" stop-color="#8b6a2b"/>
+          </linearGradient>
+        </defs>
+        <path d="M8 70 L14 22 L38 46 L60 8 L82 46 L106 22 L112 70 Z" fill="url(#end-crown)" stroke="#5a3d12" stroke-width="3" stroke-linejoin="round"/>
+        <rect x="8" y="62" width="104" height="12" rx="3" fill="#d4a64a" stroke="#5a3d12" stroke-width="3"/>
+        <circle cx="60" cy="40" r="7" fill="#c0392b" stroke="#5a3d12" stroke-width="2"/>
+        <circle cx="34" cy="56" r="4" fill="#2e86c1"/><circle cx="86" cy="56" r="4" fill="#2e86c1"/>
+        <circle cx="60" cy="8" r="5" fill="#fff2cc"/><circle cx="14" cy="22" r="4" fill="#fff2cc"/><circle cx="106" cy="22" r="4" fill="#fff2cc"/>
+      </svg>
+      <!-- Gulungan kertas ing tangan -->
+      <svg class="absolute left-[60%] top-[47%] w-[46%] -translate-x-1/2 -rotate-[24deg] drop-shadow-[0_6px_10px_rgba(0,0,0,.55)]" viewBox="0 0 320 130" xmlns="http://www.w3.org/2000/svg" aria-label="Gulungan kertas">
+        <defs>
+          <linearGradient id="end-paper" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f6e9c4"/><stop offset=".55" stop-color="#e3c98f"/><stop offset="1" stop-color="#b9975a"/>
+          </linearGradient>
+        </defs>
+        <rect x="34" y="34" width="252" height="70" rx="35" fill="url(#end-paper)" stroke="#8b6a2b" stroke-width="3"/>
+        <rect x="14" y="44" width="26" height="52" rx="8" fill="#5a3716"/>
+        <rect x="280" y="44" width="26" height="52" rx="8" fill="#5a3716"/>
+        <rect x="148" y="30" width="24" height="78" rx="4" fill="#9e2b1e"/>
+      </svg>
+    </div>
+    <p class="relative -mt-2 font-cinzel text-[30px] font-bold uppercase tracking-[.2em] text-majapahit-light-gold drop-shadow-[0_3px_6px_rgba(0,0,0,.8)]">Sugeng!</p>
+  </div>
+
+  <!-- Rekap kabeh level -->
+  <div class="pointer-events-auto flex w-[640px] flex-col rounded-2xl border-2 border-majapahit-gold bg-stone-dark/98 p-7 shadow-[0_15px_40px_rgba(0,0,0,0.85)]">
+    <p class="font-poppins text-[11px] font-bold uppercase tracking-widest text-majapahit-light-gold/80">Papan Skor Pungkasan</p>
+    <h2 class="font-cinzel text-[26px] font-bold uppercase tracking-widest text-majapahit-light-gold">Rekap Petualangan</h2>
+    <p id="ending-message" class="mt-2 font-poppins text-[13px] leading-relaxed text-stone-soft"></p>
+
+    <div class="mt-4 grid grid-cols-[28px_1fr_78px_60px_60px_40px] gap-3 px-3 font-poppins text-[10px] font-bold uppercase tracking-wider text-majapahit-light-gold/80">
+      <span>No</span><span>Tantangan</span><span>Bintang</span><span>Bener</span><span>Skor</span><span>Item</span>
+    </div>
+    <div id="ending-levels" class="mt-1 space-y-1.5"></div>
+
+    <div class="mt-3 flex items-center justify-between rounded-xl border border-majapahit-gold/60 bg-majapahit-gold/15 px-4 py-2.5">
+      <span class="font-cinzel text-[15px] font-bold uppercase tracking-wider text-majapahit-cream">Skor Total</span>
+      <span class="flex items-center gap-4">
+        <span id="ending-stars" class="font-poppins text-[13px] font-bold text-majapahit-light-gold"></span>
+        <span id="ending-total" class="font-cinzel text-[26px] font-bold text-majapahit-light-gold">0</span>
+      </span>
+    </div>
+
+    <div class="mt-5 flex justify-end gap-3">
+      <button id="ending-btn-map" class="wa-util h-11 w-[170px] cursor-pointer">Peta Jelajah</button>
+      <button id="ending-btn-menu" class="kenney-button h-11 w-[200px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95">Menu Utama</button>
+    </div>
+  </div>
+</div>
