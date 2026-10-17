@@ -10,14 +10,30 @@ class WasisAksaraGame extends Phaser.Game {
   }
 }
 
+/**
+ * Di HP/tablet: masuk layar penuh pada sentuhan pertama agar bilah alamat browser
+ * tidak memotong layar, lalu kunci orientasi ke lanskap (kunci orientasi hanya
+ * diizinkan browser saat layar penuh).
+ */
+const setupMobileFullscreen = () => {
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+  const root = document.documentElement;
+  const requestFullscreen = root.requestFullscreen || root.webkitRequestFullscreen;
+  if (!isTouchDevice || !requestFullscreen) return;
+
+  const enterFullscreen = () => {
+    if (document.fullscreenElement || document.webkitFullscreenElement) return;
+    Promise.resolve(requestFullscreen.call(root, { navigationUI: 'hide' }))
+      .then(() => screen.orientation?.lock?.('landscape'))
+      .catch((err) => console.warn('Fullscreen/orientation lock unsupported:', err));
+  };
+  // Dipasang terus (bukan sekali) supaya setelah pemain keluar layar penuh, sentuhan berikutnya masuk lagi.
+  document.addEventListener('pointerup', enterFullscreen);
+};
+
 window.addEventListener('load', () => {
-  // Kunci orientasi layar ke lanskap (jika didukung perangkat/browser)
-  if (screen.orientation && screen.orientation.lock) {
-    screen.orientation.lock('landscape').catch((err) => {
-      console.warn('Screen orientation lock to landscape failed/unsupported:', err);
-    });
-  }
-  
+  setupMobileFullscreen();
+
   // Set up resize logic for HTML UI Overlay
   const resizeUIOverlay = () => {
     const container = document.getElementById('ui-overlay-container');
@@ -27,8 +43,10 @@ window.addEventListener('load', () => {
     const targetHeight = 720;
     const targetRatio = targetWidth / targetHeight;
 
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    // Ukur area yang benar-benar terlihat (bukan 100vh, yang di HP ikut menghitung bilah alamat)
+    const viewport = container.parentElement;
+    const windowWidth = viewport?.clientWidth || window.innerWidth;
+    const windowHeight = viewport?.clientHeight || window.innerHeight;
     const windowRatio = windowWidth / windowHeight;
 
     let scale = 1;
@@ -47,6 +65,8 @@ window.addEventListener('load', () => {
   resizeUIOverlay();
   window.addEventListener('resize', resizeUIOverlay);
   window.addEventListener('orientationchange', resizeUIOverlay);
+  window.visualViewport?.addEventListener('resize', resizeUIOverlay);
+  document.addEventListener('fullscreenchange', resizeUIOverlay);
 
   // Initialize the game instance on window load
   window.game = new WasisAksaraGame();
