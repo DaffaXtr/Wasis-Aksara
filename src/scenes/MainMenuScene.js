@@ -4,6 +4,7 @@ import mainMenuTemplate from '../templates/MainMenuOverlay.html?raw';
 import SaveManager from '../managers/SaveManager.js';
 import { levelData } from '../data/levelData.js';
 import { renderCP, renderEvaluasi, renderMateri, renderPandhuan, renderProfil, renderTP } from '../ui/menuPanels.js';
+import { showConfirm } from '../ui/overlayKit.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
 /**
@@ -31,32 +32,8 @@ export default class MainMenuScene extends Phaser.Scene {
     currentSave.lastActiveScene = 'MainMenuScene';
     SaveManager.save(currentSave);
 
-    // Initialize AudioManager and play backsound at a low volume
-    AudioManager.init(this.sound);
-    AudioManager.bgmVolume = 0.15; // Set volume to 15% (not too loud)
-    const playBacksound = () => AudioManager.playBGM('backsound', true);
-    if (this.cache.audio.exists('backsound')) {
-      playBacksound();
-    } else {
-      // Musik (±3 MB) dimuat setelah menu tampil agar layar pertama tidak ikut menunggu
-      this.load.audio('backsound', 'assets/audio/backsound.mp3');
-      this.load.once('complete', playBacksound);
-      this.load.start();
-    }
+    AudioManager.startBacksound(this);
 
-    // Resume audio context on first user click/tap to bypass browser autoplay policy
-    const resumeAudio = () => {
-      if (this.sound && this.sound.context && this.sound.context.state === 'suspended') {
-        this.sound.context.resume().then(() => {
-          console.log('AudioContext resumed successfully on user gesture.');
-        });
-      }
-      document.removeEventListener('click', resumeAudio);
-      document.removeEventListener('touchstart', resumeAudio);
-    };
-    document.addEventListener('click', resumeAudio);
-    document.addEventListener('touchstart', resumeAudio);
-    
     // 1. TAMPILLAN BACKGROUND & KARAKTER DI CANVAS PHASER
     // Set background on HTML container for full viewport coverage (covers side bars)
     const gameContainer = document.getElementById('wasis-aksara-game')?.parentElement;
@@ -217,6 +194,17 @@ export default class MainMenuScene extends Phaser.Scene {
       'nav-btn-profil': () => openInfo(renderProfil),
       'quick-btn-pandhuan': () => openInfo(renderPandhuan),
       'quick-btn-audio': () => updateAudioIcon(AudioManager.toggleMute()),
+      'quick-btn-reset': async () => {
+        const confirmed = await showConfirm({
+          title: 'Busak Progres?',
+          text: 'Kabeh bintang, skor, item, lan rekap wangsulan bakal dibusak. Dolanan diwiwiti maneh saka Level 1.',
+          confirmLabel: 'Busak',
+          cancelLabel: 'Batal'
+        });
+        if (!confirmed) return;
+        SaveManager.reset();
+        this.scene.restart();
+      },
       'kamus-btn-close': () => closeModal(kamusModal),
       'menu-info-close': closeInfo
     };

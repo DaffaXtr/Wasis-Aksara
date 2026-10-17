@@ -4,7 +4,7 @@ import ScoreManager from '../managers/ScoreManager.js';
 import HintManager from '../managers/HintManager.js';
 import { level1Data } from '../data/level1Data.js';
 import level1Template from '../templates/Level1Overlay.html?raw';
-import { showFeedback, showHistoryPopup } from '../ui/overlayKit.js';
+import { addAudioToggle, confirmLeaveLevel, showFeedback, showHistoryPopup } from '../ui/overlayKit.js';
 import { sfxError, sfxOpen, sfxReward, sfxWrite } from '../utils/sfx.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
 
@@ -83,6 +83,7 @@ export default class Level1Scene extends Phaser.Scene {
     this.els['l1-tab-legena'].onclick = () => this.switchMateriTab('legena');
     this.els['l1-tab-sandhangan'].onclick = () => this.switchMateriTab('sandhangan');
     this.els['l1-btn-exit'].onclick = () => this.leaveToMap();
+    addAudioToggle(this.els['l1-btn-exit']);
     this.boundElements = Object.values(this.els).filter(Boolean);
   }
 
@@ -353,8 +354,6 @@ export default class Level1Scene extends Phaser.Scene {
     if (correct) {
       const { correct: full, correctWithHint } = level1Data.scoring;
       ScoreManager.addBonus(this.state.hintUsed ? correctWithHint : full);
-    } else {
-      ScoreManager.addWrongAnswer();
     }
     const chip = this.$(`l1-chip-${index}`);
     chip.classList.remove('wa-chip-active');
@@ -395,8 +394,12 @@ export default class Level1Scene extends Phaser.Scene {
     });
   }
 
-  leaveToMap() {
-    if (this.state.phase === 'finished') return;
+  async leaveToMap() {
+    if (this.state.phase === 'finished' || this.confirmingLeave) return;
+    this.confirmingLeave = true;
+    const confirmed = await confirmLeaveLevel();
+    this.confirmingLeave = false;
+    if (!confirmed || this.state.phase === 'finished') return;
     this.state.phase = 'finished';
     fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
   }

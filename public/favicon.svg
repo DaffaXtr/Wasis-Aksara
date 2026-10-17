@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#3E3228"/>
+  <rect x="3" y="3" width="58" height="58" rx="11" fill="none" stroke="#8B6A2B" stroke-width="2"/>
+  <!-- Siluet candi bertingkat -->
+  <path fill="#D4A64A" d="M32 9l3 5h-6zM27 15h10v5H27zM23 21h18v6H23zM19 28h26v7H19zM14 36h36v8H14zM10 45h44v9H10z"/>
+  <path fill="#3E3228" d="M28 45h8v9h-8z"/>
+  <path fill="#F2D28A" d="M27 15h10v1.5H27zM23 21h18v1.5H23zM19 28h26v1.5H19zM14 36h36v1.5H14zM10 45h44v1.5H10z"/>
+</svg>

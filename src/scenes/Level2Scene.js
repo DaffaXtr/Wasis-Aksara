@@ -3,7 +3,7 @@ import SaveManager from '../managers/SaveManager.js';
 import ScoreManager from '../managers/ScoreManager.js';
 import { level2Data } from '../data/level2Data.js';
 import level2Template from '../templates/Level2Overlay.html?raw';
-import { showFeedback, showHistoryPopup } from '../ui/overlayKit.js';
+import { addAudioToggle, confirmLeaveLevel, showFeedback, showHistoryPopup } from '../ui/overlayKit.js';
 import { isSameAksara } from '../utils/aksara.js';
 import { sfxOpen, sfxWrite } from '../utils/sfx.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
@@ -69,6 +69,7 @@ export default class Level2Scene extends Phaser.Scene {
     this.els['l2-btn-reset'].onclick = () => this.clearSlot();
     this.els['l2-btn-check'].onclick = () => this.checkAnswer();
     this.els['l2-btn-exit'].onclick = () => this.leaveToMap();
+    addAudioToggle(this.els['l2-btn-exit']);
     this.boundElements = Object.values(this.els);
   }
 
@@ -267,7 +268,6 @@ export default class Level2Scene extends Phaser.Scene {
       correct
     });
     if (correct) ScoreManager.addBonus(level2Data.scoring.correct);
-    else ScoreManager.addWrongAnswer();
     this.updateHud();
 
     await showFeedback(correct);
@@ -286,8 +286,12 @@ export default class Level2Scene extends Phaser.Scene {
     fadeTransitionOut(this, 500, () => this.scene.start('ResultScene', { level: 2, score, stars, answers: this.answers }));
   }
 
-  leaveToMap() {
-    if (this.state.phase === 'finished') return;
+  async leaveToMap() {
+    if (this.state.phase === 'finished' || this.confirmingLeave) return;
+    this.confirmingLeave = true;
+    const confirmed = await confirmLeaveLevel();
+    this.confirmingLeave = false;
+    if (!confirmed || this.state.phase === 'finished') return;
     this.state.phase = 'finished';
     fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
   }

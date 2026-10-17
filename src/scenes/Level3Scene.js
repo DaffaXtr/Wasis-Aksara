@@ -4,7 +4,7 @@ import ScoreManager from '../managers/ScoreManager.js';
 import { level3Data } from '../data/level3Data.js';
 import level3Template from '../templates/Level3Overlay.html?raw';
 import { createAksaraKeyboard } from '../ui/aksaraKeyboard.js';
-import { showFeedback, showHistoryPopup, showKeyboardTutorial } from '../ui/overlayKit.js';
+import { addAudioToggle, confirmLeaveLevel, showFeedback, showHistoryPopup, showKeyboardTutorial } from '../ui/overlayKit.js';
 import { isSameAksara } from '../utils/aksara.js';
 import { sfxOpen, sfxWrite } from '../utils/sfx.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
@@ -68,6 +68,7 @@ export default class Level3Scene extends Phaser.Scene {
     this.els['l3-btn-help'].onclick = () => showKeyboardTutorial();
     this.els['l3-btn-check'].onclick = () => this.checkAnswer();
     this.els['l3-btn-exit'].onclick = () => this.leaveToMap();
+    addAudioToggle(this.els['l3-btn-exit']);
     this.boundElements = Object.values(this.els);
   }
 
@@ -171,7 +172,6 @@ export default class Level3Scene extends Phaser.Scene {
       note: correct ? '' : sentence.reason
     });
     if (correct) ScoreManager.addBonus(level3Data.scoring.correct);
-    else ScoreManager.addWrongAnswer();
     this.updateHud();
 
     await showFeedback(correct);
@@ -211,8 +211,12 @@ export default class Level3Scene extends Phaser.Scene {
     });
   }
 
-  leaveToMap() {
-    if (this.state.phase === 'finished') return;
+  async leaveToMap() {
+    if (this.state.phase === 'finished' || this.confirmingLeave) return;
+    this.confirmingLeave = true;
+    const confirmed = await confirmLeaveLevel();
+    this.confirmingLeave = false;
+    if (!confirmed || this.state.phase === 'finished') return;
     this.state.phase = 'finished';
     fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
   }

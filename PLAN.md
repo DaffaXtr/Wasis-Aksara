@@ -36,13 +36,22 @@ Acuan: *Brief Prototipe* (menu, 4 level permainan, evaluasi).
 - [x] Gambar peta ada di dalam overlay 1280×720 sehingga posisi node tetap pas di rasio layar mana pun.
 
 ### Perbaikan umum (bersama Tahap 2)
-- [x] Latar PNG besar (prolog 1–9, bg_home, Bg_CandiTikusNew, CandiTikus-Glow) dikonversi ke WebP: 29,5 MB → 3,6 MB. PNG asli masih ada di `public/assets/images/` dan bisa dihapus.
+- [x] Latar PNG besar (prolog 1–9, bg_home, Bg_CandiTikusNew, CandiTikus-Glow) dikonversi ke WebP: 29,5 MB → 3,6 MB. PNG asli sudah dihapus.
 - [x] Musik latar dimuat setelah menu tampil (tidak lagi menahan layar pemuatan).
 - [x] Scene yang tidak ada di brief dihapus: Achievement, Inventory, Kamus (scene), `achievementData.js`.
 - [x] README disesuaikan (4 pusaka, peta baru, autosave).
 
+### Perbaikan umum (lanjutan)
+- [x] Muat ulang di tengah level/rekap kembali ke peta (bukan langsung masuk level); menu & prolog kembali ke menu. Musik latar juga dimulai dari peta.
+- [x] Tombol Swara ada di HUD tiap level; status bisu disimpan (`wasis_aksara_muted`, terpisah dari save) dan musik langsung terdengar saat dinyalakan lagi.
+- [x] Tombol keluar level meminta konfirmasi (`confirmLeaveLevel`, `showConfirm` di `overlayKit.js`).
+- [x] Tombol "Reset" di menu utama untuk membusak progres (dengan konfirmasi) — untuk uji coba bergantian di kelas.
+- [x] `favicon.svg` ditambahkan; PNG duplikat, aset Kenney yang tak dirujuk, `ui/Button|Panel|DialogBox|StarRating.js`, kombo `ScoreManager`, dan `targetScore` dihapus. `dist/` 47 MB → 10 MB.
+
 ### Tahap 3 — Popup Sejarah + 3D/AR
-`<model-viewer>`: model 3D bisa diputar; tombol "Lihat di AR" di HP (Android: Scene Viewer, iOS: butuh `.usdz`). Fallback gambar jika model belum ada.
+- [x] Model 3D sederhana Candi Tikus dibuat dengan skrip (`tools/build_candi_tikus.mjs` → `public/assets/models/candi-tikus.glb`, ±270 KB, ±3.800 segitiga): kolam berundak 2 teras, tangga utara, 2 kolam kecil berpancuran, bangunan induk + menara tengah & 8 menara kecil, parit berair. Skala 1:30 (±1,3 m) untuk AR.
+- [x] Popup sejarah: tombol **Deleng 3D** memuat `<model-viewer>` (chunk terpisah, offline): bisa diputar/zoom, tombol **Deleng ing AR** muncul di HP yang mendukung (Android: Scene Viewer/WebXR, iOS: Quick Look dengan USDZ yang dibuat otomatis). Tautan `Deleng versi scan asli` membuka embed Sketchfab (Om Husnul) bila online.
+- [ ] Uji AR di HP Android & iPhone sungguhan (belum bisa diuji di desktop).
 
 ### Tahap 4 — Level 1: Misteri Cathetan Patirtan
 - [x] Popup sejarah → dialog permukaan → "Nyilem" → adegan dhasar blumbang (CSS: latar diburamkan, berkas cahaya, gelembung, ganggang).

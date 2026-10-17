@@ -4,7 +4,7 @@ import ScoreManager from '../managers/ScoreManager.js';
 import { level4Data } from '../data/level4Data.js';
 import level4Template from '../templates/Level4Overlay.html?raw';
 import { createAksaraKeyboard } from '../ui/aksaraKeyboard.js';
-import { showFeedback, showHistoryPopup, showKeyboardTutorial } from '../ui/overlayKit.js';
+import { addAudioToggle, confirmLeaveLevel, showFeedback, showHistoryPopup, showKeyboardTutorial } from '../ui/overlayKit.js';
 import { isSameAksara, splitAksara } from '../utils/aksara.js';
 import { sfxError, sfxOpen, sfxWrite } from '../utils/sfx.js';
 import { fadeTransitionIn, fadeTransitionOut } from '../utils/transition.js';
@@ -54,6 +54,7 @@ export default class Level4Scene extends Phaser.Scene {
     this.els['l4-btn-help'].onclick = () => showKeyboardTutorial();
     this.els['l4-btn-check'].onclick = () => this.checkAnswer();
     this.els['l4-btn-exit'].onclick = () => this.leaveToMap();
+    addAudioToggle(this.els['l4-btn-exit']);
     this.updateHud();
 
     this.time.delayedCall(150, () => this.els['l4-hud'].classList.replace('opacity-0', 'opacity-100'));
@@ -210,7 +211,6 @@ export default class Level4Scene extends Phaser.Scene {
       correct
     });
     if (correct) ScoreManager.addBonus(level4Data.scoring.correct);
-    else ScoreManager.addWrongAnswer();
 
     // Tampilkan wangsulan bener; kotak hijau tidak diturunkan jadi merah oleh tembung lain
     word.cells.forEach((key, i) => {
@@ -250,8 +250,12 @@ export default class Level4Scene extends Phaser.Scene {
     });
   }
 
-  leaveToMap() {
-    if (this.state.phase === 'finished') return;
+  async leaveToMap() {
+    if (this.state.phase === 'finished' || this.confirmingLeave) return;
+    this.confirmingLeave = true;
+    const confirmed = await confirmLeaveLevel();
+    this.confirmingLeave = false;
+    if (!confirmed || this.state.phase === 'finished') return;
     this.state.phase = 'finished';
     fadeTransitionOut(this, 350, () => this.scene.start('MapScene'));
   }

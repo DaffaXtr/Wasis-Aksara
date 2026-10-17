@@ -1,3 +1,4 @@
+import AudioManager from '../managers/AudioManager.js';
 import { getCandi, getLevel } from '../data/levelData.js';
 import { sfxError, sfxOpen, sfxReward, sfxSuccess } from '../utils/sfx.js';
 
@@ -27,6 +28,81 @@ function closeModal(element, resolve, value) {
   }, 300);
 }
 
+const CUBE_ICON = '<svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>';
+const MEDIA_BUTTON = 'absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 whitespace-nowrap rounded-lg border border-majapahit-gold bg-stone-dark/90 px-4 py-2 font-poppins text-[12px] font-bold uppercase tracking-widest text-majapahit-light-gold shadow-lg transition hover:scale-105 hover:text-majapahit-cream active:scale-95 cursor-pointer';
+
+/**
+ * Tombol "Deleng 3D" di atas gambar candi. <model-viewer> (beserta three.js) baru dimuat setelah
+ * tombol ditekan, supaya popup tetap ringan. Model .glb bisa diputar dan dibuka di AR (HP);
+ * versi scan Sketchfab bisa dibuka dari tautan di bawah viewer bila ada internet.
+ */
+function mountModel3d(media, credit, candi) {
+  const button = document.createElement('button');
+  button.className = MEDIA_BUTTON;
+  button.innerHTML = `${CUBE_ICON}Deleng 3D`;
+  button.onclick = async () => {
+    button.disabled = true;
+    button.textContent = 'Ngemot…';
+    try {
+      await import('@google/model-viewer');
+    } catch (error) {
+      console.warn('model-viewer gagal dimuat:', error);
+      button.textContent = 'Model 3D gagal dimuat';
+      return;
+    }
+    const viewer = document.createElement('model-viewer');
+    Object.entries({
+      src: candi.model3d.src,
+      alt: `Model 3D ${candi.name}`,
+      'camera-controls': '',
+      'touch-action': 'none',
+      'auto-rotate': '',
+      'auto-rotate-delay': '2000',
+      'camera-orbit': '25deg 58deg 80%',
+      'shadow-intensity': '1',
+      exposure: '1.1',
+      ar: '',
+      'ar-modes': 'webxr scene-viewer quick-look',
+      'ar-scale': 'auto'
+    }).forEach(([name, value]) => viewer.setAttribute(name, value));
+    viewer.className = 'h-full w-full';
+    viewer.style.backgroundColor = 'transparent';
+    // Tombol AR hanya ditampilkan model-viewer bila perangkat mendukung AR
+    const arButton = document.createElement('button');
+    arButton.slot = 'ar-button';
+    arButton.className = MEDIA_BUTTON;
+    arButton.innerHTML = `${CUBE_ICON}Deleng ing AR`;
+    viewer.appendChild(arButton);
+    media.replaceChildren(viewer);
+
+    if (candi.model3d.scan) showScanLink(media, credit, candi);
+  };
+  media.appendChild(button);
+}
+
+function showScanLink(media, credit, candi) {
+  const { scan } = candi.model3d;
+  const link = document.createElement('button');
+  link.className = 'cursor-pointer underline decoration-dotted underline-offset-2 hover:text-majapahit-light-gold';
+  link.textContent = 'Deleng versi scan asli (butuh internet)';
+  link.onclick = () => {
+    if (!navigator.onLine) {
+      link.textContent = 'Butuh sambungan internet';
+      return;
+    }
+    const iframe = document.createElement('iframe');
+    iframe.title = candi.name;
+    iframe.src = `${scan.embedUrl}?autostart=1&ui_theme=dark&dnt=1`;
+    iframe.allow = 'autoplay; fullscreen; xr-spatial-tracking';
+    iframe.allowFullscreen = true;
+    iframe.className = 'h-full w-full border-0';
+    media.replaceChildren(iframe);
+    credit.textContent = scan.credit;
+  };
+  credit.replaceChildren(link);
+  credit.classList.remove('hidden');
+}
+
 /**
  * Popup sejarah candi yang tampil sebelum tantangan level dimulai.
  */
@@ -44,7 +120,10 @@ export function showHistoryPopup(level) {
           <span data-slot="location" class="font-marcellus text-sm text-majapahit-cream/80"></span>
         </div>
         <div class="mt-4 flex min-h-0 flex-1 gap-6">
-          <div data-slot="media" class="flex w-[360px] shrink-0 items-center justify-center overflow-hidden rounded-xl border border-majapahit-gold/40 bg-stone-dark/80"></div>
+          <div class="flex w-[400px] shrink-0 flex-col gap-1.5">
+            <div data-slot="media" class="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden rounded-xl border border-majapahit-gold/40 bg-stone-dark/80"></div>
+            <p data-slot="credit" class="hidden text-center font-poppins text-[10px] text-stone-soft/60"></p>
+          </div>
           <div data-slot="history" class="flex-1 space-y-3 overflow-y-auto pr-2 font-poppins text-[14px] leading-relaxed text-stone-soft"></div>
         </div>
         <div class="mt-4 flex justify-end">
@@ -69,6 +148,7 @@ export function showHistoryPopup(level) {
     image.className = 'h-full w-full object-contain p-3 animate-wa-float';
     slot('media').appendChild(image);
   }
+  if (candi?.model3d) mountModel3d(slot('media'), slot('credit'), candi);
 
   sfxOpen();
   openModal(modal);
@@ -165,6 +245,77 @@ export function showKeyboardTutorial() {
       if (step < KEYBOARD_TUTORIAL.length - 1) { step += 1; show(); } else closeModal(modal, resolve);
     };
   });
+}
+
+/**
+ * Dialog konfirmasi (mis. keluar level, busak progres).
+ * @returns {Promise<boolean>} true jika pemain memilih tombol konfirmasi
+ */
+export function showConfirm({ title, text, confirmLabel = 'Ya', cancelLabel = 'Batal' }) {
+  const modal = mount(`
+    <div class="wa-modal-container z-80 opacity-0 transition-opacity duration-300">
+      <div class="bg-stone-dark/98 w-[460px] rounded-2xl border-2 border-majapahit-gold p-7 text-center shadow-[0_15px_40px_rgba(0,0,0,0.85)]">
+        <h2 data-slot="title" class="font-cinzel text-[22px] font-bold tracking-wider text-majapahit-light-gold"></h2>
+        <p data-slot="text" class="mt-3 mb-6 font-poppins text-[13px] leading-relaxed text-stone-soft"></p>
+        <div class="flex items-center justify-center gap-4">
+          <button data-slot="cancel" class="wa-util h-11 w-[160px]"></button>
+          <button data-slot="confirm" class="kenney-button h-11 w-[160px] cursor-pointer font-poppins text-[12px] font-bold uppercase tracking-widest text-stone-dark transition hover:scale-105 active:scale-95"></button>
+        </div>
+      </div>
+    </div>`);
+
+  const slot = (name) => modal.querySelector(`[data-slot="${name}"]`);
+  slot('title').textContent = title;
+  slot('text').textContent = text;
+  slot('confirm').textContent = confirmLabel;
+  slot('cancel').textContent = cancelLabel;
+
+  sfxOpen();
+  openModal(modal);
+  return new Promise((resolve) => {
+    const answer = (value) => {
+      slot('confirm').onclick = slot('cancel').onclick = null;
+      closeModal(modal, resolve, value);
+    };
+    slot('confirm').onclick = () => answer(true);
+    slot('cancel').onclick = () => answer(false);
+  });
+}
+
+/**
+ * Konfirmasi sebelum keluar level, agar sentuhan tak sengaja tidak menghapus progres level.
+ */
+export function confirmLeaveLevel() {
+  return showConfirm({
+    title: 'Metu saka Level?',
+    text: 'Wangsulan lan skor ing level iki durung disimpen lan bakal ilang yen kowe metu saiki.',
+    confirmLabel: 'Metu',
+    cancelLabel: 'Tetep Dolanan'
+  });
+}
+
+const AUDIO_ON_ICON = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>';
+const AUDIO_OFF_ICON = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>';
+
+/**
+ * Tombol Swara di HUD level, dipasang tepat sebelum tombol keluar dengan gaya yang sama.
+ * @param {HTMLElement} exitButton
+ */
+export function addAudioToggle(exitButton) {
+  if (!exitButton) return;
+  const button = document.createElement('button');
+  button.className = exitButton.className;
+  button.title = 'Swara';
+  button.setAttribute('aria-label', 'Swara');
+  const render = () => {
+    button.innerHTML = `<svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${AudioManager.isMuted ? AUDIO_OFF_ICON : AUDIO_ON_ICON}</svg>`;
+  };
+  button.onclick = () => {
+    AudioManager.toggleMute();
+    render();
+  };
+  render();
+  exitButton.before(button);
 }
 
 /**

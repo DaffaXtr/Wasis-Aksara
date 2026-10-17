@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import AudioManager from '../managers/AudioManager.js';
 import SaveManager from '../managers/SaveManager.js';
 import mapOverlayTemplate from '../templates/MapOverlay.html?raw';
 import { candiData, levelData } from '../data/levelData.js';
@@ -22,6 +23,9 @@ export default class MapScene extends Phaser.Scene {
     const currentSave = SaveManager.load();
     currentSave.lastActiveScene = 'MapScene';
     SaveManager.save(currentSave);
+
+    // Peta bisa jadi layar pertama (lanjut setelah muat ulang), jadi musik juga dimulai di sini
+    AudioManager.startBacksound(this);
 
     // 1. SET BACKGROUND IMAGE ON GAME CONTAINER
     // Peta utama digambar di dalam overlay; latar ini hanya mengisi sisi layar di luar rasio 16:9.

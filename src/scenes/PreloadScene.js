@@ -68,9 +68,11 @@ export default class PreloadScene extends Phaser.Scene {
 
   create() {
     console.log('PreloadScene: assets loaded. Starting game...');
-    const saveData = SaveManager.load();
-    // Fallback ke menu jika scene terakhir sudah tidak ada (mis. Level 5 versi lama).
-    const startScene = this.scene.get(saveData.lastActiveScene) ? saveData.lastActiveScene : 'MainMenuScene';
+    const { lastActiveScene } = SaveManager.load();
+    // Level selalu mulai dari awal, jadi pemain yang keluar di tengah level/rekap dikembalikan ke peta.
+    // Menu, prolog, dan scene yang sudah tidak ada (mis. Level 5 versi lama) kembali ke menu.
+    const resumeToMap = lastActiveScene && !['MainMenuScene', 'PrologScene'].includes(lastActiveScene) && this.scene.get(lastActiveScene);
+    const startScene = resumeToMap ? 'MapScene' : 'MainMenuScene';
     console.log(`PreloadScene: Resuming from last active scene: ${startScene}`);
     this.scene.start(startScene);
   }
